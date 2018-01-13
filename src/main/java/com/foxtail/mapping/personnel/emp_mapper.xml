@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.foxtail.dao.mybatis.personnel.EmpDao">
+	
+	<sql id="base_column">
+		a.*
+	</sql>
+
+	  
+	<select id="findForPage" resultType="com.foxtail.model.personnel.Emp" >
+  		select  <include refid="base_column" />,b.name deptName,c.name placeName,d.name levelName from 
+  		man_emp a left join man_dept b on a.deptid=b.id
+  		left join man_place c on a.placeid = c.id
+  		left join man_level d on a.levelid = d.id
+  		WHERE 1=1
+  		<if test="ft.kw != null ">AND a.name like CONCAT('%',#{ft.kw},'%')</if>
+  		<if test="ft.deptid != null ">AND a.deptid = #{ft.deptid}</if>
+  		<if test="ft.placeid != null ">AND a.placeid = #{ft.placeid}</if>
+  		<if test="ft.month != null ">AND a.birthday > #{ft.monthFirst} AND a.birthday  &lt; #{ft.monthLast}</if>
+  		ORDER BY a.createtime DESC
+  	</select>
+  
+		
+	<select id="getById" resultType="com.foxtail.model.personnel.Emp" >
+  		select  <include refid="base_column" />,b.name deptName,c.name placeName,d.name levelName from 
+  		man_emp a left join man_dept b on a.deptid=b.id
+  		left join man_place c on a.placeid = c.id
+  		left join man_level d on a.levelid = d.id
+  		WHERE a.id=#{id}
+  		ORDER BY a.createtime DESC
+  	</select> 
+
+	
+	
+	<update id="update" >
+	   UPDATE man_emp SET name=#{ model.name }
+		,phone=#{ model.phone }
+		,identifier=#{ model.identifier }
+		,idcard=#{ model.idcard }
+		,entry_time=#{ model.entry_time }
+		,birthday=#{ model.birthday }
+		,sex=#{ model.sex }
+		,origin=#{ model.origin }
+,national=#{ model.national }
+,political=#{ model.political }
+,marriage=#{ model.marriage }
+,height=#{ model.height }
+,experience=#{ model.experience }
+,health=#{ model.health }
+,weight=#{ model.weight }
+,urgent_man=#{ model.urgent_man }
+,urgent_phone=#{ model.urgent_phone }
+,reg_area=#{ model.reg_area }
+,live_area=#{ model.live_area }
+,graduation_school=#{ model.graduation_school }
+,major=#{ model.major }
+,graduation_time=#{ model.graduation_time }
+,education=#{ model.education }
+,certificate=#{ model.certificate }
+		,pwd=#{ model.pwd }
+		,contact_addr=#{ model.contact_addr }
+		,state=#{ model.state }
+		,remark=#{model.remark}
+		 WHERE id=#{model.id}
+	</update>
+
+	 <!-- 根据对象主键更新 -->
+  	<insert id="save" > 
+     INSERT INTO man_emp(name, deptid, placeid, levelid,account, phone, identifier, idcard, entry_time, birthday, sex, origin, national, political, marriage, height, experience, health, weight, urgent_man, urgent_phone, reg_area, live_area, graduation_school, major , graduation_time, education, certificate, pwd, contact_addr, state,remark) 
+     VALUES(#{ model.name },#{ model.deptid },#{ model.placeid },#{ model.levelid },#{ model.account },#{ model.phone },#{ model.identifier },#{ model.idcard },#{ model.entry_time },#{ model.birthday },#{ model.sex },#{ model.origin },#{ model.national },#{ model.political },#{ model.marriage },#{ model.height },#{ model.experience },#{ model.health },#{ model.weight },#{ model.urgent_man },#{ model.urgent_phone },#{ model.reg_area },#{ model.live_area },#{ model.graduation_school },#{ model.major },#{ model.graduation_time },#{ model.education },#{ model.certificate },#{ model.pwd },#{ model.contact_addr },#{ model.state },#{model.remark})
+
+     </insert>
+	
+	
+	<select id="getAccountsByIds" resultType="String" >
+  		select  a.account from 
+  		man_emp a 
+  		WHERE a.id in 
+  		 <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+              #{id}
+          </foreach>
+  	</select> 
+	
+  	
+  
+</mapper>   

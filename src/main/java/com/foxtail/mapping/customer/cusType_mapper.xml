@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.foxtail.dao.mybatis.customer.CusTypeDao">
+	
+	<sql id="base_column">
+		a.*
+	</sql>
+
+	  
+	<select id="findForPage" resultType="com.foxtail.model.customer.CusType" >
+  		select  <include refid="base_column" /> from cus_type a
+  	</select>
+  	<select id="findAll" resultType="com.foxtail.model.customer.CusType" >
+  		select  <include refid="base_column" /> from cus_type a WHERE a.state=0
+  	</select>
+  	
+  	
+  	<select id="countCus" resultType="int" >
+  		select  count(id) from cus_customer a WHERE a.typeid in 
+  		 <foreach collection="ids" item="id" index="index"
+             open="(" close=")" separator=",">
+              #{id}
+          </foreach>
+  	</select>
+  	
+  
+		
+	<select id="getById" resultType="com.foxtail.model.customer.CusType" >
+  		select  <include refid="base_column" /> from cus_type a where a.id=#{id}
+  	</select> 
+
+	
+	
+	<update id="update" >
+	   UPDATE cus_type SET name=#{ model.name }
+		,state=#{ model.state }
+		 WHERE id=#{model.id}
+	</update>
+
+	 <!-- 根据对象主键更新 -->
+  	<insert id="save"  >
+     INSERT INTO cus_type(name, state) VALUES(#{ model.name },#{ model.state })
+     </insert>
+	
+  	
+  
+</mapper>   

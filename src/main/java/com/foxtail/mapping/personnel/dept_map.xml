@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.foxtail.dao.mybatis.personnel.DeptDao">
+	
+
+
+	<sql id="base_column">
+		*
+	</sql>
+
+	 <!-- 分页数据,查询所有不在回收站的数据-->    
+	<select id="findAll" resultType="com.foxtail.model.personnel.Dept" >
+  		select a.*,ifnull(b.num,0) manNum from man_dept a left join 
+  		(select deptid,count(id) num from man_emp where state=0 group by deptid) b on a.id=b.deptid
+  	</select>    
+  	
+  	<select id="getByid" resultType="com.foxtail.model.personnel.Dept" >
+  		select a.*,b.name parentName from man_dept a left join man_dept b on a.parentid=b.id where a.id =#{id}
+  	</select> 
+  	  
+  
+	<!--批量删除-->
+	<delete id="delete" >
+	   delete from man_dept
+	   where id in
+	      <foreach collection="ids" item="id" index="index"
+             open="(" close=")" separator=",">
+              #{id}
+          </foreach>
+	</delete>	
+
+	
+	<!-- 更新记录 -->
+	<update id="update" >
+	   update man_dept
+		<set >
+			<if test="model.name != null ">
+		  	name = #{model.name},
+			</if>
+			<if test="model.state != null ">
+		  	state = #{model.state},
+			</if>
+			
+		  	parentid = #{model.parentid}
+			
+	    </set>
+	   where id = #{model.id}
+	</update>
+
+	 <!-- 根据对象主键更新 -->
+  	<insert id="save"  >
+       INSERT INTO man_dept (name,parentid,state, createtime, updatetime) VALUES (#{model.name},#{model.parentid},#{model.state},null,null)
+  	</insert>
+	
+  	
+  	<select id="findByParentid" resultType="string" >
+  		select id from man_dept where parentid = #{pid}
+  	</select> 
+  	
+  	<select id="placeCount" resultType="int" >
+  		select count(id) from man_place where deptid in
+	      <foreach collection="ids" item="id" index="index"
+             open="(" close=")" separator=",">
+              #{id}
+          </foreach>
+  	</select> 
+  	
+  
+</mapper>   

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.foxtail.dao.mybatis.sys.SysAdviceDao">
+	<!-- Result Map -->
+	<resultMap id="BaseResultMap" type="com.foxtail.model.sys.SysAdvice">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+		<result column="create_user_name" property="createUserName" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="advice" property="advice" jdbcType="VARCHAR" />
+		<result column="reply_user_id" property="replyUserId" jdbcType="INTEGER" />
+		<result column="reply_user_name" property="replyUserName" jdbcType="VARCHAR" />
+		<result column="reply_time" property="replyTime" jdbcType="TIMESTAMP" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="reply_content" property="replyContent" jdbcType="VARCHAR" />
+	</resultMap>
+    <resultMap id="BaseResultVoMap" extends="BaseResultMap" type="com.foxtail.vo.sys.SysAdviceVo">
+
+    </resultMap>
+
+	<sql id="Base_Column_List">
+		id,create_user_id,create_user_name,create_time,advice,reply_user_id,reply_user_name,reply_time,status,reply_content
+	</sql>
+
+	 <!-- 分页数据 -->    
+	<select id="findListByPage" resultMap="BaseResultVoMap" parameterType="com.foxtail.vo.sys.SysAdviceVo">
+  		select 
+  		<include refid="Base_Column_List" />
+  	      from t_sys_advice where 1=1 
+		  	<if test="vo.id != null ">and id = #{ vo.id }</if>
+		  	<if test="vo.createUserId != null ">and create_user_id = #{ vo.createUserId }</if>
+  	        <if test="vo.createUserName != null and '' != vo.createUserName ">and create_user_name = #{ vo.createUserName }</if>
+		  	<if test="vo.createTime != null ">and create_time = #{ vo.createTime }</if>
+  	        <if test="vo.advice != null and '' != vo.advice ">and advice = #{ vo.advice }</if>
+		  	<if test="vo.replyUserId != null ">and reply_user_id = #{ vo.replyUserId }</if>
+  	        <if test="vo.replyUserName != null and '' != vo.replyUserName ">and reply_user_name = #{ vo.replyUserName }</if>
+		  	<if test="vo.replyTime != null ">and reply_time = #{ vo.replyTime }</if>
+		  	<if test="vo.status != null ">and status = #{ vo.status }</if>
+  	        <if test="vo.replyContent != null and '' != vo.replyContent ">and reply_content = #{ vo.replyContent }</if>
+  	</select>      
+  
+	<!-- 根据主键获取对象 -->  
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+	  select 
+	  <include refid="Base_Column_List" />
+	  from t_sys_advice
+	  where id = #{id,jdbcType=INTEGER}
+	</select>	
+
+	 <!-- 获取表所有数据 -->    
+    <select id="findAll" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+      select
+      <include refid="Base_Column_List" />
+      from t_sys_advice
+    </select>
+
+	<!-- 根据主键删除 -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+	  delete from t_sys_advice
+	  where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 保存对象 -->
+	<insert id="insert" parameterType="com.foxtail.model.sys.SysAdvice" useGeneratedKeys="true" keyProperty="id">
+       insert into t_sys_advice (
+		id,create_user_id,create_user_name,create_time,advice,reply_user_id,reply_user_name,reply_time,status,reply_content)values ( 
+		#{id,jdbcType=INTEGER},#{createUserId,jdbcType=INTEGER},#{createUserName,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{advice,jdbcType=VARCHAR},#{replyUserId,jdbcType=INTEGER},#{replyUserName,jdbcType=VARCHAR},#{replyTime,jdbcType=TIMESTAMP},#{status,jdbcType=INTEGER},#{replyContent,jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 根据对象字段保存 -->
+	<insert id="insertSelective" parameterType="com.foxtail.model.sys.SysAdvice" useGeneratedKeys="true" keyProperty="id" >
+	   insert into t_sys_advice
+ 		<trim prefix="(" suffix=")" suffixOverrides="," >
+	  		<if test="id != null ">id,</if>
+	  		<if test="createUserId != null ">create_user_id,</if>
+	  		<if test="createUserName != null ">create_user_name,</if>
+	  		<if test="createTime != null ">create_time,</if>
+	  		<if test="advice != null ">advice,</if>
+	  		<if test="replyUserId != null ">reply_user_id,</if>
+	  		<if test="replyUserName != null ">reply_user_name,</if>
+	  		<if test="replyTime != null ">reply_time,</if>
+	  		<if test="status != null ">status,</if>
+	  		<if test="replyContent != null ">reply_content,</if>
+ 		</trim>
+ 		<trim prefix="values (" suffix=")" suffixOverrides="," >
+	  		<if test="id != null ">#{id,jdbcType=INTEGER},</if>
+	  		<if test="createUserId != null ">#{createUserId,jdbcType=INTEGER},</if>
+	  		<if test="createUserName != null ">#{createUserName,jdbcType=VARCHAR},</if>
+	  		<if test="createTime != null ">#{createTime,jdbcType=TIMESTAMP},</if>
+	  		<if test="advice != null ">#{advice,jdbcType=VARCHAR},</if>
+	  		<if test="replyUserId != null ">#{replyUserId,jdbcType=INTEGER},</if>
+	  		<if test="replyUserName != null ">#{replyUserName,jdbcType=VARCHAR},</if>
+	  		<if test="replyTime != null ">#{replyTime,jdbcType=TIMESTAMP},</if>
+	  		<if test="status != null ">#{status,jdbcType=INTEGER},</if>
+	  		<if test="replyContent != null ">#{replyContent,jdbcType=VARCHAR},</if>
+ 		</trim>
+	</insert>
+	
+	<!-- 更新记录 -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.foxtail.model.sys.SysAdvice" >
+	   update t_sys_advice
+		<set >
+			<if test="id != null ">
+		  	id = #{id,jdbcType=INTEGER},
+			</if>
+			<if test="createUserId != null ">
+		  	create_user_id = #{createUserId,jdbcType=INTEGER},
+			</if>
+			<if test="createUserName != null ">
+		  	create_user_name = #{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null ">
+		  	create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="advice != null ">
+		  	advice = #{advice,jdbcType=VARCHAR},
+			</if>
+			<if test="replyUserId != null ">
+		  	reply_user_id = #{replyUserId,jdbcType=INTEGER},
+			</if>
+			<if test="replyUserName != null ">
+		  	reply_user_name = #{replyUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="replyTime != null ">
+		  	reply_time = #{replyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null ">
+		  	status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="replyContent != null ">
+		  	reply_content = #{replyContent,jdbcType=VARCHAR},
+			</if>
+	    </set>
+	   where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	 <!-- 根据对象主键更新 -->    
+  	<update id="updateByPrimaryKey" parameterType="com.foxtail.model.sys.SysAdvice" >
+       update t_sys_advice
+       set 
+	      id = #{id,jdbcType=INTEGER},
+	      create_user_id = #{createUserId,jdbcType=INTEGER},
+	      create_user_name = #{createUserName,jdbcType=VARCHAR},
+	      create_time = #{createTime,jdbcType=TIMESTAMP},
+	      advice = #{advice,jdbcType=VARCHAR},
+	      reply_user_id = #{replyUserId,jdbcType=INTEGER},
+	      reply_user_name = #{replyUserName,jdbcType=VARCHAR},
+	      reply_time = #{replyTime,jdbcType=TIMESTAMP},
+	      status = #{status,jdbcType=INTEGER},
+	      reply_content = #{replyContent,jdbcType=VARCHAR}
+	   where id = #{id,jdbcType=INTEGER}
+  	</update>
+	
+	<!--  查找记录-->
+	<select id="selectList" parameterType="com.foxtail.model.sys.SysAdvice" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from t_sys_advice where 1=1
+			<if test="id != null ">
+			AND  id = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="createUserId != null ">
+			AND  create_user_id = #{createUserId,jdbcType=INTEGER}
+			</if>
+			<if test="createUserName != null and '' != createUserName ">
+			AND  create_user_name = #{createUserName,jdbcType=VARCHAR}
+			</if>
+			<if test="createTime != null ">
+			AND  create_time = #{createTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="advice != null and '' != advice ">
+			AND  advice = #{advice,jdbcType=VARCHAR}
+			</if>
+			<if test="replyUserId != null ">
+			AND  reply_user_id = #{replyUserId,jdbcType=INTEGER}
+			</if>
+			<if test="replyUserName != null and '' != replyUserName ">
+			AND  reply_user_name = #{replyUserName,jdbcType=VARCHAR}
+			</if>
+			<if test="replyTime != null ">
+			AND  reply_time = #{replyTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="status != null ">
+			AND  status = #{status,jdbcType=INTEGER}
+			</if>
+			<if test="replyContent != null and '' != replyContent ">
+			AND  reply_content = #{replyContent,jdbcType=VARCHAR}
+			</if>
+	</select>
+	
+	<!--批量删除-->
+	<delete id="deleteByIds" >
+	   delete from t_sys_advice
+	   where id in
+	      <foreach collection="ids" item="id" index="index"
+             open="(" close=")" separator=",">
+              #{id,jdbcType=INTEGER}
+          </foreach>
+	</delete>
+	
+</mapper>   

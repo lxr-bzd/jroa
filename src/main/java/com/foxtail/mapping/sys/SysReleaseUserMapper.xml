@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.foxtail.dao.mybatis.sys.SysReleaseUserDao">
+	<!-- Result Map -->
+	<resultMap id="BaseResultMap" type="com.foxtail.model.sys.SysReleaseUser">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="release_type" property="releaseType" jdbcType="INTEGER" />
+		<result column="qq" property="qq" jdbcType="VARCHAR" />
+		<result column="img_file_path" property="imgFilePath" jdbcType="VARCHAR" />
+		<result column="contacts_user" property="contactsUser" jdbcType="VARCHAR" />
+		<result column="contacts_phone" property="contactsPhone" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="introduce" property="introduce" jdbcType="VARCHAR" />
+		<result column="common_address" property="commonAddress" jdbcType="VARCHAR" />
+		<result column="org_type" property="orgType" jdbcType="INTEGER"/>
+	</resultMap>
+	
+	<resultMap id="BaseSysUserMap" type="com.foxtail.model.sys.SysUser">
+		<id column="u_id" property="id" jdbcType="INTEGER" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="account" property="account" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="mobile_phone" property="mobilePhone" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="reg_time" property="regTime" jdbcType="TIMESTAMP" />
+		<result column="reg_ip" property="regIp" jdbcType="VARCHAR" />
+		<result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP" />
+		<result column="last_login_err_time" property="lastLoginErrTime" jdbcType="TIMESTAMP" />
+		<result column="last_login_ip" property="lastLoginIp" jdbcType="VARCHAR" />
+		<result column="id_number" property="idNumber" jdbcType="VARCHAR" />
+		<result column="login_err_times" property="loginErrTimes" jdbcType="INTEGER" />
+		<result column="user_type" property="userType" jdbcType="INTEGER" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+	</resultMap>
+	
+    <resultMap id="BaseResultVoMap" extends="BaseResultMap" type="com.foxtail.vo.sys.SysReleaseUserVo">
+		<association property="sysUser" resultMap="BaseSysUserMap" ></association>
+    </resultMap>
+
+	<sql id="Base_Column_List">
+		id,user_id,release_type,qq,img_file_path,contacts_user,contacts_phone,address,introduce,common_address,org_type
+	</sql>
+
+	 <!-- 分页数据 -->    
+	<select id="findListByPage" resultMap="BaseResultVoMap" parameterType="com.foxtail.vo.sys.SysReleaseUserVo">
+  		select  t.*,u.id as u_id,user_name,account,email,mobile_phone,password,reg_time,reg_ip,last_login_time,last_login_err_time,last_login_ip,id_number,login_err_times,user_type,status
+  	      from t_sys_release_user t 
+  	      left join  t_sys_user u on u.id=t.user_id
+  	       where 1=1 
+		  	<if test="vo.id != null ">and id = #{ vo.id }</if>
+		  	<if test="vo.userId != null ">and user_id = #{ vo.userId }</if>
+		  	<if test="vo.releaseType != null ">and release_type = #{ vo.releaseType }</if>
+  	        <if test="vo.qq != null and '' != vo.qq ">and qq = #{ vo.qq }</if>
+  	        <if test="vo.imgFilePath != null and '' != vo.imgFilePath ">and img_file_path = #{ vo.imgFilePath }</if>
+  	        <if test="vo.contactsUser != null and '' != vo.contactsUser ">and contacts_user = #{ vo.contactsUser }</if>
+  	        <if test="vo.contactsPhone != null and '' != vo.contactsPhone ">and contacts_phone = #{ vo.contactsPhone }</if>
+  	        <if test="vo.address != null and '' != vo.address ">and address = #{ vo.address }</if>
+  	        <if test="vo.introduce != null and '' != vo.introduce ">and introduce = #{ vo.introduce }</if>
+  	        <if test="vo.commonAddress != null and '' != vo.commonAddress ">and common_address = #{ vo.commonAddress }</if>
+  	</select>      
+  
+	<!-- 根据主键获取对象 -->  
+	<select id="selectByPrimaryKey" resultMap="BaseResultVoMap" parameterType="java.lang.Integer" >
+		select  t.*,u.id as u_id,user_name,account,email,mobile_phone,password,reg_time,reg_ip,last_login_time,last_login_err_time,last_login_ip,id_number,login_err_times,user_type,status
+	      from t_sys_release_user t 
+	      left join  t_sys_user u on u.id=t.user_id
+	    where t.id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<!-- 获取表所有数据 -->    
+    <select id="findAll" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+      select
+      <include refid="Base_Column_List" />
+      from t_sys_release_user
+    </select>
+
+	<!-- 根据主键删除 -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+	  delete from t_sys_release_user
+	  where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 保存对象 -->
+	<insert id="insert" parameterType="com.foxtail.model.sys.SysReleaseUser" useGeneratedKeys="true" keyProperty="id">
+       insert into t_sys_release_user (
+		id,user_id,release_type,qq,img_file_path,contacts_user,contacts_phone,address,introduce,common_address,org_type)values ( 
+		#{id,jdbcType=INTEGER},#{userId,jdbcType=INTEGER},#{releaseType,jdbcType=INTEGER},#{qq,jdbcType=VARCHAR},#{imgFilePath,jdbcType=VARCHAR},#{contactsUser,jdbcType=VARCHAR},#{contactsPhone,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},#{introduce,jdbcType=VARCHAR},#{commonAddress,jdbcType=VARCHAR},#{orgType,jdbcType=INTEGER})
+	</insert>
+
+	<!-- 根据对象字段保存 -->
+	<insert id="insertSelective" parameterType="com.foxtail.model.sys.SysReleaseUser" useGeneratedKeys="true" keyProperty="id" >
+	   insert into t_sys_release_user
+ 		<trim prefix="(" suffix=")" suffixOverrides="," >
+	  		<if test="id != null ">id,</if>
+	  		<if test="userId != null ">user_id,</if>
+	  		<if test="releaseType != null ">release_type,</if>
+	  		<if test="qq != null ">qq,</if>
+	  		<if test="imgFilePath != null ">img_file_path,</if>
+	  		<if test="contactsUser != null ">contacts_user,</if>
+	  		<if test="contactsPhone != null ">contacts_phone,</if>
+	  		<if test="address != null ">address,</if>
+	  		<if test="introduce != null ">introduce,</if>
+	  		<if test="commonAddress != null ">common_address,</if>
+	  		<if test="orgType != null ">org_type,</if>
+ 		</trim>
+ 		<trim prefix="values (" suffix=")" suffixOverrides="," >
+	  		<if test="id != null ">#{id,jdbcType=INTEGER},</if>
+	  		<if test="userId != null ">#{userId,jdbcType=INTEGER},</if>
+	  		<if test="releaseType != null ">#{releaseType,jdbcType=INTEGER},</if>
+	  		<if test="qq != null ">#{qq,jdbcType=VARCHAR},</if>
+	  		<if test="imgFilePath != null ">#{imgFilePath,jdbcType=VARCHAR},</if>
+	  		<if test="contactsUser != null ">#{contactsUser,jdbcType=VARCHAR},</if>
+	  		<if test="contactsPhone != null ">#{contactsPhone,jdbcType=VARCHAR},</if>
+	  		<if test="address != null ">#{address,jdbcType=VARCHAR},</if>
+	  		<if test="introduce != null ">#{introduce,jdbcType=VARCHAR},</if>
+	  		<if test="commonAddress != null ">#{commonAddress,jdbcType=VARCHAR},</if>
+	  		<if test="orgType != null ">#{orgType,jdbcType=INTEGER},</if>
+ 		</trim>
+	</insert>
+	
+	<!-- 更新记录 -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.foxtail.model.sys.SysReleaseUser" >
+	   update t_sys_release_user
+		<set >
+			<if test="id != null ">
+		  	id = #{id,jdbcType=INTEGER},
+			</if>
+			<if test="userId != null ">
+		  	user_id = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="releaseType != null ">
+		  	release_type = #{releaseType,jdbcType=INTEGER},
+			</if>
+			<if test="qq != null ">
+		  	qq = #{qq,jdbcType=VARCHAR},
+			</if>
+			<if test="imgFilePath != null ">
+		  	img_file_path = #{imgFilePath,jdbcType=VARCHAR},
+			</if>
+			<if test="contactsUser != null ">
+		  	contacts_user = #{contactsUser,jdbcType=VARCHAR},
+			</if>
+			<if test="contactsPhone != null ">
+		  	contacts_phone = #{contactsPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null ">
+		  	address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="introduce != null ">
+		  	introduce = #{introduce,jdbcType=VARCHAR},
+			</if>
+			<if test="commonAddress != null ">
+		  	common_address = #{commonAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="orgType != null ">
+		  	org_type = #{orgType,jdbcType=INTEGER},
+			</if>
+	    </set>
+	   where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	 <!-- 根据对象主键更新 -->    
+  	<update id="updateByPrimaryKey" parameterType="com.foxtail.model.sys.SysReleaseUser" >
+       update t_sys_release_user
+       set 
+	      id = #{id,jdbcType=INTEGER},
+	      user_id = #{userId,jdbcType=INTEGER},
+	      release_type = #{releaseType,jdbcType=INTEGER},
+	      qq = #{qq,jdbcType=VARCHAR},
+	      img_file_path = #{imgFilePath,jdbcType=VARCHAR},
+	      contacts_user = #{contactsUser,jdbcType=VARCHAR},
+	      contacts_phone = #{contactsPhone,jdbcType=VARCHAR},
+	      address = #{address,jdbcType=VARCHAR},
+	      introduce = #{introduce,jdbcType=VARCHAR},
+	      common_address = #{commonAddress,jdbcType=VARCHAR},
+	       org_type = #{orgType,jdbcType=INTEGER}
+	   where id = #{id,jdbcType=INTEGER}
+  	</update>
+	
+	<!--  查找记录-->
+	<select id="selectList" parameterType="com.foxtail.model.sys.SysReleaseUser" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from t_sys_release_user where 1=1
+			<if test="id != null ">
+			AND  id = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="userId != null ">
+			AND  user_id = #{userId,jdbcType=INTEGER}
+			</if>
+			<if test="releaseType != null ">
+			AND  release_type = #{releaseType,jdbcType=INTEGER}
+			</if>
+			<if test="qq != null and '' != qq ">
+			AND  qq = #{qq,jdbcType=VARCHAR}
+			</if>
+			<if test="imgFilePath != null and '' != imgFilePath ">
+			AND  img_file_path = #{imgFilePath,jdbcType=VARCHAR}
+			</if>
+			<if test="contactsUser != null and '' != contactsUser ">
+			AND  contacts_user = #{contactsUser,jdbcType=VARCHAR}
+			</if>
+			<if test="contactsPhone != null and '' != contactsPhone ">
+			AND  contacts_phone = #{contactsPhone,jdbcType=VARCHAR}
+			</if>
+			<if test="address != null and '' != address ">
+			AND  address = #{address,jdbcType=VARCHAR}
+			</if>
+			<if test="introduce != null and '' != introduce ">
+			AND  introduce = #{introduce,jdbcType=VARCHAR}
+			</if>
+			<if test="commonAddress != null and '' != commonAddress ">
+			AND  common_address = #{commonAddress,jdbcType=VARCHAR}
+			</if>
+	</select>
+	
+	<!--批量删除-->
+	<delete id="deleteByIds" >
+	   delete from t_sys_release_user
+	   where id in
+	      <foreach collection="ids" item="id" index="index"
+             open="(" close=")" separator=",">
+              #{id,jdbcType=INTEGER}
+          </foreach>
+	</delete>
+	
+</mapper>   

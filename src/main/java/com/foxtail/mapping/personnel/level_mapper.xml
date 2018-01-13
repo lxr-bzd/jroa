@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.foxtail.dao.mybatis.personnel.LevelDao">
+	
+	<sql id="base_column">
+		a.*
+	</sql>
+
+	  
+	<select id="findForPage" resultType="com.foxtail.model.personnel.Level" >
+  		select  <include refid="base_column" /> from man_level a
+  		WHERE 1=1
+  		<if test="kw != null ">AND a.name like CONCAT('%',#{kw},'%')</if>
+  	</select>
+  
+  <!-- 	<select id="findByPlaceid" resultType="com.foxtail.model.personnel.Level" >
+  		select  <include refid="base_column" /> from man_level a WHERE a.placeid=#{placeid}
+  	</select> -->
+  	
+  	
+  
+		
+	<select id="getById" resultType="com.foxtail.model.personnel.Level" >
+	select  <include refid="base_column" /> from man_level a 
+  	 where a.id=#{id}
+  	</select> 
+
+	
+	
+	<update id="update" >
+	   UPDATE man_level SET name=#{ model.name }
+		,subs_meal=#{ model.subs_meal }
+		,sal_base=#{ model.sal_base }
+		,subs_insurance=#{ model.subs_insurance }
+		,subs_every=#{ model.subs_every }
+		
+	,subs_manage=#{ model.subs_manage }
+	,subs_team=#{ model.subs_team }
+	,subs_age=#{ model.subs_age }
+		,remark=#{ model.remark }
+		 WHERE id=#{model.id}
+
+	</update>
+
+	 <!-- 根据对象主键更新 -->
+  	<insert id="save"  >
+	INSERT INTO man_level(name, subs_meal, sal_base, subs_insurance, subs_every,subs_manage,subs_team,subs_age, remark) 
+	VALUES(#{ model.name }, #{ model.subs_meal },#{ model.sal_base },#{ model.subs_insurance },#{ model.subs_every },#{ model.subs_manage },#{ model.subs_team },#{ model.subs_age },#{ model.remark })
+	</insert>
+	
+  	<select id="empCount" resultType="int" >
+  		select count(id) from man_emp where levelid in
+	      <foreach collection="ids" item="id" index="index"
+             open="(" close=")" separator=",">
+              #{id}
+          </foreach>
+  	</select> 
+  
+</mapper>   

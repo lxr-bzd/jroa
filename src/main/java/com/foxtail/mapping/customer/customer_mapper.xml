@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.foxtail.dao.mybatis.customer.CustomerDao">
+	
+	<sql id="base_column">
+		a.*
+	</sql>
+
+	  
+	<select id="findForPage" resultType="com.foxtail.model.customer.Customer" >
+  		select  <include refid="base_column" />,b.name productName,c.name empName from cus_customer a  left join cus_product b on a.productid=b.id
+  		left join man_emp c on a.empid=c.id
+  		WHERE 1=1
+  		<if test="ft.state != null ">AND a.state = #{ft.state}</if>
+  		
+  	</select>
+  
+		
+	<select id="getById" resultType="com.foxtail.model.customer.Customer" >
+  		select  <include refid="base_column" />,b.name productName,c.name empName from cus_customer a  left join cus_product b on a.productid=b.id
+  		left join man_emp c on a.empid=c.id
+  		where a.id=#{id}
+  	</select> 
+
+	
+	
+	<update id="update" >
+	 UPDATE cus_customer SET
+name=#{ model.name }
+,typeid=#{ model.typeid }
+,follow=#{ model.follow }
+,productid=#{ model.productid }
+,worth=#{ model.worth }
+,contacts=#{ model.contacts }
+,phone=#{ model.phone }
+,addr=#{ model.addr }
+,empid=#{ model.empid }
+,industry = #{ model.industry }
+,scale = #{ model.scale }
+,source=#{ model.source}
+,state=#{ model.state }
+ WHERE id=#{model.id}
+	</update>
+
+	 <!-- 根据对象主键更新 -->
+  	<insert id="save"  >
+   INSERT INTO cus_customer(name, typeid, follow, productid, worth, contacts, phone, addr, empid,industry,scale,source, state) VALUES(#{ model.name },#{ model.typeid },#{ model.follow },#{ model.productid },#{ model.worth },#{ model.contacts },#{ model.phone },#{ model.addr },#{ model.empid },#{ model.industry },#{ model.scale },#{ model.source },#{ model.state })
+
+     </insert>
+     
+     <!--批量删除-->
+	<delete id="deleteAllProduct" >
+	   delete from cus_product_cus  where cusid = #{id}
+	</delete>
+	
+	
+	<insert id="saveProduct"  >
+  INSERT INTO cus_product_cus (cusid, proid) VALUES (#{id}, #{pid})
+
+     </insert>
+	
+</mapper>   

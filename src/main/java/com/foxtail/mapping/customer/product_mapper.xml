@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.foxtail.dao.mybatis.customer.ProductDao">
+	
+	<sql id="base_column">
+		a.*
+	</sql>
+
+	  
+	<select id="findForPage" resultType="com.foxtail.model.customer.Product" >
+  		select  <include refid="base_column" /> from cus_product a
+  	</select>
+  	
+  	<select id="findByCus" resultType="com.foxtail.model.customer.Product" >
+ select  <include refid="base_column" /> from cus_product a 
+ WHERE id in (select  proid from cus_product_cus a where a.cusid=#{cusid})
+  		
+  	</select>
+  
+		
+	<select id="getById" resultType="com.foxtail.model.customer.Product" >
+  		select  <include refid="base_column" /> from cus_product a where a.id=#{id}
+  	</select> 
+
+	
+	
+	<update id="update" >
+	 UPDATE cus_product SET name=#{ model.name }
+,info=#{ model.info }
+,state=#{ model.state }
+ WHERE id=#{model.id}
+	</update>
+
+	 <!-- 根据对象主键更新 -->
+  	<insert id="save"  >
+    INSERT INTO cus_product(name, info, state) VALUES(#{ model.name },#{ model.info },#{ model.state })
+    </insert>
+	<!-- 统计关联客户数 -->
+	<select id="customerCount" resultType="int" >
+  		select count(id) from cus_customer where productid in
+	      <foreach collection="ids" item="id" index="index"
+             open="(" close=")" separator=",">
+              #{id}
+          </foreach>
+  	</select> 
+	
+  	
+  
+</mapper>   

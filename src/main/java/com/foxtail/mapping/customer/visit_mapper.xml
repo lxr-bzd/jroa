@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.foxtail.dao.mybatis.customer.VisitDao">
+	
+	<sql id="base_column">
+		a.*
+	</sql>
+
+	  
+	<select id="findForPage" resultType="com.foxtail.model.customer.Visit" >
+  		select  <include refid="base_column" /> from cus_visit a
+  		 	WHERE 1=1
+  		<if test="cusid != null ">AND a.cusid = #{cusid}</if>
+  	</select>
+  
+		
+	<select id="getById" resultType="com.foxtail.model.customer.Visit" >
+  		select  <include refid="base_column" /> from cus_visit a where a.id=#{id}
+  	</select> 
+
+	
+	
+	<update id="update" >
+	   UPDATE cus_visit SET cusid=#{ model.cusid }
+		,empid=#{ model.empid }
+		,info=#{ model.info }
+		,time=#{ model.time }
+		 WHERE id=#{model.id}
+	</update>
+
+	 <!-- 根据对象主键更新 -->
+  	<insert id="save"  >
+     INSERT INTO cus_visit(cusid, empid, info, time) VALUES(#{ model.cusid },#{ model.empid },#{ model.info },#{ model.time })
+     </insert>
+	
+  	
+  
+</mapper>   
