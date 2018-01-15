@@ -16,7 +16,7 @@ public interface CustomerDao {
 	
 	Customer getById(@Param("id")String id);
 	
-	List<Customer> findForPage(@Param("page")Pagination page,@Param("ft")CustomerFilter filter);
+	List<Customer> findForPag(@Param("page")Pagination page,@Param("ft")CustomerFilter filter,@Param("deptids")String[] deptids);
 	
 	void saveProduct(@Param("id")String id,@Param("pid")String pid);
 	

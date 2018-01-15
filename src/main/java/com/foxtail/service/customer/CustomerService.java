@@ -12,6 +12,8 @@ import com.foxtail.dao.mybatis.customer.ProductDao;
 import com.foxtail.filter.CustomerFilter;
 import com.foxtail.model.customer.Customer;
 import com.foxtail.model.customer.Product;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 
 
 @Service
@@ -65,9 +67,10 @@ public class CustomerService {
 	}
 	
 	public Pagination findForPage(Pagination page,CustomerFilter filter) {
-		
-		List  list = customerDao.findForPage(page,filter);
-		page.setList(list);
+		PageHelper.startPage(page.getPageNo(), page.getPageSize());
+		Page listCountry  = (Page)customerDao.findForPag(page,filter,filter.getDeptids());
+		page.setTotalCount((int)listCountry.getTotal());
+		page.setList(listCountry.getResult());
 		return page;
 
 	}

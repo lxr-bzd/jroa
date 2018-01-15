@@ -10,11 +10,14 @@ public class EmpFilter {
 	String deptid;
 	String placeid;
 	
-	
+	Long regStart;
+	Long regEnd;
 	
 	Integer month;
 	Long monthFirst;
 	Long monthLast;
+	
+	Integer sex;
 	
 	
 	public String getKw() {
@@ -58,6 +61,24 @@ public class EmpFilter {
 	}
 	public void setMonthLast(Long monthLast) {
 		this.monthLast = monthLast;
+	}
+	public Long getRegStart() {
+		return regStart;
+	}
+	public void setRegStart(Long regStart) {
+		this.regStart = regStart;
+	}
+	public Long getRegEnd() {
+		return regEnd;
+	}
+	public void setRegEnd(Long regEnd) {
+		this.regEnd = regEnd;
+	}
+	public Integer getSex() {
+		return sex;
+	}
+	public void setSex(Integer sex) {
+		this.sex = sex;
 	}
 	
 	

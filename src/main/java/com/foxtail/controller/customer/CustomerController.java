@@ -1,7 +1,11 @@
 package com.foxtail.controller.customer;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -46,12 +50,16 @@ public class CustomerController extends BaseMybatisController{
 	
 	@RequestMapping("view")
 	@ResponseBody
-	public Object view(String type,CustomerFilter filter,HttpServletRequest request) {
+	public Object view(String type,CustomerFilter filter,String deptStr,HttpServletRequest request) {
 		
 		if("info".equals(type))
 			return JsonResult.getSuccessResult(customerService.getById(request.getParameter("id")));
-		else 
-		return DataGridResult.getResult(customerService.findForPage(getPagination(request),filter));
+		else {
+			if(!StringUtils.isEmpty(deptStr))
+			filter.setDeptids(deptStr.split(","));
+			return DataGridResult.getResult(customerService.findForPage(getPagination(request),filter));
+		}
+		
 	}
 	
 	

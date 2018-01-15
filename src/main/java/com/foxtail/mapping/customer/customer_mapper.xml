@@ -7,11 +7,19 @@
 	</sql>
 
 	  
-	<select id="findForPage" resultType="com.foxtail.model.customer.Customer" >
+	<select id="findForPag" resultType="com.foxtail.model.customer.Customer" >
   		select  <include refid="base_column" />,b.name productName,c.name empName from cus_customer a  left join cus_product b on a.productid=b.id
   		left join man_emp c on a.empid=c.id
   		WHERE 1=1
   		<if test="ft.state != null ">AND a.state = #{ft.state}</if>
+  		<if test="ft.kw != null ">AND c.name like CONCAT('%',#{ft.kw},'%')</if>
+  		<if test="ft.startTime != null ">AND a.createtime > #{ft.startTime}</if>
+  		<if test="ft.endTime != null ">AND a.createtime &lt; #{ft.endTime}</if>
+  		<if test="deptids != null "> AND c.deptid in
+  			<foreach collection="deptids" item="id" index="index" open="(" close=")" separator=",">
+              #{id}
+          	</foreach>
+        </if>
   		
   	</select>
   
