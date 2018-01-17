@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.foxtail.bean.ServiceManager;
 import com.foxtail.common.AppModelMap;
 import com.foxtail.common.DataGridResult;
 import com.foxtail.common.JsonResult;
@@ -55,7 +57,7 @@ public class VisitController extends BaseMybatisController{
 	@RequestMapping("save")
 	@ResponseBody
 	public Object save(Visit visit) {
-		
+		visit.setEmpid(ServiceManager.securityService.getUid());
 		visitService.save(visit);
 
 		return JsonResult.getSuccessResult();

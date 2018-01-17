@@ -138,7 +138,7 @@ var toInfoUrl = '${path}/personnel/organize/level/view.do';
     	<table class="table_list" id="mainTable" data-toggle="table"
 			data-url="${path}/personnel/organize/level/view.do" data-pagination="ture" 
 			data-side-pagination="server" data-cache="false" data-query-params="postQueryParams"
-			data-page-list="[15, 30, 50, 100]" data-page-size= "15" data-method="post"
+			data-page-list="[10, 20, 35, 50]" data-page-size= "10" data-method="post"
 			data-show-refresh="false" data-show-toggle="false"
 			data-show-columns="false" data-toolbar="#toolbar"
 			data-click-to-select="false" data-single-select="false"

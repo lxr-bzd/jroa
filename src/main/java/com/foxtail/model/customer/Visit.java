@@ -5,7 +5,9 @@ public class Visit {
 	
 	String id;//int(11)	 'id'
 	String cusid;//int(11)	 '客户id'
+	String cusName;
 	String empid;//int(11)	 '业务员id'
+	String empName;
 	String info;//int(11)	 '回访详情'
 	String time;//bigint(20)	 '回访时间'
 	public String getId() {
@@ -37,6 +39,18 @@ public class Visit {
 	}
 	public void setTime(String time) {
 		this.time = time;
+	}
+	public String getCusName() {
+		return cusName;
+	}
+	public void setCusName(String cusName) {
+		this.cusName = cusName;
+	}
+	public String getEmpName() {
+		return empName;
+	}
+	public void setEmpName(String empName) {
+		this.empName = empName;
 	}
 	
 	

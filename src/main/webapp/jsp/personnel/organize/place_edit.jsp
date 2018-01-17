@@ -18,30 +18,15 @@ function isEdit(){
 	return $("#submit_form").attr("data-isedit")
 }
 
-	$(function() {
-		if(isEdit())return;
-		
-			
-			$app.request("${path}/personnel/organize/dept/view.do"
-	    		,function(data){
-				if(data.status==0){
-					depts = data.data;
-					
-				}
-				selectT(null);
-				
-			});
-			
-		
-	});
+
 	
 	function toSubmit(){
 		//影藏域填充
-		if(!isEdit()){
-		var p = getSelectval();
 		
-		if(p)$("#submit_form input[name=deptid]").val(p.v);
-		}
+		var deptid = $app.form.multipleSelectVal("#submit_form .lxr_multipleSelect");
+				if(!deptid)deptid="";
+				$("#submit_form input[name=deptid]").val(deptid);
+		
 	
 		
 		//表单验证
@@ -90,18 +75,95 @@ function isEdit(){
 
 	}
 	
+	function isedit(){
+		return $("#submit_form ").attr("data-isadd")?false:true;
+		
+	}
+	
 </script>
 	<script type="text/javascript">
+	
+	
+	var deptModel;
+	var depts;
+	
+	$(function() {
+		
+		$app.request("${path}/personnel/organize/dept/view.do",function(data){
+			depts = data.data;
+			if(isedit()){
+				var cid = $("#submit_form input[name=id]").val();
+				for(var i=0;i<depts.length;i++){
+					if(depts[i].id==cid)
+						depts.splice(i,1);
+				}
+				deptSelect.init = getVals($("#submit_form input[name=deptid]").val());
+			}
+			deptModel = $lxr.tree(depts,{pidname:"parentid"});
+			
+			$app.form("#submit_form");
+		});
+	});
+	
+	function findByPid(pid){
+		for (var i = 0; i < depts.length; i++) {
+			if(depts[i].id == pid)
+				return depts[i].childs;
+		}
+	}
+	
+	
+	var deptSelect = {
+			 name:"name"
+			,val:"id"
+			,getRoot:function(render){
+				render(deptModel);
+			}
+			,onSelect:function(pid,render){
+				render(findByPid(pid));
+				//if(pid)renderPlace($app.form.multipleSelectVal("#submit_form .lxr_multipleSelect"));
+			}
+	};	
+	
+	function getVals(val){
+		var vals = [];
+		var dept;
+		for (var i = 0; i < depts.length; i++) {
+			if(depts[i].id == val){ 
+			dept = depts[i];
+				break;
+			}	
+		}
+		
+		while(true){
+			if(!dept)break;
+			vals.push(dept.id);
+			dept = findPBydept(dept);
+		}
+		var ret = [];
+		for (var i =  vals.length-1; i > -1; i--) {
+			ret.push(vals[i]);	
+		}
+		
+		console.log(ret);
+		return ret;
+	}
+	
+	function findPBydept(dept){
+		for (var i = 0; i < depts.length; i++) {
+			if(depts[i].id == dept.parentid)
+				return depts[i];
+		}
+	}
+	
 	$(document).ready(function () {
 		 var validateOpts = {
 				 ignore : []
 		 ,rules: {
 		deptid: {required: true}
 		 ,name:{required: true}
-		 
-		 
 		  }
-		/*   ,
+		/*,
 		  messages: {
 		   name: {
 		    required: "hiik"
@@ -114,6 +176,7 @@ function isEdit(){
 		 
 		 $("#submit_form").validate(validateOpts);
 		});
+		
 </script>
 </head>
 <body>
@@ -124,18 +187,15 @@ function isEdit(){
 <c:if test="${empty param.action}">
 		
    			
-   			<form id="submit_form"  method="post" data-action="${path}/personnel/organize/place/save.do">
+   			<form id="submit_form" data-isadd="true" method="post" data-action="${path}/personnel/organize/place/save.do">
    				<input type="hidden" name="id" value="">
 					
 				<ul class="forminfo">
-					<li><label>所属部门：</label>
-					<div id = "col_group" class="btn-group">
-					    
-					</div>
-					<input type="hidden" name="deptid"/>
-						
-					
-					</li>
+					<li>
+					<label>所属部门：</label>
+					<div class="lxr_multipleSelect"  data-name="deptid" data-model="deptSelect"> </div>
+					<input name="deptid" type="hidden" value="">
+				</li>
 					<li><label>职位名称：</label><input name="name"  value="" type="text" class="form-control input-primary w260" /></li>
 					
 					
@@ -160,13 +220,16 @@ function isEdit(){
 <c:if test="${param.action=='edit'}">
 
 
-   			<form id="submit_form" data-isedit="true" method="post" data-action="${path}/personnel/organize/place/update.do">
+   			<form id="submit_form"  method="post" data-action="${path}/personnel/organize/place/update.do">
    				<input type="hidden" name="id" value="${vo.id}">
 					
 				<ul class="forminfo">
-					<li><label>所属部门：</label>
-					    ${vo.deptName}
-					</li>
+				<li>
+					<label>所属部门：</label>
+					<div class="lxr_multipleSelect"  data-name="deptid" data-model="deptSelect"> </div>
+					<input name="deptid" type="hidden" value="${vo.deptid }">
+				</li>
+					
 					<li><label>职位名称：</label><input name="name"  value="${vo.name}" type="text" class="form-control input-primary w260" /></li>
 					
 					
@@ -192,108 +255,4 @@ function isEdit(){
 </body>
 
 
-<script type="text/javascript">
-
-var typeurl = "${path}/parking/canton/list.do";
-
-
-function init() {
-	
-	 
-	
-}
-
-
-function getSelectvalArr(){
-	var sel = $("#col_group>select");
-	
-
-	var ret = [];
-	
-	sel.each(function(i,e){
-		var v = $(e).val();
-		if(v||v===0)
-		ret.push({v:v,cantype:$(e).attr("data-cantype")});
-		
-	});
-	
-	return ret;
-	
-}
-
-function getSelectval(){
-	
-	
-	var arr = getSelectvalArr();
-	
-	if(!arr||arr.length<1)
-		return;
-	
-	return arr[arr.length-1];
-	
-}
-
-
-
-
-
-
-
-
-
-
-function selectT(pid){
-	
-				 result = getByPid(pid);
-				 if(!(result instanceof Array)||result.length<1)
-					 return;
-				 var html = template("t_select",{cantype:result[0].cantype,pid:pid,data:result});
-				 
-				 $("#col_group").append(html);
-				 
-	 
-}
-
-
- function getByPid(pid){
-	 
-	 var ret = [];
-	 for (var i = 0; i < depts.length; i++) {
-		if(depts[i].parentid == pid)
-			ret.push(depts[i]);
-	}
-	 
-	 return ret;
-	 
- }
-
-
-
-function  onSelect(select){
-	
-	
-	$(select).nextAll().remove();
-	
-	var v = $(select).val();
-	if(!v&&v!==0)return;
-	
-	selectT(v);
-	
-	
-}
-
-
-
-
-</script>
-
-<script type="text/html" id="t_select">
-<select data-pid="{{pid}}" data-cantype="{{cantype}}" class="form-control"  style="display: inline;width:110px;" onchange="onSelect(this)">
-<option value="">--请选择--</option>
-{{each data as d i}}
-<option value="{{d.id}}">{{d.name}}</option>
-{{/each}}
-</select>
-
-</script>
 </html>

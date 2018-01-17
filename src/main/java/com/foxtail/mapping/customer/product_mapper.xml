@@ -14,7 +14,7 @@
   	<select id="findByCus" resultType="com.foxtail.model.customer.Product" >
  select  <include refid="base_column" /> from cus_product a 
  WHERE id in (select  proid from cus_product_cus a where a.cusid=#{cusid})
-  		
+  		ORDER BY a.createtime DESC
   	</select>
   
 		
@@ -33,7 +33,7 @@
 
 	 <!-- 根据对象主键更新 -->
   	<insert id="save"  >
-    INSERT INTO cus_product(name, info, state) VALUES(#{ model.name },#{ model.info },#{ model.state })
+    INSERT INTO cus_product(name, info, state,createtime) VALUES(#{ model.name },#{ model.info },#{ model.state },unix_timestamp(now())*1000)
     </insert>
 	<!-- 统计关联客户数 -->
 	<select id="customerCount" resultType="int" >

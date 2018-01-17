@@ -50,7 +50,13 @@ public class CustomerService {
 	}
 	
 	
-	public void update(Customer customer) {
+	public void update(Customer customer,String type) {
+		
+		if("custom".equals(type)) {
+			customerDao.updateByCustom(customer);
+			return;
+		}
+		
 	
 		customerDao.update(customer);
 		

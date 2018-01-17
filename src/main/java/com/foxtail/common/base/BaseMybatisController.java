@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.spi.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -27,7 +29,7 @@ import com.lxr.commons.exception.ApplicationException;
 public class BaseMybatisController implements WebBindingInitializer
 {
  
-  
+  static Logger logger = org.slf4j.LoggerFactory.getLogger(BaseMybatisController.class);
   
   public static final String ACTION_EDIT = "edit";
   public static final String ACTION_ADD = "add";
@@ -59,7 +61,8 @@ public class BaseMybatisController implements WebBindingInitializer
 		if(e instanceof ApplicationException)
 			return JsonResult.getFailResult(e.getMessage());
 		
-		e.printStackTrace();
+		logger.error("未知异常",e);
+		
 		return JsonResult.getFailResult("未知异常:"+e.getMessage());
 
 	}

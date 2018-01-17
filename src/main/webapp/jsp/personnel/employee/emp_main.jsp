@@ -60,7 +60,11 @@ var toInfoUrl = '${path}/personnel/employee/emp/toinfo.do';
 	
 	//设置查询参数
 	function postQueryParams(params) {
+		$app.form.preSubmit("#searchForm");
 		var queryParams = $("#searchForm").serializeObject();
+		
+		var id =  $app.form.multipleSelectVal("#searchForm .lxr_multipleSelect");
+		if(id||id==0)queryParams.deptStr=deptUnder(id).join(",");
 		queryParams.limit=params.limit;
 		queryParams.offset=params.offset;
 			queryParams.deptid = $app.form.multipleSelectVal("#searchForm .lxr_multipleSelect");
@@ -163,6 +167,32 @@ function renderPlace(did){
 }
 
 
+function deptUnder(id){
+	var ids = [id];
+	var dept;
+	for (var i = 0; i < depts.length; i++) {
+		if(depts[i].id == id){
+			dept = depts[i];
+			break;
+		}
+	}
+	if(dept.childs.length>0)
+		ids.push(getChilds(dept.childs));
+	
+	return ids;
+}
+
+function getChilds(ds){
+	var ids = [];
+	for (var i = 0; i < ds.length; i++) {
+		ids.push(ds[i].id);
+		if(ds[i].childs.length>0)
+			ids.push(getChilds(ds[i].childs));
+	}
+	return ids;
+	
+}
+
 
 </script>
 </head>
@@ -177,8 +207,16 @@ function renderPlace(did){
     			<div style="display: inline;" class="lxr_multipleSelect" data-name="deptid" data-model="deptSelect"> </div>
 					<input name="deptid" type="hidden">
 					<span>入职时间：</span>
-					<input data-lxr="{type:'time',format:'yyyy-MM-dd'}"
-					 data-format="{type:'time',val:'${vo.entry_time }',format:'yyyy-MM-dd'}" value="" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary" onfocus="WdatePicker({isShowClear:false})" >
+					<input placeholder="开始" data-lxr="{type:'time',format:'yyyy-MM-dd'}" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary" onfocus="WdatePicker({isShowClear:false})">
+    			<input type="hidden" name="regStart">--
+				<input placeholder="结束" data-lxr="{type:'time',format:'yyyy-MM-dd'}" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary" onfocus="WdatePicker({isShowClear:false})">
+				<input type="hidden" name="regEnd">
+    			
+    			<span>性别：</span><select name="sex" class="form-control" style="display: inline;width:110px;" onchange="">
+    			<option value="">--全部--</option>
+    			<option value="1">男</option>
+    			<option value="2">女</option>
+    			</select>
     			<span>关键词：</span>
     			<input name="kw" value="" placeholder="姓名"  class="form-control input-sm w200" type="text" style="display: inline;" >
     			<input type="button" class="btn btn-info btn-round btn-sm" value="查询" onclick="queryList()">
@@ -194,7 +232,7 @@ function renderPlace(did){
     	<table class="table_list" id="mainTable" data-toggle="table"
 			data-url="${path}/personnel/employee/emp/view.do" data-pagination="ture" 
 			data-side-pagination="server" data-cache="false" data-query-params="postQueryParams"
-			data-page-list="[15, 30, 50, 100]" data-page-size= "15" data-method="post"
+			data-page-list="[10, 20, 35, 50]" data-page-size= "10" data-method="post"
 			data-show-refresh="false" data-show-toggle="false"
 			data-show-columns="false" data-toolbar="#toolbar"
 			data-click-to-select="false" data-single-select="false"

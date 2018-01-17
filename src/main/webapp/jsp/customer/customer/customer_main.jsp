@@ -17,7 +17,7 @@ var toInfoUrl = '${path}/customer/customer/customer/view.do';
 	function toAdd(){
 		$app.dialog(toAddUrl,function(){
 			refTable();
-		},{width:"500px",height:"650px"});
+		},{width:"500px",height:"670px"});
 	}
 	//删除
 	function toRemove(id){
@@ -63,10 +63,13 @@ var toInfoUrl = '${path}/customer/customer/customer/view.do';
 	
 	//设置查询参数
 	function postQueryParams(params) {
+		$app.form.preSubmit("#searchForm");
 		var queryParams = $("#searchForm").serializeObject();
+		var id =  $app.form.multipleSelectVal("#searchForm .lxr_multipleSelect");
+		if(id||id==0)queryParams.deptStr=deptUnder(id).join(",");
 		queryParams.limit=params.limit;
 		queryParams.offset=params.offset;
-		return queryParams;
+		return $lxr.trimObject(queryParams);
 	}
 	//查询列表
     function refTable(){
@@ -76,7 +79,7 @@ var toInfoUrl = '${path}/customer/customer/customer/view.do';
     function editById(id){
 		$app.dialog(toEditUrl+'?id='+id+"&sysAction=edit",function(){
 			refTable();
-		});
+		},{width:"500px",height:"670px"});
 	}
 
 	
@@ -90,21 +93,22 @@ var toInfoUrl = '${path}/customer/customer/customer/view.do';
     function operatorFormatter(value, row, index) {
     	var operator='<div class="btn-group">';
 		    
-    <shiro:hasPermission name="customer/customer/customer:edit">
-		operator+=$app.btn('edit','编辑','editById(\''+row.id+'\')');
-    </shiro:hasPermission>
-    <shiro:hasPermission name="customer/customer/customer:delete">
-		operator+=$app.btn('delete','编辑','toRemove(\''+row.id+'\')');
-	</shiro:hasPermission>
-	<shiro:hasPermission name="customer/customer/customer">
-				operator+=$app.btn('info','查看回访','toVisit(\''+row.id+'\')');
-	</shiro:hasPermission> 
+    	operator+=$app.btn('auth','回访','tovisit(\''+row.id+'\',\''+row.name+'\')');
+	    	<shiro:hasPermission name="personnel/organize/place:edit">
+	    	operator+= $app.btn('edit','编辑','editById(\''+row.id+'\')');
+		    </shiro:hasPermission>
+		    <shiro:hasPermission name="personnel/organize/place:delete">
+		    operator+= $app.btn({},'取消','cusCancel(\''+row.id+'\')');
+	    	</shiro:hasPermission>
+	    
+			
+			
 		return operator+'</div>';
 	}
     
+    
+    
    
-    
-    
     
  
     
@@ -112,16 +116,28 @@ var toInfoUrl = '${path}/customer/customer/customer/view.do';
 
 <script type="text/javascript">
 
-function toVisit(id){
-	window.location.href = "${path}/customer/customer/visit.do?cusid="+id
+function tovisit(id,name){
+	
+	window.location.href = "${path}/customer/customer/visit.do?cusid="+id+"&cusName="+encodeURIComponent(name);
 }
+
+
+function cusCancel(id){
+	$app.confirm("是否将客户放入公海？",function(){
+		$app.request("${path}/customer/customer/customer/update.do?sysType=custom&state=1&id="+id,function(){
+			refTable();
+		});
+		
+	});
+}
+
 
  function followFormatter(value, row, index){
 	 
 	 switch (value) {
 	 
 	case "1":
-		return '除访';
+		return '初访';
 		break;
 	case "2":
 		return '意向';
@@ -130,7 +146,7 @@ function toVisit(id){
 		return '报价';
 		break;
 	case "4":
-		return '成交';
+		return '<span style="color:red;">成交</span>';
 		break;
 	case "5":
 		return '搁置';
@@ -142,8 +158,82 @@ function toVisit(id){
 	 
  }
  
- 
+var deptModel;
+var depts;
+
+$(function() {
+	
+	$app.request("${path}/personnel/organize/dept/view.do",function(data){
+		deptModel = $lxr.tree(data.data,{pidname:"parentid"});
+		depts = data.data;
+		$app.form("#searchForm");
+	});
+});
+
+function findByPid(pid){
+	for (var i = 0; i < depts.length; i++) {
+		if(depts[i].id == pid)
+			return depts[i].childs;
+	}
+}
+
+
+var deptSelect = {
+		 name:"name"
+		,val:"id"
+		,getRoot:function(render){
+			render(deptModel);
+		}
+		,onSelect:function(pid,render){
+			render(findByPid(pid));
+			//if(pid)renderPlace($app.form.multipleSelectVal("#searchForm .lxr_multipleSelect"));
+		}
+};
+
+
+function renderPlace(did){
+	$app.request("${path}/personnel/organize/place/view.do?type=bydeptid&deptid="+did,function(data){
+		
+		var html = '<select name = "placeid" class="form-control lxr_select"  style="display: inline;width:110px;" onchange=""><option value="">--请选择--</option>';
+		if(!$lxr.isEmpty(data.data))
+	for (var i = 0; i < data.data.length; i++) {
+			html+='<option value="'+data.data[i].id+'">'+data.data[i].name+'</option>';
+		}
+		html+='</select>';
+		
+		 $("#searchForm select[name=placeid]").replaceWith(html);
+	});
+	
+}
+
+function deptUnder(id){
+	var ids = [id];
+	var dept;
+	for (var i = 0; i < depts.length; i++) {
+		if(depts[i].id == id){
+			dept = depts[i];
+			break;
+		}
+	}
+	if(dept.childs.length>0)
+		ids.push(getChilds(dept.childs));
+	
+	return ids;
+}
+
+function getChilds(ds){
+	var ids = [];
+	for (var i = 0; i < ds.length; i++) {
+		ids.push(ds[i].id);
+		if(ds[i].childs.length>0)
+			ids.push(getChilds(ds[i].childs));
+	}
+	return ids;
+	
+}
+
 </script>
+ 
 </head>
 <body class="mlr15">
 
@@ -151,9 +241,25 @@ function toVisit(id){
     <div class="rightinfo explain_col">
 		<div>
     		<form id="searchForm" name="searchForm"  method="post">
-    			
-    			<span>关键词：</span>
-    			<input name="kw" value="" placeholder="关键词"  class="form-control input-sm w200" type="text" style="display: inline;" >
+    			<span>所属部门：</span>
+    			<div style="display: inline;" class="lxr_multipleSelect" data-name="deptid" data-model="deptSelect"> </div>
+				
+    			<span>业务员：</span><input name="kw" value="" placeholder="业务员"  class="form-control input-sm w200" type="text" style="display: inline;" >
+				<span>录入时间：</span>
+    			<input placeholder="开始" data-lxr="{type:'time',format:'yyyy-MM-dd'}" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary" onfocus="WdatePicker({isShowClear:false})">
+    			<input type="hidden" name="startTime">--
+				<input placeholder="结束" data-lxr="{type:'time',format:'yyyy-MM-dd'}" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary" onfocus="WdatePicker({isShowClear:false})">
+				<input type="hidden" name="endTime">
+				<span>跟进状态：</span>
+				<select name="follow" class="form-control " style="display: inline;width: 100px;">
+				<option value="">全部</option>
+				<option value="1">初访</option>
+				<option value="2">意向</option>
+				<option value="3">报价</option>
+				<option value="4">成交</option>
+				<option value="5">搁置</option>
+				</select>
+				
     			<input type="button" class="btn btn-info btn-round btn-sm" value="查询" onclick="refTable()">
     		</form>
     	</div>
@@ -165,7 +271,7 @@ function toVisit(id){
 		</div>
     </div>
     	<table class="table_list" id="mainTable" data-toggle="table"
-			data-url="${path}/customer/customer/customer/view.do" data-pagination="ture" 
+			data-url="${path}/customer/customer/customer/view.do?state=0" data-pagination="ture" 
 			data-side-pagination="server" data-cache="false" data-query-params="postQueryParams"
 			data-page-list="[15, 30, 50, 100]" data-page-size= "15" data-method="post"
 			data-show-refresh="false" data-show-toggle="false"
@@ -182,7 +288,6 @@ function toVisit(id){
 					<th data-field="typeName">客户类型</th>
 					<th data-field="contacts" >联系人</th>
 					<th data-field="follow" data-formatter="followFormatter">跟进状态</th>
-					
 					<th data-field="empName" >业务员</th>
 					<th data-field="deptName" >部门</th>
 					<th data-field="state"  data-formatter="$app.tableUi.state">状态</th>

@@ -9,7 +9,7 @@
 <%@ include file="/common/global.jsp"%>	
 <title>查询列表</title>
 <script>
-var toAddUrl = '${path}/customer/customer/visit/toedit.do';
+var toAddUrl = '${path}/customer/customer/visit/toedit.do?cusid=${param.cusid}';
 var deleteUrl = '${path}/customer/customer/visit/delete.do';
 var toEditUrl = '${path}/customer/customer/visit/toedit.do';
 var toInfoUrl = '${path}/customer/customer/visit/view.do';
@@ -95,7 +95,7 @@ var toInfoUrl = '${path}/customer/customer/visit/view.do';
 		operator+=$app.btn('edit','编辑','editById(\''+row.id+'\')');
     </shiro:hasPermission>
     <shiro:hasPermission name="personnel/organize/place:delete">
-		operator+=$app.btn('delete','编辑','toRemove(\''+row.id+'\')');
+		operator+=$app.btn('delete','删除','toRemove(\''+row.id+'\')');
 	</shiro:hasPermission>
 	    	/* <shiro:hasPermission name="menber:delete">
 				operator+='<button class="btn btn-danger btn-round btn-xs" onclick="deleteById(\''+row.id+'\')"><i class="glyphicon glyphicon-trash"></i>删除</button>';
@@ -108,23 +108,38 @@ var toInfoUrl = '${path}/customer/customer/visit/view.do';
  
     
 </script>
+<script type="text/javascript">
+$(function(){
+	console.log()
+	$("#cusName").html(decodeURIComponent(GetQueryString("cusName")));
+	
+});
+
+function GetQueryString(name){ 
+	var vars = [], hash; 
+	var hashes = window.location.href.slice(window.location.href.indexOf('?')+1).split('&'); 
+	for(var i = 0; i < hashes.length; i++) { 
+	hash = hashes[i].split('='); 
+	vars.push(hash[0]); 
+	vars[hash[0]] = hash[1]; 
+	} 
+	return vars[name]; 
+	}
+</script>
 </head>
 <body class="mlr15">
 
-    
     <div class="rightinfo explain_col">
 		<div>
     		<form id="searchForm" name="searchForm"  method="post">
+    			<h2 id="cusName"></h2>
     			
-    			<span>关键词：</span>
-    			<input name="kw" value="" placeholder="关键词"  class="form-control input-sm w200" type="text" style="display: inline;" >
-    			<input type="button" class="btn btn-info btn-round btn-sm" value="查询" onclick="refTable()">
     		</form>
     	</div>
 	    <div id="toolbar" class="btn-group">
 	   
 	   <button class="btn btn-info btn-round  btn-sm" onclick="toAdd();" >
-					<i class="glyphicon glyphicon-plus"></i> 添加
+					<i class="glyphicon glyphicon-plus"></i> 添加回访
 		</button>
 		</div>
     </div>
@@ -135,17 +150,16 @@ var toInfoUrl = '${path}/customer/customer/visit/view.do';
 			data-show-refresh="false" data-show-toggle="false"
 			data-show-columns="false" data-toolbar="#toolbar"
 			data-click-to-select="false" data-single-select="false"
-			data-striped="false" data-content-type="application/x-www-form-urlencoded"
-			>
+			data-striped="false" data-content-type="application/x-www-form-urlencoded">
 			<thead>
 				<tr>
 				
 					<th data-field="" data-checkbox="true"></th>
-					<!-- <th data-field="sort" data-formatter="Formatter.sort">序号</th> -->
 					<th data-field="id" >id</th>
-					<th data-field="name" >名称</th>
-					
-					<th data-field="state"  >状态</th>
+					<th data-field="cusName" >客户名称</th>
+					<th data-field="empName" >业务员</th>
+					<th data-field="info" >回访内容</th>
+					<th data-field="time"   data-formatter="$app.tableUi.time">回访时间</th>
 					<th data-field="operator" data-formatter="operatorFormatter">操作</th>
 				</tr>
 			</thead>

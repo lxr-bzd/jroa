@@ -70,7 +70,8 @@ var toInfoUrl = '${path}/personnel/organize/place.do';
 		var queryParams = $("#searchForm").serializeObject();
 		queryParams.limit=params.limit;
 		queryParams.offset=params.offset;
-		queryParams.deptid = $app.form.multipleSelectVal("#searchForm .lxr_multipleSelect");
+		var id =  $app.form.multipleSelectVal("#searchForm .lxr_multipleSelect");
+		if(id||id==0)queryParams.deptStr=deptUnder(id).join(",");
 		return $lxr.trimObject(queryParams);
 	}
 	//查询列表
@@ -167,6 +168,32 @@ function renderPlace(did){
 	
 }
 
+
+function deptUnder(id){
+	var ids = [id];
+	var dept;
+	for (var i = 0; i < depts.length; i++) {
+		if(depts[i].id == id){
+			dept = depts[i];
+			break;
+		}
+	}
+	if(dept.childs.length>0)
+		ids.push(getChilds(dept.childs));
+	
+	return ids;
+}
+
+function getChilds(ds){
+	var ids = [];
+	for (var i = 0; i < ds.length; i++) {
+		ids.push(ds[i].id);
+		if(ds[i].childs.length>0)
+			ids.push(getChilds(ds[i].childs));
+	}
+	return ids;
+	
+}
 
 
 </script>

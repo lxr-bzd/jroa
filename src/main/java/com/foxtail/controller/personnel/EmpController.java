@@ -54,12 +54,16 @@ public class EmpController extends BaseMybatisController{
 	
 	@RequestMapping("view")
 	@ResponseBody
-	public Object view(String type,EmpFilter filter,HttpServletRequest request) {
+	public Object view(String type,EmpFilter filter,String deptStr,HttpServletRequest request) {
 		
 		if("info".equals(type))
 			return JsonResult.getSuccessResult(empService.getById(request.getParameter("id")));
-		else 
-		return DataGridResult.getResult(empService.findForPage(getPagination(request),filter));
+		else {
+			if(!StringUtils.isEmpty(deptStr))
+				filter.setDeptids(deptStr.split(","));
+			return DataGridResult.getResult(empService.findForPage(getPagination(request),filter));
+		}
+		
 	}
 	
 	

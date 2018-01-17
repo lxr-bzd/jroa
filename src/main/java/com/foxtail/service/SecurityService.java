@@ -19,6 +19,15 @@ public class SecurityService {
 
 	}
 	
+	public String getUname() {
+		
+		
+		String id=  ServiceManager.jdbcTemplate.queryForObject("select name from man_emp where account=?", String.class, ShiroUser.getUser().getAccount());
+		
+		
+		return id;
+
+	}
 	
 
 }

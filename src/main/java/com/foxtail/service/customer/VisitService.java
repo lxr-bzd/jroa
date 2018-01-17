@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.foxtail.bean.ServiceManager;
 import com.foxtail.common.page.Pagination;
+import com.foxtail.dao.mybatis.customer.CustomerDao;
 import com.foxtail.dao.mybatis.customer.VisitDao;
+import com.foxtail.model.customer.Customer;
 import com.foxtail.model.customer.Visit;
 
 
@@ -14,10 +16,15 @@ public class VisitService {
 
 	@Autowired
 	VisitDao visitDao;
-	
+	@Autowired
+	CustomerDao customerDao;
 	
 	public void save(Visit visit) {
-		
+		Customer customer = new Customer();
+		customer.setId(visit.getCusid());
+		customer.setState(0+"");
+		customer.setEmpid(visit.getEmpid());
+		customerDao.updateByCustom(customer);
 		visitDao.save(visit);
 
 	}

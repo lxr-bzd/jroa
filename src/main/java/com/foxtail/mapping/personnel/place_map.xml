@@ -6,11 +6,15 @@
 		*
 	</sql>
 	  
-	<select id="findForPage" resultType="com.foxtail.model.personnel.Place" >
+	<select id="findForPage2" resultType="com.foxtail.model.personnel.Place" >
   	select a.*,b.name deptName,ifnull(c.num,0) manNum from man_place a left join man_dept b on a.deptid=b.id
   		left join (select placeid,count(id) num from man_emp where state=0 group by placeid) c on a.id=c.placeid
   	WHERE 1=1
-  	<if test="deptid != null ">AND a.deptid = #{deptid}</if>
+  	<if test="deptids != null ">AND a.deptid in 
+  			<foreach collection="deptids" item="id" index="index"
+  			 open="(" close=")" separator=",">#{id}</foreach>
+  	</if>
+  		<if test="kw != null ">AND a.name like CONCAT('%',#{kw},'%')</if>
   		</select>
   	
   	
@@ -28,7 +32,9 @@
 	
 	<update id="update" >
 	   update man_place set
-		  	name = #{model.name},		
+	   
+		  	name = #{model.name},
+		  	deptid=	#{model.deptid},	
 		  	state = #{model.state},
 		  	info = #{model.info}
 	   where id = #{model.id}
@@ -38,8 +44,8 @@
   	<insert id="save"  >
      INSERT INTO man_place (name,roleid, deptid, info, state) VALUES (#{model.name}, #{model.roleid}, #{model.deptid}, #{model.info}, #{model.state})</insert>
 	
-  	<select id="levelCount" resultType="int" >
-  		select count(id) from man_level where placeid in
+  	<select id="empCount" resultType="int" >
+  		select count(id) from man_emp where placeid in
 	      <foreach collection="ids" item="id" index="index"
              open="(" close=")" separator=",">
               #{id}

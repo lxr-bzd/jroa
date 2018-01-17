@@ -14,7 +14,7 @@ public interface EmpDao {
 	
 	Emp getById(@Param("id")String id);
 	
-	List<Emp> findForPage(@Param("page")Pagination page,@Param("ft")EmpFilter filter);
+	List<Emp> findForPage2(@Param("ft")EmpFilter filter);
 	
 	String[] getAccountsByIds(@Param("ids")String[] ids);
 	

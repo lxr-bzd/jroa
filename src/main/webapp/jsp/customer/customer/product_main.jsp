@@ -91,10 +91,10 @@ var toInfoUrl = '${path}/customer/customer/product/view.do';
     	var operator='<div class="btn-group">';
 		    
 	    	<shiro:hasPermission name="personnel/organize/place:edit">
-	    		operator+='<button class="btn btn-warning btn-round btn-xs" onclick="editById(\''+row.id+'\');"><i class="glyphicon glyphicon-pencil"></i> 编辑</button>&nbsp;&nbsp;';
-		    </shiro:hasPermission>
+	    	operator+= $app.btn('edit','编辑','editById(\''+row.id+'\')');
+	    	</shiro:hasPermission>
 		    <shiro:hasPermission name="personnel/organize/place:delete">
-				operator+='<button class="btn btn-danger btn-round btn-xs" onclick="toRemove(\''+row.id+'\')" ><i class="glyphicon glyphicon-trash"></i> 删除</button>';
+				operator+=$app.btn('delete','删除','toRemove(\''+row.id+'\')');
 	    	</shiro:hasPermission>
 	    	/* <shiro:hasPermission name="menber:delete">
 				operator+='<button class="btn btn-danger btn-round btn-xs" onclick="deleteById(\''+row.id+'\')"><i class="glyphicon glyphicon-trash"></i>删除</button>';
@@ -142,6 +142,7 @@ var toInfoUrl = '${path}/customer/customer/product/view.do';
 					<th data-field="id" >ID</th>
 					<th data-field="name" >产品名称</th>
 					<th data-field="info"  >产品介绍</th>
+					<th data-field="createtime"  >录入时间</th>
 					<th data-field="operator" data-formatter="operatorFormatter">操作</th>
 				</tr>
 			</thead>

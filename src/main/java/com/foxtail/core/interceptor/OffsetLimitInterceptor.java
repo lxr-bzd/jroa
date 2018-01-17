@@ -286,6 +286,7 @@ void processIntercept(Object[] queryArgs) throws Exception {
             log.error("Ignore this exception", e);
         } finally {
             try {
+            	if(rs!=null)
                 rs.close();
             } catch (SQLException e) {
                 log.error("Ignore this exception", e);

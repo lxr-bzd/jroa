@@ -15,6 +15,8 @@ import com.foxtail.model.sys.SysUser;
 import com.foxtail.model.sys.SysUserRole;
 import com.foxtail.service.sys.SysUserRoleService;
 import com.foxtail.service.sys.SysUserService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 
 
 @Service
@@ -89,10 +91,11 @@ public class EmpService {
 	
 	public Pagination findForPage(Pagination page,EmpFilter filter) {
 		
-		List  list = empDao.findForPage(page,filter);
-		page.setList(list);
+		PageHelper.startPage(page.getPageNo(), page.getPageSize());
+		Page listCountry  = (Page)empDao.findForPage2(filter);
+		page.setTotalCount((int)listCountry.getTotal());
+		page.setList(listCountry.getResult());
 		return page;
-
 	}
 	
 	

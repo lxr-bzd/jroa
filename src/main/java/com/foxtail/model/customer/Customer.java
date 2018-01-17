@@ -19,6 +19,7 @@ public class Customer {
 	String scale;
 	String source;
 	String state;//int(2)	 '是否有效 0：有效，1：无效'
+	Long createtime;
 	
 	Product[] products;
 	
@@ -115,7 +116,6 @@ public class Customer {
 		this.deptName = deptName;
 	}
 	
-	
 	public String getIndustry() {
 		return industry;
 	}
@@ -154,7 +154,11 @@ public class Customer {
 	public void setProductids(String[] productids) {
 		this.productids = productids;
 	}
-	
-	
+	public Long getCreatetime() {
+		return createtime;
+	}
+	public void setCreatetime(Long createtime) {
+		this.createtime = createtime;
+	}
 	
 }

@@ -8,18 +8,22 @@
 
 	  
 	<select id="findForPag" resultType="com.foxtail.model.customer.Customer" >
-  		select  <include refid="base_column" />,b.name productName,c.name empName from cus_customer a  left join cus_product b on a.productid=b.id
+  		select  <include refid="base_column" />,b.name productName,c.name empName,d.name typeName from cus_customer a  left join cus_product b on a.productid=b.id
   		left join man_emp c on a.empid=c.id
+  		left join cus_type d on a.typeid = d.id
   		WHERE 1=1
   		<if test="ft.state != null ">AND a.state = #{ft.state}</if>
   		<if test="ft.kw != null ">AND c.name like CONCAT('%',#{ft.kw},'%')</if>
   		<if test="ft.startTime != null ">AND a.createtime > #{ft.startTime}</if>
   		<if test="ft.endTime != null ">AND a.createtime &lt; #{ft.endTime}</if>
+  		<if test="ft.follow != null ">AND a.follow = #{ft.follow}</if>
+  		<if test="ft.empid != null ">AND a.empid = #{ft.empid}</if>
   		<if test="deptids != null "> AND c.deptid in
   			<foreach collection="deptids" item="id" index="index" open="(" close=")" separator=",">
               #{id}
           	</foreach>
         </if>
+        ORDER BY createtime DESC
   		
   	</select>
   
@@ -42,18 +46,29 @@ name=#{ model.name }
 ,contacts=#{ model.contacts }
 ,phone=#{ model.phone }
 ,addr=#{ model.addr }
-,empid=#{ model.empid }
 ,industry = #{ model.industry }
 ,scale = #{ model.scale }
 ,source=#{ model.source}
 ,state=#{ model.state }
  WHERE id=#{model.id}
 	</update>
+	
+	<update id="updateByCustom" >
+	 UPDATE cus_customer 
+	 <set >
+			<if test="model.empid != null ">empid=#{model.empid},</if>
+			<if test="model.state != null ">state=#{ model.state },</if>
+	</set>
+
+
+ WHERE id=#{model.id}
+	</update>
+	
 
 	 <!-- 根据对象主键更新 -->
-  	<insert id="save"  >
-   INSERT INTO cus_customer(name, typeid, follow, productid, worth, contacts, phone, addr, empid,industry,scale,source, state) VALUES(#{ model.name },#{ model.typeid },#{ model.follow },#{ model.productid },#{ model.worth },#{ model.contacts },#{ model.phone },#{ model.addr },#{ model.empid },#{ model.industry },#{ model.scale },#{ model.source },#{ model.state })
-
+  	<insert id="save" useGeneratedKeys="true" keyProperty="model.id">
+   INSERT INTO cus_customer(name, typeid, follow, productid, worth, contacts, phone, addr, empid,industry,scale,source, state,createtime) VALUES
+   (#{ model.name },#{ model.typeid },#{ model.follow },#{ model.productid },#{ model.worth },#{ model.contacts },#{ model.phone },#{ model.addr },#{ model.empid },#{ model.industry },#{ model.scale },#{ model.source },#{ model.state },unix_timestamp(now())*1000)
      </insert>
      
      <!--批量删除-->

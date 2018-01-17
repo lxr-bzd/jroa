@@ -12,6 +12,10 @@ public class CustomerFilter {
 	
 	String[] deptids;
 	
+	String follow;
+	
+	String empid;
+	
 
 	public Integer getState() {
 		return state;
@@ -53,5 +57,23 @@ public class CustomerFilter {
 		this.deptids = deptids;
 	}
 
+	public String getFollow() {
+		return follow;
+	}
+
+	public void setFollow(String follow) {
+		this.follow = follow;
+	}
+
+	public String getEmpid() {
+		return empid;
+	}
+
+	public void setEmpid(String empid) {
+		this.empid = empid;
+	}
+
+	
+	
 
 }

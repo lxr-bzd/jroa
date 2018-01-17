@@ -15,11 +15,7 @@ var depts = [];
 var backurl = "${path}/customer/customer/customer.do";
 
 
-	$(function() {
-		
-		
 	
-	});
 	function toSubmit(){
 		//表单验证
 		if(!$("#submit_form").valid())
@@ -59,10 +55,19 @@ var backurl = "${path}/customer/customer/customer.do";
 		
 	}
 	
+	function isedit(){
+		return $("#submit_form ").attr("data-isadd")?false:true;
+		
+	}
+	
+	
 </script>
 	<script type="text/javascript">
 	$(document).ready(function () {
 		initType();
+		
+		if(isedit())initProducts();
+		
 		
 		 var validateOpts = {
 		  rules: {
@@ -95,13 +100,13 @@ var backurl = "${path}/customer/customer/customer.do";
 				$app.alert("未选择一条数据");
 				return false;
 			}
-			initProducts(rows);
+			renderProducts(rows);
 		},{content:content,title:"选择产品"});
 		
 	}
 	
 	
-	function initProducts(ps){
+	function renderProducts(ps){
 		
 		var html = "";
 		
@@ -112,6 +117,11 @@ var backurl = "${path}/customer/customer/customer.do";
 		$("#submit_form .products_group").html(html);
 		$("#submit_form .products_group").data("products",ps);
 		
+	}
+	
+	function initProducts(){
+		var ps =  $.parseJSON($("#submit_form .products_group").attr("data-val"));
+		renderProducts(ps);
 	}
 	
 	
@@ -126,17 +136,17 @@ var backurl = "${path}/customer/customer/customer.do";
 		$app.request("${path}/customer/customer/cusType/view.do?type=all",function(data){
 			
 			var array = data.data;
-			var html = '';
+			var html = ' <select name="typeid">';
+		      
 			for (var i = 0; i < array.length; i++) {
-				html+='<input type="radio"  name="typeid" value="'+array[i].id+'" title="'+array[i].name+'" >'
+				html+='<option value="'+array[i].id+'" >'+array[i].name+'</option>'
 			}
-			
-			
+			html+=' </select>'
 			$("#submit_form .type_group").html(html);
 			var val = $("#submit_form .type_group").attr("data-val");
 			
-			if(val)$("#submit_form .type_group>input[value="+val+"]").attr("checked",true);
-			else  $("#submit_form .type_group>input:first").attr("checked",true);
+			if(val)$("#submit_form .type_group>select").val(val);
+			form.render('select');
 		});
 	}
 	
@@ -156,7 +166,7 @@ var backurl = "${path}/customer/customer/customer.do";
 					</li>
 					
 					<li><label>客户质量：</label>
-					<div class="type_group">
+					<div class="type_group w260 selectBox">
 							
 					</div>
 					</li>
@@ -167,17 +177,17 @@ var backurl = "${path}/customer/customer/customer.do";
 					</li>
 					<li><label>关联产品：</label>
 					<div class="products_group" style="display:inline;"></div>
-					<input name="" type="button" class="btn btn-primary" value="选择产品" onclick="selectProduct()" />
+					<input type="button" class="btn btn-primary" value="选择产品" onclick="selectProduct()" />
 					</li>
 					
 					<li><label>跟进状态：</label>
 						<div class="w260 selectBox">
-						    <select>
-						        <option value="0" name="follow">初访</option>
-						        <option value="1" name="follow">意向</option>
-						        <option value="2" name="follow">报价</option>
-						        <option value="3" name="follow">成交</option>
-						        <option value="4" name="follow">搁置</option>
+						    <select name="follow">
+						        <option value="1" >初访</option>
+						        <option value="2" >意向</option>
+						        <option value="3" >报价</option>
+						        <option value="4" >成交</option>
+						        <option value="5" >搁置</option>
 						    </select>
 					   </div>
 					</li>
@@ -204,14 +214,14 @@ var backurl = "${path}/customer/customer/customer.do";
 <c:if test="${param.sysAction=='edit'}">
 
 
-   			<form id="submit_form" data-isadd="true" method="post" data-action="${path}/customer/customer/customer/update.do">
+   			<form id="submit_form" class="layui-form"  method="post" data-action="${path}/customer/customer/customer/update.do">
    				<input name="id" type="hidden" value="${vo.id }">
    				<ul class="forminfo">
 					<li><label>客户名称：</label><input name="name" value="${vo.name }" type="text" class="form-control input-primary w260" />
 					</li>
 					
 					<li><label>客户质量：</label>
-					<div class="type_group" data-val="${vo.typeid }">
+					<div class="type_group w260 selectBox" data-val="${vo.typeid }">
 							
 					</div>
 					</li>
@@ -220,17 +230,21 @@ var backurl = "${path}/customer/customer/customer.do";
 					</li>
 					<li><label>联系电话：</label><input name="phone" value="${vo.phone }" type="text" class="form-control input-primary w260" />
 					</li>
-					<li><label>关联产品：</label><input type="text" value="${vo.productName }" name="productName" class="form-control input-primary w260" style="display: inline-block;"/>
-					<input type="hidden" name="productid" value="${vo.productid }">
+					<li><label>关联产品：</label><div class="products_group" data-val='${productsJson }' style="display:inline;"></div>
+					
 					<input name="" type="button" class="btn btn-primary" value="选择产品" onclick="selectProduct()" />
 					</li>
 					
 					<li><label>跟进状态：</label>
-						<input type="radio"  name="follow" value="1" <c:if test="${vo.follow==1}">checked="checked"</c:if>>初访
-						<input type="radio"  name="follow" value="2" <c:if test="${vo.follow==2}">checked="checked"</c:if> >意向
-						<input type="radio"  name="follow" value="3" <c:if test="${vo.follow==3}">checked="checked"</c:if>>报价
-						<input type="radio"  name="follow" value="4" <c:if test="${vo.follow==4}">checked="checked"</c:if>>成交
-						<input type="radio"  name="follow" value="5" <c:if test="${vo.follow==5}">checked="checked"</c:if>>搁置
+						<div class="w260 selectBox">
+						    <select name="follow">
+						        <option value="1" <c:if test="${vo.follow==1}">selected="selected"</c:if>>初访</option>
+						        <option value="2" <c:if test="${vo.follow==2}">selected="selected"</c:if>>意向</option>
+						        <option value="3" <c:if test="${vo.follow==3}">selected="selected"</c:if>>报价</option>
+						        <option value="4" <c:if test="${vo.follow==4}">selected="selected"</c:if>>成交</option>
+						        <option value="5" <c:if test="${vo.follow==5}">selected="selected"</c:if>>搁置</option>
+						    </select>
+					   </div>
 					</li>
 					<li><label>客户来源：</label><input name="source" value="${vo.source }" type="text" class="form-control input-primary w260" />
 					<li><label>所属行业：</label><input name="industry" value="${vo.industry }" type="text" class="form-control input-primary w260" />
@@ -242,8 +256,8 @@ var backurl = "${path}/customer/customer/customer.do";
 					
 					
 				<li><label>状态：</label>
-					<input type="radio"  name="state" value="0" <c:if test="${vo.state==0}">checked="checked"</c:if>>启用
-					<input type="radio"  name="state" value="1" <c:if test="${vo.state==1}">checked="checked"</c:if>>禁用
+					<input type="radio"  name="state" value="0" title="启用" <c:if test="${vo.state==0}">checked="checked"</c:if>>
+					<input type="radio"  name="state" value="1" title="禁用" <c:if test="${vo.state==1}">checked="checked"</c:if>>
 				</li>
 					
 	    			<li><label>&nbsp;</label><input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/></li>

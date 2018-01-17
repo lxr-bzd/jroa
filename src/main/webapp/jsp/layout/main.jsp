@@ -98,7 +98,7 @@ function showConfirmDiaglog(title,msg,closeFun,okFunction){
 <div>
 	<div id="top" class="header">
 		<div class="topleft" >
-	    	<a href="#" target="_parent"><img src="../images/layout/logo.png" title="系统首页" /></a>
+	    	<a href="${path}/workIndex.do" target="rightFrame"><img src="../images/layout/logo.png" title="系统首页" /></a>
 	    </div>
     <ul class="nav">
 <!-- 	    <li><a href="#" onclick="changeMenu()" class="selected"><img src="../images/layout/icon01.png" title="工作台" /><h2>工作台</h2></a></li> -->
@@ -153,7 +153,7 @@ function showConfirmDiaglog(title,msg,closeFun,okFunction){
     		
 				</dl>
 		</div>
-		<div id="middle-right" style="float: left;" >
+		<div id="middle-right" style="" >
 			 <iframe id="rightFrame" name="rightFrame" style="width:100%; border:0;" src="<%=request.getContextPath()%>/workIndex.do"></iframe>
 		</div>
 		 <div id="clear" style="clear: both;"></div> 

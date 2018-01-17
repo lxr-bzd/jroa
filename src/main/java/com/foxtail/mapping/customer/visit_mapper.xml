@@ -8,22 +8,21 @@
 
 	  
 	<select id="findForPage" resultType="com.foxtail.model.customer.Visit" >
-  		select  <include refid="base_column" /> from cus_visit a
+  		select  <include refid="base_column" />,b.name empName,c.name cusName from cus_visit a left join man_emp b on a.empid=b.id
+  		 	left join cus_customer c on a.cusid=c.id
   		 	WHERE 1=1
   		<if test="cusid != null ">AND a.cusid = #{cusid}</if>
+  		ORDER BY time DESC
   	</select>
   
 		
 	<select id="getById" resultType="com.foxtail.model.customer.Visit" >
   		select  <include refid="base_column" /> from cus_visit a where a.id=#{id}
   	</select> 
-
-	
-	
+  	
 	<update id="update" >
-	   UPDATE cus_visit SET cusid=#{ model.cusid }
-		,empid=#{ model.empid }
-		,info=#{ model.info }
+	   UPDATE cus_visit SET 
+		info=#{ model.info }
 		,time=#{ model.time }
 		 WHERE id=#{model.id}
 	</update>

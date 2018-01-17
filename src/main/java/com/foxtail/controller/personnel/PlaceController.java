@@ -2,6 +2,7 @@ package com.foxtail.controller.personnel;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -43,13 +44,17 @@ public class PlaceController extends BaseMybatisController{
 	
 	@RequestMapping("view")
 	@ResponseBody
-	public Object view(String type,HttpServletRequest request) {
+	public Object view(String type,String deptStr,HttpServletRequest request) {
 		
 		if("info".equals(type))
 			return JsonResult.getSuccessResult(placeService.getById(request.getParameter("id")));
 		else if("bydeptid".equals(type))
 			return JsonResult.getSuccessResult(placeService.findByDeptid(request.getParameter("deptid")));
-		return DataGridResult.getResult(placeService.findForPage(getPagination(request),request.getParameter("deptid")));
+		
+		String[] deptids = null;
+		if(!StringUtils.isEmpty(deptStr))
+			deptids = deptStr.split(",");
+		return DataGridResult.getResult(placeService.findForPage(getPagination(request),deptids,request.getParameter("kw")));
 	}
 	
 	

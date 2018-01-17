@@ -7,7 +7,7 @@ import com.foxtail.common.util.DateUtils;
 public class EmpFilter {
 
 	String kw;
-	String deptid;
+	String[] deptids;
 	String placeid;
 	
 	Long regStart;
@@ -26,11 +26,13 @@ public class EmpFilter {
 	public void setKw(String kw) {
 		this.kw = kw;
 	}
-	public String getDeptid() {
-		return deptid;
+	
+	
+	public String[] getDeptids() {
+		return deptids;
 	}
-	public void setDeptid(String deptid) {
-		this.deptid = deptid;
+	public void setDeptids(String[] deptids) {
+		this.deptids = deptids;
 	}
 	public String getPlaceid() {
 		return placeid;

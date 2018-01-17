@@ -17,7 +17,7 @@ var updateUrl = '${path}/personnel/apply/apply/update.do';
 	function toAdd(){
 		$app.dialog(toAddUrl,function(){
 			refleshData('mainTable');
-		});
+		},{width:"520px",height:"380px"});
 		//window.location=toAddUrl;
 	}
 	//删除
@@ -70,7 +70,7 @@ var updateUrl = '${path}/personnel/apply/apply/update.do';
     function editById(id){
     	$app.dialog(toEditUrl+'?module=leave&id='+id+"&action=edit",function(){
 			refleshData('mainTable');
-		});
+		},{width:"520px",height:"380px"});
 	}
 
 	

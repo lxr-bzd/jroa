@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
 import com.foxtail.bean.ServiceManager;
 import com.foxtail.common.AppModelMap;
 import com.foxtail.common.DataGridResult;
@@ -41,8 +42,12 @@ public class CustomerController extends BaseMybatisController{
 	public String toEdit(String sysAction,String id,ModelMap modelMap){
 		String jsp= getEditJsp();
 		
-		if("edit".equals(sysAction))
-		modelMap.put("vo", customerService.getById(id));
+		if("edit".equals(sysAction)) {
+			Customer customer = customerService.getById(id);
+			modelMap.put("vo", customer);
+			modelMap.put("productsJson", JSONObject.toJSONString(customer.getProducts()));
+		}
+		
 		return jsp;
 	}
 	
@@ -57,6 +62,7 @@ public class CustomerController extends BaseMybatisController{
 		else {
 			if(!StringUtils.isEmpty(deptStr))
 			filter.setDeptids(deptStr.split(","));
+			filter.setEmpid(ServiceManager.securityService.getUid());
 			return DataGridResult.getResult(customerService.findForPage(getPagination(request),filter));
 		}
 		
@@ -85,9 +91,10 @@ public class CustomerController extends BaseMybatisController{
 	
 	@RequestMapping("update")
 	@ResponseBody
-	public Object update(Customer customer) {
+	public Object update(String sysType,Customer customer) {
 		
-		customerService.update(customer);
+		
+		customerService.update(customer,sysType);
 
 		return JsonResult.getSuccessResult();
 	}

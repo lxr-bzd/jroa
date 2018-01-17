@@ -11,6 +11,8 @@ import com.foxtail.dao.mybatis.personnel.PlaceDao;
 import com.foxtail.model.personnel.Place;
 import com.foxtail.model.sys.SysRole;
 import com.foxtail.service.sys.SysRoleService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.lxr.commons.exception.ApplicationException;
 
 
@@ -40,8 +42,8 @@ public class PlaceService {
 	
 	public void delete(String[] ids) {
 		
-		if(placeDao.levelCount(ids)>0)
-			throw new ApplicationException("存在关联等级，不能删除");
+		if(placeDao.empCount(ids)>0)
+			throw new ApplicationException("存在关联员工，不能删除");
 		
 		sysRoleService.deleteIds(placeDao.findRoleidsByIds(ids));
 		
@@ -55,10 +57,13 @@ public class PlaceService {
 		placeDao.update(place);
 	}
 	
-	public Pagination findForPage(Pagination page,String kw) {
+	public Pagination findForPage(Pagination page,String[] deptids,String kw) {
 		
-		List  list = placeDao.findForPage(page,kw);
-		page.setList(list);
+		
+		PageHelper.startPage(page.getPageNo(), page.getPageSize());
+		Page listCountry  = (Page)placeDao.findForPage2(deptids,kw);
+		page.setTotalCount((int)listCountry.getTotal());
+		page.setList(listCountry.getResult());
 		return page;
 
 	}

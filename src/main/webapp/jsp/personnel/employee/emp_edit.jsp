@@ -230,7 +230,7 @@ var backurl = "${path}/personnel/employee/emp.do";
 		
    			
    			<form id="submit_form" data-isadd="true" method="post" data-action="${path}/personnel/employee/emp/save.do">
-   				<div class="">
+   				<div class="formTable">
 					<table class="forminfo layui-table" cellspacing="0" cellpadding="0" border="0" width="100%">
 						<tbody>
 							<tr>
@@ -590,7 +590,7 @@ var backurl = "${path}/personnel/employee/emp.do";
 
 <form id="submit_form" method="post" data-action="${path}/personnel/employee/emp/update.do">
 <input type="hidden" name="id" value="${vo.id }">
-   				<div class="">
+   				<div class="formTable">
 					<table class="forminfo layui-table" cellspacing="0" cellpadding="0" border="0" width="100%">
 						<tbody>
 							<tr>
@@ -707,10 +707,10 @@ var backurl = "${path}/personnel/employee/emp.do";
 											<th>婚姻状况</th>
 											<td>
 											
-											      <select name="marriage" class="form-control input-primary w100" >
-											      <option value="1"<c:if test="${vo.sex==1}">selected = "selected"</c:if> >已婚</option>
-											      <option value="2"<c:if test="${vo.sex==2}">selected = "selected"</c:if> >未婚</option>
-											      <option value="3"<c:if test="${vo.sex==3}">selected = "selected"</c:if>>离异</option>
+											         <select name="marriage" class="form-control input-primary w100" >
+											      <option value="1"<c:if test="${vo.marriage==1}">selected = "selected"</c:if> >已婚</option>
+											      <option value="2"<c:if test="${vo.marriage==2}">selected = "selected"</c:if> >未婚</option>
+											      <option value="3"<c:if test="${vo.marriage==3}">selected = "selected"</c:if>>离异</option>
 											      </select>
 											
 											</td>

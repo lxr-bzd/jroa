@@ -16,11 +16,11 @@ public interface PlaceDao {
 	
 	Place getById(@Param("id")String id);
 	
-	List<Place> findForPage(@Param("page")Pagination page,@Param("deptid")String deptid);
+	List<Place> findForPage2(@Param("deptids")String[] deptids,@Param("kw")String kw);
 	
 	List<Place> findByDeptid(@Param("deptid")String deptid);
 	
-	int levelCount(@Param("ids")String[] ids);
+	int empCount(@Param("ids")String[] ids);
 	
 	String[] findRoleidsByIds(@Param("ids")String[] ids);
 }

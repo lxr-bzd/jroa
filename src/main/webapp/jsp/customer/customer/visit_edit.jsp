@@ -16,12 +16,10 @@ var depts = [];
 var backurl = "${path}/customer/customer/visit.do";
 
 
-	$(function() {
-		
-		
-	
-	});
 	function toSubmit(){
+		
+		$app.form.preSubmit("#submit_form");
+		
 		//表单验证
 		if(!$("#submit_form").valid())
 				return;
@@ -59,16 +57,22 @@ var backurl = "${path}/customer/customer/visit.do";
 		}
 		
 	}
+	function isedit(){
+		return $("#submit_form ").attr("data-isadd")?false:true;
+		
+	}
 	
 </script>
 	<script type="text/javascript">
 	$(document).ready(function () {
+		if(isedit())
+			$app.form.format($('#submit_form'));
+		
+		
 		 var validateOpts = {
 		  rules: {
-		name: {required: true}
+			  info: {required: true}
 		
-		 
-		 
 		  }
 		/*   ,
 		  messages: {
@@ -96,22 +100,14 @@ var backurl = "${path}/customer/customer/visit.do";
    			<form id="submit_form" data-isadd="true" method="post" data-action="${path}/customer/customer/visit/save.do">
    				<input name="cusid" type="hidden" value="${param.cusid }">
    				<ul class="forminfo">
-					<li><label>回访详情：</label><input name="info" type="text" type="text" class="form-control input-primary w260" />
-					</li>
 					
-					<li><label>回访时间：</label><input data-lxr="{type:'time',format:'yyyy-MM-dd hh:mm:ss'}" value="" placeholder="开始时间" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary w260" onfocus="WdatePicker({isShowClear:false,dateFmt:'yyyy-MM-dd HH:mm:ss'})" >
+					
+					<li><label>回访时间：</label><input data-lxr="{type:'time',format:'yyyy-MM-dd hh:mm:ss'}" value="" placeholder="回访时间" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary w260" onfocus="WdatePicker({isShowClear:false,dateFmt:'yyyy-MM-dd HH:mm:ss'})" >
     				<input name="time" type="hidden">
     				</li>
-					
-					<li><label>备注：</label><input name="remark"  value="" type="text" class="form-control input-primary w260" />
+    				<li><label>回访内容：</label><textarea name="info"  rows="" cols=""  class="form-control input-primary w260" style="width:400px;"></textarea>
+    				
 					</li>
-					
-				<li><label>状态：</label>
-					<input type="radio"  name="state" value="0" checked="checked">启用
-					<input type="radio"  name="state" value="1"  >禁用
-				</li>
-					
-					
 					
 	    			<li><label>&nbsp;</label><input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/></li>
 	    		</ul>
@@ -125,20 +121,12 @@ var backurl = "${path}/customer/customer/visit.do";
    			<form id="submit_form"  method="post" data-action="${path}/customer/customer/visit/update.do">
    				<input name="id" value="${vo.id }" type="hidden"  />
    				<ul class="forminfo">
-					<li><label>级别：</label><input name="name" value="${vo.name }" type="text" class="form-control input-primary w260" />
+					<li><label>回访时间：</label><input data-lxr="{type:'time',format:'yyyy-MM-dd hh:mm:ss'}"  data-format="{type:'time',val:'${vo.time }',format:'yyyy-MM-dd hh:mm:ss'}" value="" placeholder="回访时间" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary w260" onfocus="WdatePicker({isShowClear:false,dateFmt:'yyyy-MM-dd HH:mm:ss'})" >
+    				<input name="time" type="hidden" >
+    				</li>
+    				<li><label>回访内容：</label><textarea name="info"  rows="" cols=""  class="form-control input-primary w260" style="width:400px;">${vo.info}</textarea>
+    				
 					</li>
-					
-				
-					
-					<li><label>备注：</label><input name="remark"  value="${vo.remark }" type="text" class="form-control input-primary w260" />
-					</li>
-					
-				<li><label>状态：</label>
-					<input type="radio"  name="state" value="0" <c:if test="${vo.state==0}">checked="checked"</c:if>>启用
-					<input type="radio"  name="state" value="1" <c:if test="${vo.state==1}">checked="checked"</c:if>>禁用
-				</li>
-					
-					
 					
 	    			<li><label>&nbsp;</label><input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/></li>
 	    		</ul>

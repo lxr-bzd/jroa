@@ -7,20 +7,23 @@
 	</sql>
 
 	  
-	<select id="findForPage" resultType="com.foxtail.model.personnel.Emp" >
+	<select id="findForPage2" resultType="com.foxtail.model.personnel.Emp" >
   		select  <include refid="base_column" />,b.name deptName,c.name placeName,d.name levelName from 
   		man_emp a left join man_dept b on a.deptid=b.id
   		left join man_place c on a.placeid = c.id
   		left join man_level d on a.levelid = d.id
   		WHERE 1=1
   		<if test="ft.kw != null ">AND a.name like CONCAT('%',#{ft.kw},'%')</if>
-  		<if test="ft.deptid != null ">AND a.deptid = #{ft.deptid}</if>
   		<if test="ft.placeid != null ">AND a.placeid = #{ft.placeid}</if>
   		<if test="ft.month != null ">AND a.birthday > #{ft.monthFirst} AND a.birthday  &lt; #{ft.monthLast}</if>
   		
   		<if test="ft.regStart != null ">AND a.entry_time > #{ft.regStart}</if>
   		<if test="ft.regEnd != null ">AND a.entry_time &lt; #{ft.regEnd}</if>
   		<if test="ft.sex != null ">AND a.sex = #{ft.sex}</if>
+  		<if test="ft.deptids != null ">AND a.deptid in 
+  			<foreach collection="ft.deptids" item="id" index="index"
+  			 open="(" close=")" separator=",">#{id}</foreach>
+  		</if>
   		ORDER BY a.createtime DESC
   	</select>
   
@@ -38,6 +41,8 @@
 	
 	<update id="update" >
 	   UPDATE man_emp SET name=#{ model.name }
+	   ,deptid=#{model.deptid}
+	   ,placeid=#{model.placeid} 
 		,phone=#{ model.phone }
 		,identifier=#{ model.identifier }
 		,idcard=#{ model.idcard }

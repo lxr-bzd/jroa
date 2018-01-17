@@ -14,6 +14,8 @@ public interface CustomerDao {
 	
 	void update(@Param("model")Customer customer);
 	
+	void updateByCustom(@Param("model")Customer customer);
+	
 	Customer getById(@Param("id")String id);
 	
 	List<Customer> findForPag(@Param("page")Pagination page,@Param("ft")CustomerFilter filter,@Param("deptids")String[] deptids);
@@ -21,5 +23,8 @@ public interface CustomerDao {
 	void saveProduct(@Param("id")String id,@Param("pid")String pid);
 	
 	void deleteAllProduct(@Param("id")String id);
+	
+	
+	
 }
 
