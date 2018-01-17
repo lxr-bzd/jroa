@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.foxtail.dao.mybatis.admin.ArticleDao">
+	
+	<sql id="base_column">
+		a.*
+	</sql>
+
+	  
+	<select id="findForPage2" resultType="com.foxtail.model.admin.Article" >
+  		select  <include refid="base_column" /> from adm_article a
+  		WHERE 1=1
+  		<if test="ft.state != null ">AND a.state = #{ft.state}</if>
+  		<if test="ft.type != null ">AND a.type = #{ft.type}</if>
+  		<if test="ft.kw != null ">AND a.title like CONCAT('%',#{ft.kw},'%')</if>
+  		<if test="ft.startTime != null ">AND a.createtime > #{ft.startTime}</if>
+  		<if test="ft.endTime != null ">AND a.type &lt; #{ft.endTime}</if>
+  		ORDER BY createtime DESC
+  	</select>
+  
+		
+	<select id="getById" resultType="com.foxtail.model.admin.Article" >
+  		select  <include refid="base_column" /> from adm_article a where a.id=#{id}
+  	</select> 
+
+	
+	
+	<update id="update" >
+	  UPDATE adm_article SET title=#{ model.title }
+,author=#{ model.author }
+,image=#{ model.image }
+,summary=#{ model.summary }
+,content=#{ model.content }
+ WHERE id=#{model.id}
+	</update>
+
+	 <!-- 根据对象主键更新 -->
+  	<insert id="save"  >
+    INSERT INTO adm_article(title, author, image, summary, content,type,createtime) VALUES
+    (#{ model.title },#{ model.author },#{ model.image },#{ model.summary },#{ model.content },#{ model.type },unix_timestamp(now())*1000)
+
+     </insert>
+	
+  	
+  
+</mapper>   

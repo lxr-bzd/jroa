@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.foxtail.dao.mybatis.admin.WorkReportDao">
+	
+	<sql id="base_column">
+		a.*
+	</sql>
+
+	  
+	<select id="findForPage2" resultType="com.foxtail.model.admin.WorkReport" >
+  		select  <include refid="base_column" /> from adm_work_report a
+  	</select>
+  
+		
+	<select id="getById" resultType="com.foxtail.model.admin.WorkReport" >
+  		select  <include refid="base_column" /> from adm_work_report a where a.id=#{id}
+  	</select> 
+
+	
+	
+	<update id="update" >
+	   UPDATE adm_work_report SET type=#{ model.type }
+			,empid=#{ model.empid }
+			,content=#{ model.content }
+			 WHERE id=#{model.id}
+	</update>
+
+	 <!-- 根据对象主键更新 -->
+  	<insert id="save"  >
+     INSERT INTO adm_work_report(type, empid, content) VALUES(#{ model.type },#{ model.empid },#{ model.content })
+     </insert>
+	
+  	
+  
+</mapper>   
