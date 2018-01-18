@@ -210,11 +210,11 @@ var deptid = $app.form.multipleSelectVal("#submit_form .lxr_multipleSelect");
 					      <input type="radio" name="state" value="1" title="禁用">
 					    </div>
 					</li>
-					
-					
-					
-	    			<li><label>&nbsp;</label><input name="" type="button" class="btn btn-primary" value="确认" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/></li>
 	    		</ul>
+    			<div class="btnWrap">
+    				<input name="" type="button" class="btn btn-primary" value="确认" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
+    				<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/>
+    			</div>
     		</form>
     		
 </c:if>
@@ -263,11 +263,11 @@ var deptid = $app.form.multipleSelectVal("#submit_form .lxr_multipleSelect");
 						<input type="radio"  name="state" value="1" title="禁用" <c:if test="${vo.state==1}">checked="checked"</c:if>>
 					</div>
 				</li>
-					
-					
-					
-	    			<li><label>&nbsp;</label><input name="" type="button" class="btn btn-primary" value="确认" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/></li>
 	    		</ul>
+	    		<div class="btnWrap">
+    				<input name="" type="button" class="btn btn-primary" value="确认" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
+    				<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/>
+	    		</div>
     		</form>
 		
     		

@@ -108,9 +108,11 @@ var backurl = "${path}/customer/customer/visit.do";
     				<li><label>回访内容：</label><textarea name="info"  rows="" cols=""  class="form-control input-primary w260" style="width:400px;"></textarea>
     				
 					</li>
-					
-	    			<li><label>&nbsp;</label><input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/></li>
 	    		</ul>
+	    		<div class="btnWrap">
+					<input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
+					<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/>
+	    		</div>
     		</form>
     		
 </c:if>
@@ -127,9 +129,11 @@ var backurl = "${path}/customer/customer/visit.do";
     				<li><label>回访内容：</label><textarea name="info"  rows="" cols=""  class="form-control input-primary w260" style="width:400px;">${vo.info}</textarea>
     				
 					</li>
-					
-	    			<li><label>&nbsp;</label><input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/></li>
 	    		</ul>
+	    		<div class="btnWrap">
+					<input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
+					<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/>
+	    		</div>
     		</form>
 		
     		

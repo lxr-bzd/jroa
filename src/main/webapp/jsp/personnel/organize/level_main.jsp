@@ -16,7 +16,7 @@ var toInfoUrl = '${path}/personnel/organize/level/view.do';
 	function toAdd(){
 		$app.dialog(toAddUrl,function(){
 			refleshData('mainTable');
-		},{width:"500px",height:"700px"});
+		},{width:"500px",height:"630px"});
 	}
 	//删除
 	function toRemove(id){
@@ -77,7 +77,7 @@ var toInfoUrl = '${path}/personnel/organize/level/view.do';
     function editById(id){
     	$app.dialog(toEditUrl+'?id='+id+"&action=edit",function(){
 			refleshData('mainTable');
-		},{width:"500px",height:"700px"});
+		},{width:"500px",height:"630px"});
 	}
 
 	

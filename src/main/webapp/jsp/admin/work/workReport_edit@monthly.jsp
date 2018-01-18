@@ -1,18 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<%@ include file="/common/global.jsp"%>
+
 <head>
 <meta name="renderer" content="webkit" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<%@ include file="/common/global.jsp"%>
 <title>编辑页面</title>
 <script type="text/javascript">
 
 var depts = [];
 
 
-var backurl = "${path}/customer/customer/product.do";
+var backurl = "${path}/admin/work/workReport.do";
 
 
 	$(function() {
@@ -92,24 +93,23 @@ var backurl = "${path}/customer/customer/product.do";
 <c:if test="${empty param.sysAction}">
 		
    			
-   			<form id="submit_form" data-isadd="true" method="post" data-action="${path}/customer/customer/product/save.do">
+   			<form id="submit_form" data-isadd="true" method="post" data-action="${path}/admin/work/workReport/save.do">
+   				<input type="hidden" name="type" value="3">
+   				<input type="hidden" name="report_state" value="1">
    				<ul class="forminfo">
-					<li><label>产品名称：</label><input name="name" type="text" type="text" class="form-control input-primary w260" />
+					<li><label>今日工作：</label>
+					<textarea name="content" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height:100px;"></textarea>
+					
 					</li>
 					
-				<li><label>状态：</label>
-					<input type="radio"  name="state" value="0" checked="checked">启用
-					<input type="radio"  name="state" value="1"  >禁用
-				</li>
+					<li><label>今日学习：</label>
+					<textarea name="study" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;"></textarea>
+					</li>
 					
-				<li><label>产品介绍：</label>
-				<textarea name="info" class="form-control input-primary w260"></textarea>
-				</li>
+				
+				
+	    			<li><label>&nbsp;</label><input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/></li>
 	    		</ul>
-	    		<div class="btnWrap">
-					<input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
-					<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/>
-	    		</div>
     		</form>
     		
 </c:if>
@@ -117,27 +117,26 @@ var backurl = "${path}/customer/customer/product.do";
 <c:if test="${param.sysAction=='edit'}">
 
 
-   			<form id="submit_form"  method="post" data-action="${path}/customer/customer/product/update.do">
-   				<input name="id" value="${vo.id }" type="hidden" class="form-control input-primary w260" />
+   			<form id="submit_form"  method="post" data-action="${path}/admin/work/workReport/update.do">
+   				<input name="id" value="${vo.id }" type="hidden"  />
    				<ul class="forminfo">
+					<li><label>今日工作：</label>
+					<textarea name="content" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height:100px;">
+					${vo.content }
+					</textarea>
 					
-				
-					<li><label>产品名称：</label><input name="name" value="${vo.name}" type="text" class="form-control input-primary w260" />
 					</li>
 					
-				<li><label>状态：</label>
-					<input type="radio"  name="state" value="0" <c:if test="${vo.state==0}">checked="checked"</c:if>>启用
-					<input type="radio"  name="state" value="1" <c:if test="${vo.state==1}">checked="checked"</c:if>>禁用
-				</li>
+					<li><label>今日学习：</label>
+					<textarea name="study" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;">
+					${vo.study }
+					</textarea>
+					</li>
 					
-				<li><label>产品介绍：</label>
-				<textarea name="info" class="form-control input-primary w260">${vo.info}</textarea>
-				</li>
+					
+					
+	    			<li><label>&nbsp;</label><input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/></li>
 	    		</ul>
-	    		<div class="btnWrap">
-					<input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
-					<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/>
-	    		</div>
     		</form>
 		
     		

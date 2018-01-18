@@ -578,9 +578,10 @@ var backurl = "${path}/personnel/employee/emp.do";
 							</tr>-->
 						</tbody>
 					</table>
-					<div class="fr mt20">
-						<label>&nbsp;</label><input name="" type="button" class="btn btn-primary" value="确认" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/>
-					</div>
+				</div>
+				<div class="btnWrap">
+					<input name="" type="button" class="btn btn-primary" value="确认" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
+					<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/>
 				</div>
     		</form>
     		
@@ -941,9 +942,10 @@ var backurl = "${path}/personnel/employee/emp.do";
 							</tr>-->
 						</tbody>
 					</table>
-					<div class="fr mt20">
-						<label>&nbsp;</label><input name="" type="button" class="btn btn-primary" value="确认" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/>
-					</div>
+				</div>
+				<div class="btnWrap">
+					<input name="" type="button" class="btn btn-primary" value="确认" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
+					<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/>
 				</div>
     		</form>
 		

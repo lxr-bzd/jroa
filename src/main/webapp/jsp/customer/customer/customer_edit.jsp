@@ -204,9 +204,11 @@ var backurl = "${path}/customer/customer/customer.do";
 					<input type="radio"  name="state" value="0" title="启用" checked="checked">
 					<input type="radio"  name="state" value="1" title="禁用"  >
 				</li>
-					
-	    			<li><label>&nbsp;</label><input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/></li>
 	    		</ul>
+	    		<div class="btnWrap">
+					<input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
+					<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/>
+	    		</div>
     		</form>
     		
 </c:if>
@@ -259,9 +261,11 @@ var backurl = "${path}/customer/customer/customer.do";
 					<input type="radio"  name="state" value="0" title="启用" <c:if test="${vo.state==0}">checked="checked"</c:if>>
 					<input type="radio"  name="state" value="1" title="禁用" <c:if test="${vo.state==1}">checked="checked"</c:if>>
 				</li>
-					
-	    			<li><label>&nbsp;</label><input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/></li>
 	    		</ul>
+	    		<div class="btnWrap">
+					<input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
+					<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/>
+	    		</div>
     		</form>
 </c:if>
 	    </div>

@@ -108,11 +108,11 @@ var backurl = "${path}/personnel/examine/examine.do";
 					<input type="radio"  name="state" value="0" checked="checked">启用
 					<input type="radio"  name="state" value="1"  >禁用
 				</li>
-					
-					
-					
-	    			<li><label>&nbsp;</label><input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;<input name="" type="button" class="btn btn-warning" value="返回列表" onclick="goBackList();"/></li>
 	    		</ul>
+	    		<div class="btnWrap">
+					<input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
+					<input name="" type="button" class="btn btn-warning" value="返回列表" onclick="goBackList();"/>
+	    		</div>
     		</form>
     		
 </c:if>
@@ -146,8 +146,11 @@ var backurl = "${path}/personnel/examine/examine.do";
 					<textarea name='info' class="form-control input-primary w260" ></textarea>
 					</li>
 					
-	    			<li><label>&nbsp;</label><input name="" type="button" class="btn btn-primary" value="同意" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;<input name="" type="button" class="btn btn-warning" value="不同意" onclick="goBackList();"/></li>
 	    		</ul>
+	    		<div class="btnWrap">
+    				<input name="" type="button" class="btn btn-primary" value="同意" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
+    				<input name="" type="button" class="btn btn-warning" value="不同意" onclick="goBackList();"/>
+	    		</div>
     		</form>
 		
     		

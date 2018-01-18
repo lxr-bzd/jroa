@@ -398,9 +398,9 @@ function goBackList(){
 							</tr>-->
 						</tbody>
 					</table>
-					<div class="fr mt20">
-						<label>&nbsp;</label><input name="" type="button" class="btn btn-primary" value="打印" onclick="toSubmit()"/>
-					</div>
+				</div>
+				<div class="btnWrap">
+					<input name="" type="button" class="btn btn-primary" value="打印" onclick="toSubmit()"/>
 				</div>
     		</form>
 	
