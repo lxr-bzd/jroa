@@ -18,7 +18,7 @@ var toInfoUrl = '${path}/admin/information/article/view.do';
 	function toAdd(){
 		$app.dialog(toAddUrl+"?type=2",function(){
 			refTable();
-		},{width:"1000px"});
+		},{width:"900px",height:"700px"});
 	}
 	//删除
 	function toRemove(id){
@@ -67,7 +67,7 @@ var toInfoUrl = '${path}/admin/information/article/view.do';
     function editById(id){
 		$app.dialog(toEditUrl+'?id='+id+"&sysAction=edit",function(){
 			refTable();
-		},{width: "700px",height:"400px"});
+		},{width: "900px",height:"700px"});
 	}
 
 	

@@ -89,13 +89,13 @@ var toInfoUrl = '${path}/customer/customer/customer/view.do';
     //操作工具栏
     function operatorFormatter(value, row, index) {
     	var operator='<div class="btn-group">';
-    	operator+=$app.btn('auth','回访','tovisit(\''+row.id+'\',\''+row.name+'\')');
+		    
 	    	<shiro:hasPermission name="personnel/organize/place:edit">
-	    	operator+=$app.btn('edit','编辑','editById(\''+row.id+'\')');
-	    	  </shiro:hasPermission>
-		    <shiro:hasPermission name="personnel/organize/place:delete">
-		    operator+=$app.btn('delete','删除','toRemove(\''+row.id+'\')');
+	    		operator+='<button class="btn btn-warning btn-round btn-xs" onclick="editById(\''+row.id+'\');"><i class="glyphicon glyphicon-pencil"></i> 编辑</button>&nbsp;&nbsp;';
 		    </shiro:hasPermission>
+		    <shiro:hasPermission name="personnel/organize/place:delete">
+				operator+='<button class="btn btn-danger btn-round btn-xs" onclick="toRemove(\''+row.id+'\')" ><i class="glyphicon glyphicon-trash"></i> 删除</button>';
+	    	</shiro:hasPermission>
 	    	/* <shiro:hasPermission name="menber:delete">
 				operator+='<button class="btn btn-danger btn-round btn-xs" onclick="deleteById(\''+row.id+'\')"><i class="glyphicon glyphicon-trash"></i>删除</button>';
 			</shiro:hasPermission> */
@@ -109,10 +109,7 @@ var toInfoUrl = '${path}/customer/customer/customer/view.do';
 </script>
 
 <script type="text/javascript">
-function tovisit(id,name){
-	
-	window.location.href = "${path}/customer/customer/visit.do?cusid="+id+"&cusName="+encodeURIComponent(name);
-}
+
  function followFormatter(value, row, index){
 	 
 	 switch (value) {

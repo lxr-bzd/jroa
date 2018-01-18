@@ -8,8 +8,9 @@
 
 	  
 	<select id="findForPag" resultType="com.foxtail.model.customer.Customer" >
-  		select  <include refid="base_column" />,b.name productName,c.name empName,d.name typeName from cus_customer a  left join cus_product b on a.productid=b.id
+  		select  <include refid="base_column" />,b.name productName,c.name empName,d.name typeName,e.name deptName from cus_customer a  left join cus_product b on a.productid=b.id
   		left join man_emp c on a.empid=c.id
+  		left join man_dept e on c.deptid = e.id
   		left join cus_type d on a.typeid = d.id
   		WHERE 1=1
   		<if test="ft.state != null ">AND a.state = #{ft.state}</if>

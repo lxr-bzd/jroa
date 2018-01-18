@@ -278,7 +278,7 @@ width:auto;
 
 
 /*form*/
-.formbody{width: 100%;padding:15px 30px;display: inline-block;margin: 0 auto;}
+.formbody{width: 100%;padding:15px 30px;display: inline-block;margin: 0 auto;padding-bottom: 55px;}
 .formtitle{border-bottom:solid 1px #d0dee5; line-height:35px; position:relative; height:35px; margin-bottom:28px;}
 .formtitle span{font-weight:bold;font-size:14px; border-bottom:solid 3px #66c9f3;float:left;  z-index:100; padding:0 3px;height: 34px;} 
 /*.forminfo{padding-left:23px;}*/
@@ -564,7 +564,7 @@ body .table_list tr:hover{ background:#F4F4F4;}
 	margin-top: 10px;
 }
 .Notice-wrap li{
-	padding: 20px 0;
+	padding: 10px 0;
 	border-bottom: 1px dashed #dbdbdb;
 }
 .Notice-text{
@@ -675,7 +675,7 @@ body .table_list tr:hover{ background:#F4F4F4;}
 	background-color: #ca8cfe;
 }
 .listInner .list5{
-	background-color: #fb6dc8;
+	background-color: #148DC5;
 }
 .listText{
 	font-size: 18px;
@@ -699,4 +699,16 @@ body .table_list tr:hover{ background:#F4F4F4;}
 }
 #content *{
 	padding-bottom:10px;
+}
+
+.btnWrap{
+	width: 100%;
+	padding: 5px 10px;
+	text-align: right;
+	box-sizing: border-box;
+	background-color: #fff;
+	border-top: 1px solid #dbdbdb;
+	position: fixed;
+	right: 0;
+	bottom: 0;
 }

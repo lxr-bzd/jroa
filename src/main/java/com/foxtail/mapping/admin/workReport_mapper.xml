@@ -8,28 +8,70 @@
 
 	  
 	<select id="findForPage2" resultType="com.foxtail.model.admin.WorkReport" >
-  		select  <include refid="base_column" /> from adm_work_report a
+  		select  <include refid="base_column" />,b.name empName,c.name deptName,d.name examineName from adm_work_report a left join man_emp b on a.empid=b.id
+  		left join man_dept c on b.deptid=c.id 
+  		left join man_emp d on a.examineid=d.id
+  		WHERE 1=1
+  		<if test="ft.type != null ">AND a.type=#{ft.type}</if>
+  		ORDER BY createtime DESC
   	</select>
   
 		
 	<select id="getById" resultType="com.foxtail.model.admin.WorkReport" >
-  		select  <include refid="base_column" /> from adm_work_report a where a.id=#{id}
+	select  <include refid="base_column" />,b.name empName,c.name deptName,d.name examineName,e.content examineInfo from adm_work_report a left join man_emp b on a.empid=b.id
+  		left join man_dept c on b.deptid=c.id 
+  		left join man_emp d on a.examineid=d.id
+  		left join adm_report_examin e on a.id=e.reportid
+  		 where a.id=#{id}
   	</select> 
 
 	
 	
 	<update id="update" >
-	   UPDATE adm_work_report SET type=#{ model.type }
-			,empid=#{ model.empid }
-			,content=#{ model.content }
+	
+	   UPDATE adm_work_report SET 
+			content=#{ model.content }
+			,study = #{ model.study}
+			,uncomplete = #{ model.uncomplete}
+			,answer = #{ model.answer}
 			 WHERE id=#{model.id}
+	</update>
+	
+<update id="updateByCustom" >
+	 UPDATE adm_work_report 
+	 <set >
+			<if test="model.report_state != null ">report_state=#{model.report_state},</if>
+			<if test="model.examineid != null ">examineid=#{ model.examineid },examinetime=#{ model.examinetime },</if>
+	</set>
+ WHERE id=#{model.id}
 	</update>
 
 	 <!-- 根据对象主键更新 -->
-  	<insert id="save"  >
-     INSERT INTO adm_work_report(type, empid, content) VALUES(#{ model.type },#{ model.empid },#{ model.content })
+  	<insert id="save"  useGeneratedKeys="true" keyProperty="model.id">
+     INSERT INTO adm_work_report(type, empid, content,study,uncomplete,answer,createtime) VALUES(#{ model.type },#{ model.empid },#{ model.content },#{ model.study },#{ model.uncomplete },#{ model.answer },unix_timestamp(now())*1000)
      </insert>
 	
+	
+	<insert id="saveExamine"  >
+    INSERT INTO adm_report_examin (reportid, content,createtime) VALUES (#{ model.reportid}, #{ model.content},unix_timestamp(now())*1000)
+     </insert>
+     
+     
+     <insert id="saveDetail"  >
+    INSERT INTO adm_report_detail (reportid, sort, content, finishdate,isfinish) VALUES (#{ model.reportid}, #{ model.sort}, #{ model.content}, #{ model.finishdate},#{ model.isfinish})
+     </insert>
+     
+     <select id="getDetail" resultType="com.foxtail.model.admin.ReportDetail" >
+  		select a.* from adm_report_detail a where a.reportid=#{reportid}
+  	</select> 
   	
+  	<delete id="deleteDetail" >
+	   delete from adm_report_detail
+	   where reportid in
+	      <foreach collection="reportids" item="id" index="index"
+             open="(" close=")" separator=",">
+              #{id}
+          </foreach>
+	</delete>
   
 </mapper>   

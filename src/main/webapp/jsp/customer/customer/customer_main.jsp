@@ -98,15 +98,13 @@ var toInfoUrl = '${path}/customer/customer/customer/view.do';
 	    	operator+= $app.btn('edit','编辑','editById(\''+row.id+'\')');
 		    </shiro:hasPermission>
 		    <shiro:hasPermission name="personnel/organize/place:delete">
-		    operator+= $app.btn({},'取消','cusCancel(\''+row.id+'\')');
+		    operator+= $app.btn('delete','删除','toRemove(\''+row.id+'\')');
 	    	</shiro:hasPermission>
 	    
 			
 			
 		return operator+'</div>';
 	}
-    
-    
     
    
     
@@ -120,17 +118,6 @@ function tovisit(id,name){
 	
 	window.location.href = "${path}/customer/customer/visit.do?cusid="+id+"&cusName="+encodeURIComponent(name);
 }
-
-
-function cusCancel(id){
-	$app.confirm("是否将客户放入公海？",function(){
-		$app.request("${path}/customer/customer/customer/update.do?sysType=custom&state=1&id="+id,function(){
-			refTable();
-		});
-		
-	});
-}
-
 
  function followFormatter(value, row, index){
 	 

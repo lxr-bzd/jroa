@@ -115,19 +115,23 @@ var backurl = "${path}/admin/information/article.do";
 					
 				<li><label>概要：</label><textarea name="summary" rows="" cols="" class="form-control input-primary w260"></textarea>  
 				
-				<li><label>状态：</label>
-					<input type="radio"  name="state" value="0" checked="checked">启用
-					<input type="radio"  name="state" value="1"  >禁用
+				<li>
+					<label>状态：</label>
+					<div class="layui-form">
+						<input type="radio"  name="state" value="0" title="启用" checked="checked">
+						<input type="radio"  name="state" value="1" title="禁用"  >
+					</div>
 				</li>
 					
 					<li><label>内容：</label>
 					<textarea name="content" rows="" cols="" class="form-control input-primary w260"></textarea>
 					
 					</li>
-					
-					
-	    			<li><label>&nbsp;</label><input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/></li>
 	    		</ul>
+	    		<div class="btnWrap">
+					<input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
+					<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/>
+	    		</div>
     		</form>
     		
 </c:if>
@@ -146,21 +150,21 @@ var backurl = "${path}/admin/information/article.do";
 				<li><label>概要：</label><textarea name="summary" value="" rows="" cols="" class="form-control input-primary w260">${vo.summary }</textarea>  
 				
 				<li><label>状态：</label>
-					<input type="radio"  name="state" value="0" <c:if test="${vo.state==0}">checked="checked"</c:if>>启用
-					<input type="radio"  name="state" value="1" <c:if test="${vo.state==1}">checked="checked"</c:if>>禁用
+					<div class="layui-form">
+						<input type="radio"  name="state" value="0" title="启用" <c:if test="${vo.state==0}">checked="checked"</c:if>>
+						<input type="radio"  name="state" value="1" title="禁用" <c:if test="${vo.state==1}">checked="checked"</c:if>>
+					</div>
 				</li>
 					
 					<li><label>内容：</label>
 					<textarea name="content" rows="" cols="" class="form-control input-primary w260">${vo.content }</textarea>
 					
 					</li>
-					
-				
-					
-					
-					
-	    			<li><label>&nbsp;</label><input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/></li>
 	    		</ul>
+	    		<div class="btnWrap">
+					<input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
+					<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/>
+	    		</div>
     		</form>
 		
     		

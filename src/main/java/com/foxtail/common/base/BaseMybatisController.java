@@ -35,6 +35,8 @@ public class BaseMybatisController implements WebBindingInitializer
   public static final String ACTION_ADD = "add";
   public static final String ACTION_INFO = "info";
   
+  String baseJsp;
+  
   public void putAction(Map<String, Object> map,Object val) {
 	map.put("action", val);
 
@@ -67,25 +69,34 @@ public class BaseMybatisController implements WebBindingInitializer
 
 	}
 
+  public String getBaseJsp() {
+	  if(baseJsp==null) {
+		  
+		  baseJsp = getClass().getAnnotation(RequestMapping.class).value()[0];
+	  }
+	  
+	  return baseJsp;
+
+  }
   
   public String getMainJsp() {
-	  return getClass().getAnnotation(RequestMapping.class).value()[0]+"_main";
+	  return getBaseJsp()+"_main";
   }
   public String getMainJsp(String module) {
 	  
-	  return getClass().getAnnotation(RequestMapping.class).value()[0]+(StringUtils.isEmpty(module)?"_main":("_main@"+module));
+	  return getBaseJsp()+(StringUtils.isEmpty(module)?"_main":("_main@"+module));
   }
   
   public String getEditJsp() {
-	  return getClass().getAnnotation(RequestMapping.class).value()[0]+"_edit";
+	  return getBaseJsp()+"_edit";
 }
   
   public String getEditJsp(String module) {
-	  return getClass().getAnnotation(RequestMapping.class).value()[0]+(StringUtils.isEmpty(module)?"_edit":("_edit@"+module));
+	  return getBaseJsp()+(StringUtils.isEmpty(module)?"_edit":("_edit@"+module));
 }
   
   public String getInfoJsp(String module) {
-	  return getClass().getAnnotation(RequestMapping.class).value()[0]+(StringUtils.isEmpty(module)?"_info":("_info@"+module));
+	  return getBaseJsp()+(StringUtils.isEmpty(module)?"_info":("_info@"+module));
 
 
 }

@@ -120,13 +120,14 @@ $app.dialog = function(url,onclose,param){
 	
 	if(!param)param={};
 	
-	var height = param.height?param.height:'85%';
-	var width = param.width?param.width:'85%';
+	var height = param.height?param.height:'360px';
+	var width = param.width?param.width:'520px';
 	
 	context.layer.open({
 		  type: 2,
 		  title: param.title?param.title:'编辑',
 		  shadeClose: true,
+		  maxmin: true,
 		  skin: 'layui-layer-rim',
 		  shade: 0.5,
 		  area: [width, height],

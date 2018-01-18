@@ -16,9 +16,9 @@ var toInfoUrl = '${path}/admin/work/workReport/view.do';
 
 	//添加
 	function toAdd(){
-		$app.dialog(toAddUrl,function(){
+		$app.dialog(toAddUrl+"?sysModule=monthly",function(){
 			refTable();
-		});
+		},{width:"900px",height:"600px"});
 	}
 	//删除
 	function toRemove(id){
@@ -40,17 +40,7 @@ var toInfoUrl = '${path}/admin/work/workReport/view.do';
 		}
 	}
 	
-	//编辑
-    function toEdit(){
-    	var selected=getSelectedRowsArr('mainTable');
-    	if(selected.length>0&&selected.length<2){
-    		window.location=toEditUrl+'?id='+selected+"&sysAction=edit";
-    	}else{
-    		//提示信息
-    		$app.alert('请选择一条数据进行操作');
-    		
-    	}
-	}
+	
 	
     //查看
     function toInfo(){
@@ -75,9 +65,9 @@ var toInfoUrl = '${path}/admin/work/workReport/view.do';
     }
     
     function editById(id){
-		$app.dialog(toEditUrl+'?id='+id+"&sysAction=edit",function(){
+		$app.dialog(toEditUrl+'?id='+id+"&sysAction=edit&sysModule=monthly",function(){
 			refTable();
-		});
+		},{width:"900px",height:"600px"});
 	}
 
 	
@@ -90,7 +80,8 @@ var toInfoUrl = '${path}/admin/work/workReport/view.do';
     //操作工具栏
     function operatorFormatter(value, row, index) {
     	var operator='<div class="btn-group">';
-		    
+    	if(row.report_state!=2)
+    	operator+=$app.btn('auth','审核','toExamine(\''+row.id+'\')');
 	    	<shiro:hasPermission name="personnel/organize/place:edit">
 	    		operator+=$app.btn('edit','编辑','editById(\''+row.id+'\')');
 		    </shiro:hasPermission>
@@ -107,6 +98,34 @@ var toInfoUrl = '${path}/admin/work/workReport/view.do';
     
  
     
+</script>
+<script type="text/javascript">
+function toExamine(id){
+	$app.dialog("${path}/admin/work/workReport/toexamine.do?sysModule=daily&id="+id,function(){
+		refTable();
+	});
+
+}
+
+
+function report_stateFormatter(val){
+	switch (val) {
+	case 1:return "未审核";
+		break;
+	case 2:return "已审核";
+	break;
+	
+	}
+	
+}
+
+function examineNameFormatter(val){
+	if(!val&&val!=0)
+		return "";
+	return val;
+	
+}
+
 </script>
 </head>
 <body class="mlr15">
@@ -129,7 +148,7 @@ var toInfoUrl = '${path}/admin/work/workReport/view.do';
 		</div>
     </div>
     	<table class="table_list" id="mainTable" data-toggle="table"
-			data-url="${path}/admin/work/workReport/view.do" data-pagination="ture" 
+			data-url="${path}/admin/work/workReport/view.do?type=3" data-pagination="ture" 
 			data-side-pagination="server" data-cache="false" data-query-params="postQueryParams"
 			data-page-list="[10, 20, 35, 50]" data-page-size= "10" data-method="post"
 			data-show-refresh="false" data-show-toggle="false"
@@ -141,11 +160,12 @@ var toInfoUrl = '${path}/admin/work/workReport/view.do';
 				<tr>
 				
 					<th data-field="" data-checkbox="true"></th>
-					<!-- <th data-field="sort" data-formatter="Formatter.sort">序号</th> -->
 					<th data-field="id" >id</th>
-					<th data-field="name" >名称</th>
-					
-					<th data-field="state"  >状态</th>
+					<th data-field="empName" >员工</th>
+					<th data-field="deptName" >部门</th>
+					<th data-field="createtime" data-formatter="$app.tableUi.time">提交时间</th>
+					<th data-field="examineName" data-formatter="examineNameFormatter">审核人</th>
+					<th data-field="report_state" data-formatter="report_stateFormatter" >状态</th>
 					<th data-field="operator" data-formatter="operatorFormatter">操作</th>
 				</tr>
 			</thead>
