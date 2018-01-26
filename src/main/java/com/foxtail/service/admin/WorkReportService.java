@@ -14,6 +14,7 @@ import com.foxtail.model.admin.ReportExamine;
 import com.foxtail.model.admin.WorkReport;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.lxr.commons.exception.ApplicationException;
 
 
 @Service
@@ -36,6 +37,8 @@ public class WorkReportService {
 	public void delete(String[] ids) {
 		
 		ServiceManager.commonService.delete("adm_work_report", ids);
+		workReportDao.deleteDetail(ids);
+		workReportDao.deleteExamine(ids);
 
 	}
 	
@@ -71,6 +74,9 @@ public class WorkReportService {
 	}
 	
 	public void doExamine(ReportExamine examine) {
+		Integer state = getById(examine.getReportid()).getReport_state();
+		if(state==2)throw new ApplicationException("重复审核!");
+		
 		WorkReport report = new WorkReport();
 		report.setId(examine.getReportid());
 		report.setReport_state(2);

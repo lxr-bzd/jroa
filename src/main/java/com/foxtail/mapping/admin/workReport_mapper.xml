@@ -13,6 +13,14 @@
   		left join man_emp d on a.examineid=d.id
   		WHERE 1=1
   		<if test="ft.type != null ">AND a.type=#{ft.type}</if>
+  		<if test="ft.startTime != null ">AND a.createtime > #{ft.startTime}</if>
+  		<if test="ft.endTime != null ">AND a.createtime &lt; #{ft.endTime}</if>
+  		<if test="ft.deptids != null "> AND b.deptid in
+  		  <foreach collection="ft.deptids" item="deptid" index="index"
+             open="(" close=")" separator=",">
+              #{deptid}
+          </foreach>
+  		</if>
   		ORDER BY createtime DESC
   	</select>
   
@@ -73,5 +81,15 @@
               #{id}
           </foreach>
 	</delete>
+	
+	<delete id="deleteExamine" >
+	   delete from adm_report_examin
+	   where reportid in
+	      <foreach collection="reportids" item="id" index="index"
+             open="(" close=")" separator=",">
+              #{id}
+          </foreach>
+	</delete>
+	
   
 </mapper>   

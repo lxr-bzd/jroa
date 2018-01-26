@@ -19,12 +19,9 @@ $(function(){
 </script>
 
 </head>
-<body>
-<div>
-
+<body class="pd20">
+<div class="author" style="text-align: center;">
 发布人：${vo.author } ，发布时间：<span id="ctime" data-val="${vo.createtime }"></span>
-
-
 </div>
 	<div id="content" style="display: none;">
 		${vo.content}

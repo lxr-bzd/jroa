@@ -369,7 +369,7 @@ $(function() {
 
 
 function viewNotice(id){
-	$app.dialog("${path}/admin/information/article/toinfo.do?id="+id,null,{width:"700px"});
+	$app.dialog("${path}/admin/information/article/toinfo.do?id="+id,null,{width:"800px",height:"500px"});
 }
 
 

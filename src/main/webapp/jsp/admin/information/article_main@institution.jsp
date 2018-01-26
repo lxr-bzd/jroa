@@ -74,7 +74,7 @@ var toInfoUrl = '${path}/admin/information/article/view.do';
 
 	//根据id查看
 	function toInfo(id){
-		$app.dialog("${path}/admin/information/article/toinfo.do?id="+id);
+		$app.dialog("${path}/admin/information/article/toinfo.do?id="+id,null,{width: "900px",height:"700px"});
 		
 	}
 	
@@ -111,6 +111,7 @@ var toInfoUrl = '${path}/admin/information/article/view.do';
     			<input type="hidden" name="startTime">--
 				<input placeholder="结束" data-lxr="{type:'time',format:'yyyy-MM-dd'}" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary" onfocus="WdatePicker({isShowClear:false})">
 				<input type="hidden" name="endTime">
+				&nbsp;&nbsp;
     			<span>关键词：</span>
     			<input name="kw" value="" placeholder="关键词"  class="form-control input-sm w200" type="text" style="display: inline;" >
     			<input type="button" class="btn btn-info btn-round btn-sm" value="查询" onclick="refTable()">
@@ -136,7 +137,7 @@ var toInfoUrl = '${path}/admin/information/article/view.do';
 				<tr>
 				
 					<th data-field="" data-checkbox="true"></th>
-					<th data-field="id" >id</th>
+					<th data-field="id">id</th>
 					<th data-field="title" >标题</th>
 					<th data-field="summary" >概要</th>
 					<th data-field="author" >发布人</th>

@@ -20,7 +20,8 @@ public class ShiroPermsFilter extends AuthorizationFilter {
 	@Override
 	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue)
 			throws Exception {
-		  HttpServletRequest httpRequest = (HttpServletRequest) request;
+		
+		  	HttpServletRequest httpRequest = (HttpServletRequest) request;
 	        HttpServletResponse httpResponse = (HttpServletResponse) response;
 	        
 	        String url = getPermsUrl(httpRequest);
@@ -29,21 +30,28 @@ public class ShiroPermsFilter extends AuthorizationFilter {
 	        
 	        if(SecurityUtils.getSubject().isPermitted(url))return true;
 	       
-	        
-	        if(WebUtils.isAjax(httpRequest)){
-	        	response.getWriter().print(JSONObject.toJSONString(JsonResult.getResult(JsonResult.STATUS_UN_PERMS, "无权限！")));
-	        }else
-	        org.apache.shiro.web.util.WebUtils.issueRedirect(request, response, getUnauthorizedUrl(), null, true);
-	        
 	        return false;
 	}
 	
+	
+	@Override
+	protected boolean onAccessDenied(ServletRequest request, ServletResponse response, Object mappedValue)
+			throws Exception {
+		
+		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		if(WebUtils.isAjax(httpRequest)){
+        	response.getWriter().print(JSONObject.toJSONString(JsonResult.getResult(JsonResult.STATUS_UN_PERMS, "无权限！")));
+        }else
+        	org.apache.shiro.web.util.WebUtils.issueRedirect(request, response, getUnauthorizedUrl(), null, true);
+        
+		return false;
+	}
 	
 	private String getPermsUrl(HttpServletRequest httpRequest) {
 		String url = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length(),httpRequest.getRequestURI().length() );
         
 		if(url.startsWith("/"))
-			return url.substring(1,url.length());
+			return url.substring(1,url.length()-3);
 		
 		return url;
 

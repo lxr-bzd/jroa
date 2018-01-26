@@ -103,21 +103,19 @@ var backurl = "${path}/admin/work/workReport.do";
 					</li>
 					
 					<li><label>今日学习：</label>
-					<textarea name="study" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;"></textarea>
+					<textarea name="study" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height: 200px;"></textarea>
 					</li>
-					
-				
-				
-	    			<li><label>&nbsp;</label><input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/></li>
 	    		</ul>
+	    		<div class="btnWrap">
+					<input name="" type="button" class="btn btn-primary" value="确认" onclick="toSubmit()">&nbsp;&nbsp;&nbsp;&nbsp;
+					<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();">
+	    		</div>
     		</form>
     		
 </c:if>
 
 <c:if test="${param.sysAction=='edit'}">
-
-
-   			<form id="submit_form"  method="post" data-action="${path}/admin/work/workReport/update.do">
+	<form id="submit_form"  method="post" data-action="${path}/admin/work/workReport/update.do">
    				<input name="id" value="${vo.id }" type="hidden"  />
    				<ul class="forminfo">
 				<li><label>今日工作：</label>
@@ -127,14 +125,17 @@ var backurl = "${path}/admin/work/workReport.do";
 					</li>
 					
 					<li><label>今日学习：</label>
-					<textarea name="study" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;"
+					<textarea name="study" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px; height: 200px;"
 					>${vo.study }</textarea>
 					</li>
 					
 					
 					
-	    			<li><label>&nbsp;</label><input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/></li>
 	    		</ul>
+	    		<div class="btnWrap">
+					<input name="" type="button" class="btn btn-primary" value="确认" onclick="toSubmit()">&nbsp;&nbsp;&nbsp;&nbsp;
+					<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();">
+	    		</div>
     		</form>
 		
     		

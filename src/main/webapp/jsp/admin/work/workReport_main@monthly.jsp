@@ -103,7 +103,7 @@ var toInfoUrl = '${path}/admin/work/workReport/view.do';
 function toExamine(id){
 	$app.dialog("${path}/admin/work/workReport/toexamine.do?sysModule=daily&id="+id,function(){
 		refTable();
-	});
+	},{width:"900px",height:"600px"});
 
 }
 

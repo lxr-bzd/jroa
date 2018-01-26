@@ -17,7 +17,7 @@ var toInfoUrl = '${path}/customer/customer/customer/view.do';
 	function toAdd(){
 		$app.dialog(toAddUrl,function(){
 			refTable();
-		},{width:"500px",height:"670px"});
+		},{width:"500px",height:"700px"});
 	}
 	//删除
 	function toRemove(id){
@@ -79,7 +79,7 @@ var toInfoUrl = '${path}/customer/customer/customer/view.do';
     function editById(id){
 		$app.dialog(toEditUrl+'?id='+id+"&sysAction=edit",function(){
 			refTable();
-		},{width:"500px",height:"670px"});
+		},{width:"500px",height:"700px"});
 	}
 
 	
@@ -225,13 +225,13 @@ function getChilds(ds){
 <body class="mlr15">
 
     
-    <div class="rightinfo explain_col">
+    <div class="rightinfo explain_col" >
 		<div>
     		<form id="searchForm" name="searchForm"  method="post">
     			<span>所属部门：</span>
     			<div style="display: inline;" class="lxr_multipleSelect" data-name="deptid" data-model="deptSelect"> </div>
 				
-    			<span>业务员：</span><input name="kw" value="" placeholder="业务员"  class="form-control input-sm w200" type="text" style="display: inline;" >
+    			<span>业务员：</span><input name="kw" value="" placeholder="业务员/客户"  class="form-control input-sm w200" type="text" style="display: inline;" >
 				<span>录入时间：</span>
     			<input placeholder="开始" data-lxr="{type:'time',format:'yyyy-MM-dd'}" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary" onfocus="WdatePicker({isShowClear:false})">
     			<input type="hidden" name="startTime">--
@@ -258,7 +258,7 @@ function getChilds(ds){
 		</div>
     </div>
     	<table class="table_list" id="mainTable" data-toggle="table"
-			data-url="${path}/customer/customer/customer/view.do?state=0" data-pagination="ture" 
+			data-url="${path}/customer/customer/customer/view.do?state=0&ismy=true" data-pagination="ture" 
 			data-side-pagination="server" data-cache="false" data-query-params="postQueryParams"
 			data-page-list="[15, 30, 50, 100]" data-page-size= "15" data-method="post"
 			data-show-refresh="false" data-show-toggle="false"
@@ -274,6 +274,7 @@ function getChilds(ds){
 					<th data-field="name" >名称</th>
 					<th data-field="typeName">客户类型</th>
 					<th data-field="contacts" >联系人</th>
+					<th data-field="phone" >联系电话</th>
 					<th data-field="follow" data-formatter="followFormatter">跟进状态</th>
 					<th data-field="empName" >业务员</th>
 					<th data-field="deptName" >部门</th>

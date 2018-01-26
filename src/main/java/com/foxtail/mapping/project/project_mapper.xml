@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.foxtail.dao.mybatis.project.ProjectDao">
+	
+	<sql id="base_column">
+		a.*
+	</sql>
+
+	  
+	<select id="findForPage2" resultType="com.foxtail.model.project.Project" >
+  		select  <include refid="base_column" />,b.name customrName,c.name managerName,d.name salesmanName,e.name orderempName,f.name productName from prj_project a left join cus_customer b on a.customrid=b.id
+  		left join man_emp c on a.managerid = c.id
+  		left join man_emp d on a.salesmanid = d.id
+  		left join man_emp e on a.orderempid = e.id
+  		left join cus_product f on a.productid = f.id
+  		WHERE 1=1
+  		<if test="ft.kw != null ">AND a.name like CONCAT('%',#{ft.kw},'%')</if>
+  		
+  		ORDER BY createtime DESC
+  		
+  	</select>
+  
+		
+<select id="getById" resultType="com.foxtail.model.project.Project" >
+	select  <include refid="base_column" />,b.name customrName,c.name managerName,d.name salesmanName,f.name productName  from prj_project a left join cus_customer b on a.customrid=b.id
+  		left join man_emp c on a.managerid = c.id
+  		left join man_emp d on a.salesmanid = d.id
+  		left join cus_product f on a.productid = f.id
+  		 where a.id=#{id}
+  	</select> 
+
+	
+	
+	<update id="update" >
+	  UPDATE prj_project SET name=#{ model.name }
+,customrid=#{ model.customrid }
+,productid=#{ model.productid }
+,starttime=#{ model.starttime }
+,endtime=#{ model.endtime }
+,managerid=#{ model.managerid }
+,pro_state=#{ model.pro_state }
+,receivable=#{ model.receivable }
+,received=#{ model.received }
+,uncollected=#{ model.uncollected }
+,salesmanid=#{ model.salesmanid }
+,signtime=#{ model.signtime }
+,progress=#{ model.progress }
+,member=#{ model.member }
+,remark=#{ model.remark }
+,renew=#{ model.remark }
+,renewtime=#{ model.renewtime }
+,renew_content=#{ model.renew_content }
+ WHERE id=#{model.id}
+	</update>
+	
+	 <!-- 根据对象主键更新 -->
+  	<insert id="save"  >
+     INSERT INTO prj_project(name, customrid,productid, starttime, endtime, managerid, pro_state, receivable, received, uncollected, salesmanid, ordertime,orderempid,signtime,progress,member,remark,renew,renewtime,renew_content, createtime) 
+     VALUES(#{ model.name },#{ model.customrid },#{ model.productid},#{ model.starttime },#{ model.endtime },#{ model.managerid },#{ model.pro_state },#{ model.receivable },#{ model.received },#{ model.uncollected },#{ model.salesmanid },#{ model.ordertime },#{ model.orderempid },#{ model.signtime },#{ model.progress },#{ model.member },#{ model.remark },#{ model.renew },#{ model.renewtime },#{ model.renew_content },unix_timestamp(now())*1000)
+    </insert>
+	
+</mapper>   

@@ -102,7 +102,7 @@ var backurl = "${path}/admin/work/workReport.do";
 					</li>
 					
 					<li><label>今日学习：</label>
-					<textarea name="study" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;"></textarea>
+					<textarea name="study" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height: 200px;"></textarea>
 					</li>
 	    		</ul>
 	    		<div class="btnWrap">

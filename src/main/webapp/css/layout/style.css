@@ -30,6 +30,10 @@ span.label{padding: .3em .6em !important;}
 .cd:after { content:''; display:block; clear:both; }    /*   清除浮动   */
 .fl{float: left;} 
 .fr{float: right;} 
+.txt100{height: 100px !important;}
+.txt80{height: 80px !important;}
+.w340{width: 340px !important;}
+.w300{width: 300px !important;}
 .w260{width: 260px !important;}
 .w220{width: 220px !important;}
 .w200{width: 200px !important;}
@@ -72,6 +76,14 @@ body .modal-dialog {
 padding: 5px;
 
 }
+
+/* js框架样式开始 */
+div.lxr_multipleSelect{
+	display: inline;
+}
+
+/* js框架样式结束 */
+
 
 
 /* jquery 表单效验 */
@@ -711,4 +723,7 @@ body .table_list tr:hover{ background:#F4F4F4;}
 	position: fixed;
 	right: 0;
 	bottom: 0;
+}
+#cusName{
+	font-size: 20px;
 }

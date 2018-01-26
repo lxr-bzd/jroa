@@ -17,7 +17,7 @@ var toInfoUrl = '${path}/customer/customer/customer/view.do';
 	function toAdd(){
 		$app.dialog(toAddUrl,function(){
 			refTable();
-		});
+		},{height:"700px"});
 	}
 	//删除
 	function toRemove(id){
@@ -76,7 +76,7 @@ var toInfoUrl = '${path}/customer/customer/customer/view.do';
     function editById(id){
 		$app.dialog(toEditUrl+'?id='+id+"&sysAction=edit",function(){
 			refTable();
-		});
+		},{height:"700px"});
 	}
 
 	

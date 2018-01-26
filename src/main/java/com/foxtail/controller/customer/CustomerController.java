@@ -1,7 +1,5 @@
 package com.foxtail.controller.customer;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -55,13 +53,14 @@ public class CustomerController extends BaseMybatisController{
 	
 	@RequestMapping("view")
 	@ResponseBody
-	public Object view(String type,CustomerFilter filter,String deptStr,HttpServletRequest request) {
+	public Object view(String type,CustomerFilter filter,String deptStr,String ismy,HttpServletRequest request) {
 		
 		if("info".equals(type))
 			return JsonResult.getSuccessResult(customerService.getById(request.getParameter("id")));
 		else {
 			if(!StringUtils.isEmpty(deptStr))
 			filter.setDeptids(deptStr.split(","));
+			if(ismy!=null)
 			filter.setEmpid(ServiceManager.securityService.getUid());
 			return DataGridResult.getResult(customerService.findForPage(getPagination(request),filter));
 		}

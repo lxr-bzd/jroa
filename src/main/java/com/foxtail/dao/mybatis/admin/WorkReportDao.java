@@ -28,5 +28,6 @@ public interface WorkReportDao {
 	ReportDetail[] getDetail(@Param("reportid")String reportid);
 	
 	void deleteDetail(@Param("reportids")String[] reportids);
+	void deleteExamine(@Param("reportids")String[] reportids);
 }
 

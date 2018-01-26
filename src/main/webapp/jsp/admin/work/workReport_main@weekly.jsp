@@ -81,7 +81,8 @@ var toInfoUrl = '${path}/admin/work/workReport/view.do';
     //操作工具栏
     function operatorFormatter(value, row, index) {
     	var operator='<div class="btn-group">';
-		    
+    	if(row.report_state!=2)
+        	operator+=$app.btn('auth','审核','toExamine(\''+row.id+'\')');
 	    	<shiro:hasPermission name="personnel/organize/place:edit">
 	    		operator+=$app.btn('edit','编辑','editById(\''+row.id+'\')');
 		    </shiro:hasPermission>
@@ -101,9 +102,9 @@ var toInfoUrl = '${path}/admin/work/workReport/view.do';
 </script>
 <script type="text/javascript">
 function toExamine(id){
-	$app.dialog("${path}/admin/work/workReport/toexamine.do?sysModule=daily&id="+id,function(){
+	$app.dialog("${path}/admin/work/workReport/toexamine.do?sysModule=weekly&id="+id,function(){
 		refTable();
-	});
+	},{width:"900px",height:"600px"});
 
 }
 

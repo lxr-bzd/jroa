@@ -95,7 +95,7 @@ var backurl = "${path}/customer/customer/cusType.do";
    			
    			<form id="submit_form" data-isadd="true" method="post" data-action="${path}/customer/customer/cusType/save.do">
    				<ul class="forminfo">
-					<li><label>客户质量：</label><input name="name" type="text" type="text" class="form-control input-primary w260" />
+					<li><label>客户质量：</label><input name="name" type="text" type="text" class="form-control input-primary w300" />
 					</li>
 				
 					
@@ -118,7 +118,7 @@ var backurl = "${path}/customer/customer/cusType.do";
    			<form id="submit_form"  method="post" data-action="${path}/customer/customer/cusType/update.do">
    				<input type="hidden" name="id" value="${vo.id }">
    				<ul class="forminfo">
-					<li><label>客户质量：</label><input name="name" value="${vo.name }" type="text" class="form-control input-primary w260" />
+					<li><label>客户质量：</label><input name="name" value="${vo.name }" type="text" class="form-control input-primary w300" />
 				</li>
 				
 					

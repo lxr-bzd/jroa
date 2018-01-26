@@ -102,10 +102,10 @@ var backurl = "${path}/customer/customer/visit.do";
    				<ul class="forminfo">
 					
 					
-					<li><label>回访时间：</label><input data-lxr="{type:'time',format:'yyyy-MM-dd hh:mm:ss'}" value="" placeholder="回访时间" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary w260" onfocus="WdatePicker({isShowClear:false,dateFmt:'yyyy-MM-dd HH:mm:ss'})" >
+					<li><label>回访时间：</label><input data-lxr="{type:'time',format:'yyyy-MM-dd hh:mm:ss'}" value="" placeholder="回访时间" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary w300" onfocus="WdatePicker({isShowClear:false,dateFmt:'yyyy-MM-dd HH:mm:ss'})" >
     				<input name="time" type="hidden">
     				</li>
-    				<li><label>回访内容：</label><textarea name="info"  rows="" cols=""  class="form-control input-primary w260" style="width:400px;"></textarea>
+    				<li><label>回访内容：</label><textarea name="info"  rows="" cols=""  class="form-control input-primary w300 txt100" style="width:400px;"></textarea>
     				
 					</li>
 	    		</ul>
@@ -123,10 +123,10 @@ var backurl = "${path}/customer/customer/visit.do";
    			<form id="submit_form"  method="post" data-action="${path}/customer/customer/visit/update.do">
    				<input name="id" value="${vo.id }" type="hidden"  />
    				<ul class="forminfo">
-					<li><label>回访时间：</label><input data-lxr="{type:'time',format:'yyyy-MM-dd hh:mm:ss'}"  data-format="{type:'time',val:'${vo.time }',format:'yyyy-MM-dd hh:mm:ss'}" value="" placeholder="回访时间" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary w260" onfocus="WdatePicker({isShowClear:false,dateFmt:'yyyy-MM-dd HH:mm:ss'})" >
+					<li><label>回访时间：</label><input data-lxr="{type:'time',format:'yyyy-MM-dd hh:mm:ss'}"  data-format="{type:'time',val:'${vo.time }',format:'yyyy-MM-dd hh:mm:ss'}" value="" placeholder="回访时间" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary w300" onfocus="WdatePicker({isShowClear:false,dateFmt:'yyyy-MM-dd HH:mm:ss'})" >
     				<input name="time" type="hidden" >
     				</li>
-    				<li><label>回访内容：</label><textarea name="info"  rows="" cols=""  class="form-control input-primary w260" style="width:400px;">${vo.info}</textarea>
+    				<li><label>回访内容：</label><textarea name="info"  rows="" cols=""  class="form-control input-primary w300 txt100" style="width:400px;">${vo.info}</textarea>
     				
 					</li>
 	    		</ul>

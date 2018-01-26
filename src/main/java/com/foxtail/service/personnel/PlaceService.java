@@ -58,8 +58,6 @@ public class PlaceService {
 	}
 	
 	public Pagination findForPage(Pagination page,String[] deptids,String kw) {
-		
-		
 		PageHelper.startPage(page.getPageNo(), page.getPageSize());
 		Page listCountry  = (Page)placeDao.findForPage2(deptids,kw);
 		page.setTotalCount((int)listCountry.getTotal());

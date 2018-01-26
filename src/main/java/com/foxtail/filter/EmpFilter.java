@@ -19,6 +19,7 @@ public class EmpFilter {
 	
 	Integer sex;
 	
+	String placeKw;
 	
 	public String getKw() {
 		return kw;
@@ -81,6 +82,12 @@ public class EmpFilter {
 	}
 	public void setSex(Integer sex) {
 		this.sex = sex;
+	}
+	public String getPlaceKw() {
+		return placeKw;
+	}
+	public void setPlaceKw(String placeKw) {
+		this.placeKw = placeKw;
 	}
 	
 	

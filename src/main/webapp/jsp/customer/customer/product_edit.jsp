@@ -94,7 +94,7 @@ var backurl = "${path}/customer/customer/product.do";
    			
    			<form id="submit_form" data-isadd="true" method="post" data-action="${path}/customer/customer/product/save.do">
    				<ul class="forminfo">
-					<li><label>产品名称：</label><input name="name" type="text" type="text" class="form-control input-primary w260" />
+					<li><label>产品名称：</label><input name="name" type="text" type="text" class="form-control input-primary w300" />
 					</li>
 					
 				<li><label>状态：</label>
@@ -103,7 +103,7 @@ var backurl = "${path}/customer/customer/product.do";
 				</li>
 					
 				<li><label>产品介绍：</label>
-				<textarea name="info" class="form-control input-primary w260"></textarea>
+				<textarea name="info" class="form-control input-primary w300 txt80"></textarea>
 				</li>
 	    		</ul>
 	    		<div class="btnWrap">
@@ -122,7 +122,7 @@ var backurl = "${path}/customer/customer/product.do";
    				<ul class="forminfo">
 					
 				
-					<li><label>产品名称：</label><input name="name" value="${vo.name}" type="text" class="form-control input-primary w260" />
+					<li><label>产品名称：</label><input name="name" value="${vo.name}" type="text" class="form-control input-primary w300" />
 					</li>
 					
 				<li><label>状态：</label>
@@ -131,7 +131,7 @@ var backurl = "${path}/customer/customer/product.do";
 				</li>
 					
 				<li><label>产品介绍：</label>
-				<textarea name="info" class="form-control input-primary w260">${vo.info}</textarea>
+				<textarea name="info" class="form-control input-primary w300 txt80">${vo.info}</textarea>
 				</li>
 	    		</ul>
 	    		<div class="btnWrap">

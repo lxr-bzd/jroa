@@ -24,7 +24,9 @@
   			<foreach collection="ft.deptids" item="id" index="index"
   			 open="(" close=")" separator=",">#{id}</foreach>
   		</if>
+  		<if test="ft.placeKw != null ">AND a.placeid in (SELECT id FROM man_place WHERE name like CONCAT('%',#{ft.placeKw},'%'))</if>
   		ORDER BY a.createtime DESC
+  		
   	</select>
   
 		
@@ -66,6 +68,7 @@
 ,graduation_time=#{ model.graduation_time }
 ,education=#{ model.education }
 ,certificate=#{ model.certificate }
+,account=#{ model.account }
 		,pwd=#{ model.pwd }
 		,contact_addr=#{ model.contact_addr }
 		,state=#{ model.state }

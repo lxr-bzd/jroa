@@ -101,7 +101,7 @@ var backurl = "${path}/admin/work/workReport.do";
 					</li>
 					
 					<li><label>今日学习：</label>
-					<textarea name="" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;">${vo.study }</textarea>
+					<textarea name="" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height: 200px;">${vo.study }</textarea>
 					</li>
 					
 					
@@ -110,9 +110,11 @@ var backurl = "${path}/admin/work/workReport.do";
 					</li>
 					
 					
-					
-	    			<li><label>&nbsp;</label><input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/></li>
-	    		</ul>
+				</ul>
+	    		<div class="btnWrap">
+					<input name="" type="button" class="btn btn-primary" value="确认" onclick="toSubmit()">&nbsp;&nbsp;&nbsp;&nbsp;
+					<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();">
+	    		</div>
     		</form>
     		
 	    </div>

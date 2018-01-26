@@ -142,8 +142,10 @@ var backurl = "${path}/admin/work/workReport.do";
    				
    				</tr>
    				</table>
-					<label>&nbsp;</label><input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/>
-	    		
+					<div class="btnWrap">
+					<input name="" type="button" class="btn btn-primary" value="确认" onclick="toSubmit()">&nbsp;&nbsp;&nbsp;&nbsp;
+					<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();">
+	    		</div>
     		</form>
     		
 </c:if>
@@ -205,8 +207,11 @@ var backurl = "${path}/admin/work/workReport.do";
    				
    				</tbody>
    				</table>
-					<label>&nbsp;</label><input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/>
-	    		
+   				
+				<div class="btnWrap">
+					<input name="" type="button" class="btn btn-primary" value="确认" onclick="toSubmit()">&nbsp;&nbsp;&nbsp;&nbsp;
+					<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();">
+	    		</div>
     		</form>
 		
     		

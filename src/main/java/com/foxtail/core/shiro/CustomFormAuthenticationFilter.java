@@ -60,6 +60,7 @@ public class CustomFormAuthenticationFilter extends FormAuthenticationFilter {
 	@Override
 	protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request,
 			ServletResponse response) {
+	
 		String className = e.getClass().getName();
 		if(e!=null && !UnknownAccountException.class.getName().equals(className)
 				&&!IncorrectCredentialsException.class.getName().equals(className)
@@ -69,7 +70,22 @@ public class CustomFormAuthenticationFilter extends FormAuthenticationFilter {
 		}
 		return super.onLoginFailure(token, e, request, response);
 	}
-
+ 
+	
+	@Override                                                      
+	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
+		// TODO Auto-generated method stub
+		System.out.println(((HttpServletRequest)request).getRequestURI());
+		boolean b = super.isAccessAllowed(request, response, mappedValue);
+		return b;
+	}
+	
+	@Override
+	protected boolean onAccessDenied(ServletRequest request, ServletResponse response, Object mappedValue)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return super.onAccessDenied(request, response, mappedValue);
+	}
 
 	//重写认证通过后的页面跳转，shiro会默认跳转到上一次请求的页面，不适用于iframe的框架
 	@Override
