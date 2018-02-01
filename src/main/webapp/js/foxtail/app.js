@@ -251,20 +251,23 @@ $app.tableUi.time = function(val){
 }
 
 $app.form = function(exp){
-	this.form.multipleSelect($(exp).find("div.lxr_multipleSelect"));
+	var fm = $(exp);
+	fm.find("div.lxr_multipleSelect").each(function(i,e){
+		$app.form.multipleSelect($(e));
+		
+	});
+	fm.find("select.lxr-select").each(function(i,e){
+		$app.form.select($(e));
+		
+	});
+	
 }
 
 $app.form.select = function(select,config){
-	var p = {};
+	//select: lxr-select
+	//p={url:null,val:'',name:'',root:'data'}
+	var p = eval("("+select.attr("data-model")+")");
 	
-	if(!config)p=config;
-	else{
-		p.url = select.attr("data-url");
-		p.val = select.attr("data-val");
-		p.name = select.attr("data-name");
-		p.root = select.attr("data-root");
-		
-	}
 		
 		$.ajax({
 			url:p.url,
@@ -281,7 +284,6 @@ $app.form.select = function(select,config){
 					l = l[ex[i]];
 				}
 				
-				 
 				
 				if(l instanceof Array){
 					
@@ -293,6 +295,7 @@ $app.form.select = function(select,config){
 					
 					select.append(html);
 					
+					if(p.initVal)select.val(p.initVal);
 				}else{
 					console.log(JSON.stringify(p)+":返回数据错误");
 					

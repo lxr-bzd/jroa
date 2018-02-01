@@ -15,8 +15,7 @@
   		WHERE 1=1
   		<if test="ft.kw != null ">AND a.name like CONCAT('%',#{ft.kw},'%')</if>
   		<if test="ft.placeid != null ">AND a.placeid = #{ft.placeid}</if>
-  		<if test="ft.month != null ">AND a.birthday > #{ft.monthFirst} AND a.birthday  &lt; #{ft.monthLast}</if>
-  		
+  		<if test="ft.month != null ">AND FROM_UNIXTIME(a.birthday/1000,'%m')=#{ft.month}</if>
   		<if test="ft.regStart != null ">AND a.entry_time > #{ft.regStart}</if>
   		<if test="ft.regEnd != null ">AND a.entry_time &lt; #{ft.regEnd}</if>
   		<if test="ft.sex != null ">AND a.sex = #{ft.sex}</if>

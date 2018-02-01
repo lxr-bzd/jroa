@@ -1,6 +1,8 @@
 package com.foxtail.dao.mybatis.project;
 
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 import com.foxtail.common.page.Pagination;
 import com.foxtail.filter.ProjectFilter;
@@ -15,5 +17,11 @@ public interface ProjectDao {
 	Project getById(@Param("id")String id);
 	
 	List<Project> findForPage2(@Param("ft")ProjectFilter filter);
+	
+	void saveProduct(@Param("projectid")String prjectid,@Param("productid")String productid);
+	
+	List<Map<String, Object>> findProducts(@Param("projectid")String prjectid);
+	
+	void deleteAllProduct(@Param("ids")String[] prjectids);
 }
 

@@ -1,8 +1,10 @@
 package com.foxtail.model.project;
 
-public class PrjProgress {
+public class PrjLog {
 
 	String id;//int(11)	 'id'
+	String empid;
+	String empName;
 	String prjid;//int(11)	 '项目id'
 	String info;//varchar(200)	 '详情'
 	String time;//bigint(20)	
@@ -11,6 +13,20 @@ public class PrjProgress {
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	
+	public String getEmpid() {
+		return empid;
+	}
+	public void setEmpid(String empid) {
+		this.empid = empid;
+	}
+	
+	public String getEmpName() {
+		return empName;
+	}
+	public void setEmpName(String empName) {
+		this.empName = empName;
 	}
 	public String getPrjid() {
 		return prjid;

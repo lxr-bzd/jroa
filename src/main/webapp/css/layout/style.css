@@ -643,8 +643,15 @@ body .table_list tr:hover{ background:#F4F4F4;}
 	height: 6px;
 	margin-top: 5px;
 	border-radius: 2px;
+	background-color: #dbdbdb;
+}
+.Ranking-strip .strip{
+	display: block;
+	width: 0px;
+	height: 6px;
+	border-radius: 2px;
 	background-color: #fec75a;
-    transition: all .8s;
+	transition: all .8s;
     -webkit-transition: all .8s;
 }
 .Ranking-number{

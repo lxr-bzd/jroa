@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.foxtail.dao.mybatis.project.PrjCollectDao">
+	
+	<sql id="base_column">
+		a.*
+	</sql>
+
+	  
+	<select id="findForPage2" resultType="com.foxtail.model.project.PrjCollect" >
+  		select  <include refid="base_column" />,b.name empName from prj_collect a left join man_emp b on a.empid=b.id
+  		WHERE a.prjid=#{prjid}
+  		ORDER BY time DESC
+  		
+  	</select>
+   
+		
+	<select id="getById" resultType="com.foxtail.model.project.PrjCollect" >
+  		select  <include refid="base_column" /> from prj_collect a where a.id=#{id}
+  	</select> 
+
+	
+	
+	<update id="update" >
+	   UPDATE prj_collect SET 
+money=#{ model.money }
+,remark=#{ model.remark }
+ WHERE id=#{model.id}
+ 
+	</update>
+
+	 <!-- 根据对象主键更新 -->
+  	<insert id="save"  >
+    INSERT INTO prj_collect(empid, prjid, money, time, remark) VALUES(#{ model.empid },#{ model.prjid },#{ model.money },#{ model.time },#{ model.remark })
+     </insert>
+	
+  	
+  
+</mapper>   

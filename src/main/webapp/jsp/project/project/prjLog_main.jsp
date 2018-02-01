@@ -9,10 +9,10 @@
 <%@ include file="/common/global.jsp"%>	
 <title>查询列表</title>
 <script>
-var toAddUrl = '${path}/project/project/prjProgress/toedit.do';
-var deleteUrl = '${path}/project/project/prjProgress/delete.do';
-var toEditUrl = '${path}/project/project/prjProgress/toedit.do';
-var toInfoUrl = '${path}/project/project/prjProgress/view.do';
+var toAddUrl = '${path}/project/project/prjLog/toedit.do';
+var deleteUrl = '${path}/project/project/prjLog/delete.do';
+var toEditUrl = '${path}/project/project/prjLog/toedit.do';
+var toInfoUrl = '${path}/project/project/prjLog/view.do';
 
 	//添加
 	function toAdd(){
@@ -66,7 +66,7 @@ var toInfoUrl = '${path}/project/project/prjProgress/view.do';
 	    		operator+=$app.btn('edit','编辑','editById(\''+row.id+'\')');
 		    
 				operator+=$app.btn('delete','删除','toRemove(\''+row.id+'\')');
-	    	/* <shiro:hasPermission name="project/project/prjProgress:delete">
+	    	/* <shiro:hasPermission name="project/project/prjLog:delete">
 				operator+='<button class="btn btn-danger btn-round btn-xs" onclick="deleteById(\''+row.id+'\')"><i class="glyphicon glyphicon-trash"></i>删除</button>';
 			</shiro:hasPermission> */
 		return operator+'</div>';
@@ -80,7 +80,7 @@ var toInfoUrl = '${path}/project/project/prjProgress/view.do';
 
 <script type="text/javascript">
 $(function(){
-	console.log()
+	
 	$("#mName").html(decodeURIComponent(GetQueryString("prjName")));
 	
 });
@@ -114,7 +114,7 @@ function GetQueryString(name){
 		</div>
     </div>
     	<table class="table_list" id="mainTable" data-toggle="table"
-			data-url="${path}/project/project/prjProgress/view.do?prjid=${param.prjid}" data-pagination="ture" 
+			data-url="${path}/project/project/prjLog/view.do?prjid=${param.prjid}" data-pagination="ture" 
 			data-side-pagination="server" data-cache="false" data-query-params="postQueryParams"
 			data-page-list="[10, 20, 35, 50]" data-page-size= "10" data-method="post"
 			data-show-refresh="false" data-show-toggle="false"
@@ -127,6 +127,7 @@ function GetQueryString(name){
 				
 					<th data-field="" data-checkbox="true"></th>
 					<th data-field="id" >id</th>
+					<th data-field="empName" >操作人</th>
 					<th data-field="info" >记录</th>
 					<th data-field="time" data-formatter="$app.tableUi.time" >时间</th>
 					<th data-field="operator" data-formatter="operatorFormatter">操作</th>

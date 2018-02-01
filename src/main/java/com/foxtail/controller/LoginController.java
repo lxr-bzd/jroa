@@ -112,10 +112,6 @@ public class LoginController {
 	
 	@RequestMapping("/workIndex")
 	public String workIndex(){
-//		System.out.println(SecurityUtils.getSubject().isPermitted("personnel"));
-//		System.out.println(SecurityUtils.getSubject().isPermitted("personnel:839543"));
-//		System.out.println(SecurityUtils.getSubject().isPermitted("personnel:32534"));
-//		System.out.println(SecurityUtils.getSubject().isPermitted("personnel:degtr"));
-		return "layout/work_index";
+		return "work_index";
 	}
 }

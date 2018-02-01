@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -65,6 +65,7 @@ var backurl = "${path}/project/project/project.do";
 	<script type="text/javascript">
 	$(document).ready(function () {
 		if(isedit())$app.form.format($('#submit_form'));
+		if(isedit())initProducts();
 		 
 		 $("#submit_form").validate({
 			 ignore: [],
@@ -93,7 +94,10 @@ var backurl = "${path}/project/project/project.do";
 		});
 	
 	
-
+	function initProducts(){
+		var ps =  $.parseJSON($("#submit_form .products_group").attr("data-val"));
+		renderProducts(ps);
+	}
 	
 	
 	function onSelectCus(){
@@ -114,7 +118,7 @@ var backurl = "${path}/project/project/project.do";
 		$("#submit_form input[name=customrName]").val(data.name);
 		$("#submit_form input[name=customrid]").val(data.id);
 	$("#cusInfo_group").html("联系人："+data.contacts+","+"联系人电话："+data.phone+"");
-		},{content:content,title:"选择项目经理"});
+		},{content:content,title:"选择客户"});
 		
 	}
 	
@@ -123,6 +127,7 @@ var backurl = "${path}/project/project/project.do";
 		var content = $("#productHtml").html();
 		$lxr.dialog(function(body){
 			  body.find('#productTable').bootstrapTable();
+			 
 		}
 		,function(body){
 			var rows = getSelectedRows("productTable");
@@ -130,11 +135,10 @@ var backurl = "${path}/project/project/project.do";
 				$app.alert("未选择一条数据");
 				return false;
 			}
-			
-			var data = rows[0];
-			
-		$("#submit_form input[name=productName]").val(data.name);
-		$("#submit_form input[name=productid]").val(data.id);
+			renderProducts(rows);
+			//var data = rows[0];
+		//$("#submit_form input[name=productName]").val(data.name);
+		//$("#submit_form input[name=productid]").val(data.id);
 			
 		},{content:content,title:"选择产品"});
 	}
@@ -155,6 +159,7 @@ var backurl = "${path}/project/project/project.do";
 		var content = $("#manHtml").html();
 		$lxr.dialog(function(body){
 			  body.find('#manTable').bootstrapTable();
+			  $app.form("#manSearchForm");
 		}
 		,function(body){
 			var rows = getSelectedRows("manTable");
@@ -170,6 +175,50 @@ var backurl = "${path}/project/project/project.do";
 		},{content:content,title:"选择"});
 		
 	}
+	
+	function renderProducts(ps){
+		
+		var eps = [];
+		
+		$("#submit_form .products_group>h3").each(function(i,e){
+			if($(e).find(">input").val()==ps.id)
+				eps.push(ps.id);
+			
+		});
+		
+		var newps = [];
+		
+		for (var i = 0; i < ps.length; i++) {
+			var isexit = false;
+			for (var j = 0; j < eps.length; j++) {
+				if(eps[i]==ps[i].id){isexit=true;break;}
+			}
+			if(!isexit)newps.push(ps[i]);
+			
+			
+		}
+		
+				
+		var html = "";
+		
+		for (var i = 0; i < newps.length; i++) {
+			
+			html+=' <h3 style="display:inline;"><input name="productids" type="hidden" value="'+newps[i].id+'">'
+			+'<span class="label label-default">'+newps[i].name+' <span class="glyphicon glyphicon-remove" onclick="$(this).parent().remove();"></span>'
+			+'</span></h2>';
+		}
+		$("#submit_form .products_group").append(html);
+		//$("#submit_form .products_group").data("products",ps);
+		
+	}
+	
+	
+	$(function(){
+		$app.form("#submit_form");
+		
+		
+	});
+	
 	
 </script>
 </head>
@@ -204,13 +253,16 @@ var backurl = "${path}/project/project/project.do";
 					
 					
 					<li><label>产品：</label>
+					<div class="products_group" style="display:inline;"></div>
+					<input type="button" class="btn btn-primary" value="选择产品" onclick="onSelectProduct()" />
+				<%-- 
 							<div class="input-group w260">
 		            			<input name="productName" readonly="readonly" value="${vo.productName }"  type="text" class="form-control input-primary " />
 		           				<span class="input-group-btn">
 									<button class="btn btn-default" type="button" onclick="onSelectProduct()">选择</button>
 								</span>
 		        			</div>
-								<input name="productid" value="${vo.productid }" type="hidden" />
+								<input name="productid" value="${vo.productid }" type="hidden" /> --%>
 					</li>
 					
 					<li><label>项目经理：</label>
@@ -224,7 +276,7 @@ var backurl = "${path}/project/project/project.do";
 								<input name="managerid"  type="hidden" />
 					
 					</li>
-				<li><label>美工：</label><textarea name="member" rows="" cols="" class="form-control input-primary  w260"></textarea>
+				<li><label>项目成员：</label><textarea name="member" rows="" cols="" class="form-control input-primary  w260"></textarea>
 					</li>
 					
 					<li><label>应收帐款：</label><input name="receivable"  type="text" class="form-control input-primary w260" />
@@ -258,11 +310,8 @@ var backurl = "${path}/project/project/project.do";
 				</li>
 					
 				<li><label>项目进度：</label>
-					<input type="radio"  name="progress" value="1" checked="checked">策划中
-					<input type="radio"  name="progress" value="2"  >开发中
-					<input type="radio"  name="progress" value="3"  >测试中
-					<input type="radio"  name="progress" value="4"  >已完成
-					<input type="radio"  name="progress" value="5"  >待续费
+					<select name="progressid" data-model='{url:"${path}/project/setting/progress/view.do?limit=-1&offset=0",val:"id",name:"name",root:"rows"}' class="lxr-select form-control  w200" style="display: inline;" ></select>
+    			
 				</li>
 				<li><label>续费金额：</label><input name="renew"  type="text" class="form-control input-primary w260" />
 					</li>
@@ -277,9 +326,7 @@ var backurl = "${path}/project/project/project.do";
 					<textarea name="remark" rows="" cols=""class="form-control input-primary  w260"></textarea>
 				</li>
 				
-				
-					
-	    		</ul>
+				</ul>
 	    		<div class="btnWrap">
 					<input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()">&nbsp;&nbsp;&nbsp;&nbsp;
 					<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();">
@@ -308,7 +355,13 @@ var backurl = "${path}/project/project/project.do";
 					</li>
 					
 					
-					<li><label>产品：</label>
+					
+					<li><label>产品：</label><div class="products_group" data-val='${productsJson }' style="display:inline;"></div>
+					
+					<input name="" type="button" class="btn btn-primary" value="选择产品" onclick="onSelectProduct()" />
+					</li>
+					
+					<%-- <li><label>产品：</label>
 							<div class="input-group w260">
 		            			<input name="productName" readonly="readonly" value="${vo.productName }"  type="text" class="form-control input-primary " />
 		           				<span class="input-group-btn">
@@ -316,7 +369,7 @@ var backurl = "${path}/project/project/project.do";
 								</span>
 		        			</div>
 								<input name="productid" value="${vo.productid }" type="hidden" />
-					</li>
+					</li> --%>
 					
 					
 					<li><label>项目经理：</label>
@@ -333,16 +386,14 @@ var backurl = "${path}/project/project/project.do";
 					<li><label>项目成员：</label><textarea name="member" rows="" cols="" class="form-control input-primary  w260">${vo.member }</textarea>
 					</li>
 					
-				
-					
-					
 					<li><label>应收帐款：</label><input name="receivable" value="${vo.receivable }" type="text" class="form-control input-primary w260" />
 					</li>
 					
-					<li><label>实收帐款：</label><input name="received" value="${vo.received }" type="text" class="form-control input-primary w260" />
+					<li><label>实收帐款：</label><input readonly="readonly" value="${vo.received }" type="text" class="form-control input-primary w260" />
 					</li>
 					
-					<li><label>尾款：</label><input name="uncollected" value="${vo.uncollected }" type="text" class="form-control input-primary w260" />
+					<li><label>尾款：</label><input readonly="readonly" value="${vo.receivable-vo.received }" type="text" class="form-control input-primary w260" />
+					<input name="uncollected"  value="${vo.uncollected }" type="hidden"  />
 					</li>
 					
 					<li><label>业务员：</label>
@@ -367,12 +418,8 @@ var backurl = "${path}/project/project/project.do";
 				</li>
 					
 				<li><label>项目进度：</label>
-					<input type="radio"  name="progress" value="1" <c:if test="${vo.progress==1}">checked="checked"</c:if> >策划中
-					<input type="radio"  name="progress" value="2" <c:if test="${vo.progress==2}">checked="checked"</c:if> >开发中
-					<input type="radio"  name="progress" value="3" <c:if test="${vo.progress==3}">checked="checked"</c:if> >测试中
-					<input type="radio"  name="progress" value="4" <c:if test="${vo.progress==4}">checked="checked"</c:if> >已完成
-					<input type="radio"  name="progress" value="5" <c:if test="${vo.progress==5}">checked="checked"</c:if> >待续费
-				</li>
+					<select name="progressid" data-model='{initVal:"${vo.progressid }",url:"${path}/project/setting/progress/view.do?limit=-1&offset=0",val:"id",name:"name",root:"rows"}' class="lxr-select form-control  w200" style="display: inline;" ></select>
+    			</li>
 				<li><label>续费金额：</label><input name="renew" value="${vo.renew}" type="text" class="form-control input-primary w260" />
 					</li>
 				<li><label>续费时间：</label><input data-lxr="{type:'time',format:'yyyy-MM-dd'}" data-format="{type:'time',val:'${vo.renewtime }',format:'yyyy-MM-dd'}" value="" placeholder="时间" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary  w260" onfocus="WdatePicker({isShowClear:false,dateFmt:'yyyy-MM-dd'})" >
@@ -405,10 +452,12 @@ var backurl = "${path}/project/project/project.do";
 </body>
 <script type="text/html" id="manHtml">
 <div class="rightinfo explain_col" style="text-align: left;">
-    		<form id="searchForm" name="searchForm"  method="post">
-			
+    		<form id="manSearchForm"   method="post">
+			<span>所属部门：</span>
+    			<div style="display: inline;" class="lxr_multipleSelect" data-name="deptid" data-model="deptSelect"> </div>
+				
     			<span>职位：</span>
-    			<input name="placeKw" value="" placeholder="职位"  class="form-control input-sm w200" type="text" style="display: inline;" >
+    			<input name="kw" value="" placeholder="职位"  class="form-control input-sm w200" type="text" style="display: inline;" >
     			<input type="button" class="btn btn-info btn-round btn-sm" value="查询" onclick="refTable('#manTable')">
     		</form>
     	</div>
@@ -456,7 +505,7 @@ var backurl = "${path}/project/project/project.do";
 <table class="table_list" id="cusTable" data-toggle="table"
 			data-url="${path}/customer/customer/customer/view.do?state=0" data-pagination="ture" 
 			data-side-pagination="server" data-cache="false" data-query-params="cusQueryParams"
-			data-page-list="[15, 30, 50, 100]" data-page-size= "15" data-method="post"
+			data-page-list="[10, 20, 35, 50]" data-page-size= "10" data-method="post"
 			data-show-refresh="false" data-show-toggle="false"
 			data-show-columns="false" data-toolbar="#toolbar"
 			data-click-to-select="false" data-single-select="true"
@@ -482,11 +531,11 @@ var backurl = "${path}/project/project/project.do";
 <script type="text/html" id="productHtml">
 <table class="table_list" id="productTable" data-toggle="table"
 			data-url="${path}/customer/customer/product/view.do" data-pagination="ture" 
-			data-side-pagination="server" data-cache="false" data-query-params="postQueryParams"
-			data-page-list="[15, 30, 50, 100]" data-page-size= "15" data-method="post"
+			data-side-pagination="server" data-cache="false" data-query-params=""
+			data-page-list="[10, 20, 35, 50]" data-page-size= "10" data-method="post"
 			data-show-refresh="false" data-show-toggle="false"
 			data-show-columns="false" data-toolbar="#toolbar"
-			data-click-to-select="false" data-single-select="true"
+			data-click-to-select="false" data-single-select="false"
 			data-striped="false" data-content-type="application/x-www-form-urlencoded"
 			>
 			<thead>
@@ -506,10 +555,10 @@ function postQueryParams(params) {
 	
 	
 	// $app.form.preSubmit("#searchForm");
-	var queryParams = $("#searchForm").serializeObject();
+	var queryParams = $("#manSearchForm").serializeObject();
 	
-	//var id =  $app.form.multipleSelectVal("#searchForm .lxr_multipleSelect");
-	//if(id||id==0)queryParams.deptStr=deptUnder(id).join(",");
+	var id =  $app.form.multipleSelectVal("#manSearchForm .lxr_multipleSelect");
+	if(id||id==0)queryParams.deptStr=deptUnder(id).join(",");
 	queryParams.limit=params.limit;
 	queryParams.offset=params.offset;
 	//	queryParams.deptid = $app.form.multipleSelectVal("#searchForm .lxr_multipleSelect");

@@ -62,10 +62,11 @@ var toInfoUrl = '${path}/project/project/project/view.do';
 	
 	//设置查询参数
 	function postQueryParams(params) {
+		$app.form.preSubmit("#searchForm");
 		var queryParams = $("#searchForm").serializeObject();
 		queryParams.limit=params.limit;
 		queryParams.offset=params.offset;
-		return queryParams;
+		return $lxr.trimObject(queryParams);
 	}
 	//查询列表
     function refTable(){
@@ -101,7 +102,10 @@ var toInfoUrl = '${path}/project/project/project/view.do';
 		    <shiro:hasPermission name="project/project/project:delete">
 				operator+=$app.btn('delete','删除','toRemove(\''+row.id+'\')');
 	    	</shiro:hasPermission>
-	    	
+	    	<shiro:hasPermission name="project/project/project:delete">
+			operator+=$app.btn({type:'btn-info',img:'glyphicon-usd'},'收款','toPrjCollect(\''+row.id+'\',\''+row.name+'\')');
+			
+    		</shiro:hasPermission>
 		return operator+'</div>';
 	}
     
@@ -113,7 +117,12 @@ var toInfoUrl = '${path}/project/project/project/view.do';
 <script type="text/javascript">
 function todetail(id,name){
 	
-	window.location.href = "${path}/project/project/prjProgress.do?prjid="+id+"&prjName="+encodeURIComponent(name);
+	window.location.href = "${path}/project/project/prjLog.do?prjid="+id+"&prjName="+encodeURIComponent(name);
+}
+
+function toPrjCollect(id,name){
+	window.location.href = "${path}/project/project/prjCollect.do?prjid="+id+"&prjName="+encodeURIComponent(name);
+	
 }
 
 function progressFormatter(val){
@@ -157,6 +166,12 @@ case 2:return "紧急";
 	
 }
 
+$(function(){
+	$app.form("#searchForm");
+	
+	
+});
+
 </script>
 </head>
 <body class="mlr15">
@@ -165,9 +180,21 @@ case 2:return "紧急";
     <div class="rightinfo explain_col">
 		<div>
     		<form id="searchForm" name="searchForm"  method="post">
+    			<span>项目经理：</span>
+    			<input name="empKw" value="" placeholder="项目经理"  class="form-control input-sm w200" type="text" style="display: inline;" >
     			
-    			<span>关键词：</span>
-    			<input name="kw" value="" placeholder="关键词"  class="form-control input-sm w200" type="text" style="display: inline;" >
+    			<span>下单时间：</span>
+    			<input placeholder="开始" data-lxr="{type:'time',format:'yyyy-MM-dd'}" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary" onfocus="WdatePicker({isShowClear:false})">
+    			<input type="hidden" name="startTime">-
+				<input placeholder="结束" data-lxr="{type:'time',format:'yyyy-MM-dd'}" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary" onfocus="WdatePicker({isShowClear:false})">
+				<input type="hidden" name="endTime">
+				
+				<span>项目进度：</span>
+				<select name="progressid" data-model='{url:"${path}/project/setting/progress/view.do?limit=-1&offset=0",val:"id",name:"name",root:"rows"}' class="lxr-select form-control  w200" style="display: inline;" ><option value="">-请选择-</option></select>
+    			
+				<span>关键词：</span>
+    			<input name="kw" value="" placeholder="项目名称"  class="form-control input-sm w200" type="text" style="display: inline;" >
+    			
     			<input type="button" class="btn btn-info btn-round btn-sm" value="查询" onclick="refTable()">
     		</form>
     	</div>
@@ -194,10 +221,10 @@ case 2:return "紧急";
 					<!-- <th data-field="sort" data-formatter="Formatter.sort">序号</th> -->
 					<th data-field="id" >id</th>
 					<th data-field="name" >项目名称</th>
-					<th data-field="productName" >产品</th>
+					
 					<th data-field="customrName" >客户</th>
 					<th data-field="managerName" >项目经理</th>
-					<th data-field="progress" data-formatter="progressFormatter">项目进度</th>
+					<th data-field="progressName" >项目进度</th>
 					<th data-field="signtime" data-formatter="$app.tableUi.date" >签单时间</th>
 					<th data-field="salesmanName" >业务员</th>
 					<th data-field="ordertime" data-formatter="$app.tableUi.date"  >下单时间</th>

@@ -1,5 +1,7 @@
 package com.foxtail.controller.personnel;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -13,6 +15,7 @@ import com.foxtail.common.AppModelMap;
 import com.foxtail.common.DataGridResult;
 import com.foxtail.common.JsonResult;
 import com.foxtail.common.base.BaseMybatisController;
+import com.foxtail.common.util.DateUtils;
 import com.foxtail.filter.EmpFilter;
 import com.foxtail.model.personnel.Emp;
 import com.foxtail.service.personnel.EmpService;
@@ -61,6 +64,11 @@ public class EmpController extends BaseMybatisController{
 		else {
 			if(!StringUtils.isEmpty(deptStr))
 				filter.setDeptids(deptStr.split(","));
+			if(filter.getMonth()!=null) {
+				filter.setMonth(new Date().getMonth());
+				
+			}
+			
 			return DataGridResult.getResult(empService.findForPage(getPagination(request),filter));
 		}
 		

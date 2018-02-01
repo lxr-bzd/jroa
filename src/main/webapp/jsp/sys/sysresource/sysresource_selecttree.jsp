@@ -104,10 +104,13 @@
 		}
 	</script>
 </head>
-<body style="width: 360px; height: 400px;overflow:hidden">
+
+
+<body style="margin-bottom: 45px;">
 	<div id="treeDemo" class="ztree tree_div"></div>
-	<div class="button_div">
-	 <input type="button" class="btn btn-primary" onclick="submitSelect();" value="确定"/>
+	<div class="btnWrap">
+    				<input name="" type="button" class="btn btn-primary" value="确认" onclick="submitSelect();"/>&nbsp;&nbsp;&nbsp;&nbsp;
+    				<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/>
 	</div>
 </body>
 </html>

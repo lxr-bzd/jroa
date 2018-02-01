@@ -1,29 +1,27 @@
 package com.foxtail.controller.project;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.alibaba.fastjson.JSONArray;
-import com.foxtail.bean.ServiceManager;
 import com.foxtail.common.AppModelMap;
 import com.foxtail.common.DataGridResult;
 import com.foxtail.common.JsonResult;
 import com.foxtail.common.base.BaseMybatisController;
-import com.foxtail.filter.ProjectFilter;
-import com.foxtail.model.project.Project;
-import com.foxtail.service.project.ProjectService;
+import com.foxtail.model.project.Progress;
+import com.foxtail.service.project.ProgressService;
 
 
 @Controller
-@RequestMapping("project/project/project")
+@RequestMapping("project/setting/progress")
 @AppModelMap("部门")
-public class ProjectController extends BaseMybatisController{
+public class ProgressController extends BaseMybatisController{
 
 	@Autowired
-	ProjectService projectService;
+	ProgressService progressService;
 	
 	
 	@RequestMapping() 
@@ -36,12 +34,8 @@ public class ProjectController extends BaseMybatisController{
 	public String toEdit(String sysAction,String id,ModelMap modelMap){
 		String jsp= getEditJsp();
 		
-		if("edit".equals(sysAction)) {
-			Project project = projectService.getById(id);
-			modelMap.put("productsJson",JSONArray.toJSONString(project.getProducts()) );
-			modelMap.put("vo", project);
-		}
-		
+		if("edit".equals(sysAction))
+		modelMap.put("vo", progressService.getById(id));
 		return jsp;
 	}
 	
@@ -49,21 +43,20 @@ public class ProjectController extends BaseMybatisController{
 	
 	@RequestMapping("view")
 	@ResponseBody
-	public Object view(String sysType,ProjectFilter filter,HttpServletRequest request) {
+	public Object view(String sysType,HttpServletRequest request) {
 		
 		if("info".equals(sysType))
-			return JsonResult.getSuccessResult(projectService.getById(request.getParameter("id")));
+			return JsonResult.getSuccessResult(progressService.getById(request.getParameter("id")));
 		else 
-		return DataGridResult.getResult(projectService.findForPage(getPagination(request),filter));
+		return DataGridResult.getResult(progressService.findForPage(getPagination(request)));
 	}
 	
 	
 	@RequestMapping("save")
 	@ResponseBody
-	public Object save(Project project) {
-		project.setOrdertime(System.currentTimeMillis());
-		project.setOrderempid(ServiceManager.securityService.getUid());
-		projectService.save(project);
+	public Object save(Progress progress) {
+		
+		progressService.save(progress);
 
 		return JsonResult.getSuccessResult();
 	}
@@ -72,7 +65,7 @@ public class ProjectController extends BaseMybatisController{
 	@ResponseBody
 	public Object delete(String ids) {
 		
-		projectService.delete(ids.split(","));
+		progressService.delete(ids.split(","));
 
 		return JsonResult.getSuccessResult();
 	}
@@ -80,9 +73,10 @@ public class ProjectController extends BaseMybatisController{
 	
 	@RequestMapping("update")
 	@ResponseBody
-	public Object update(Project project) {
+	public Object update(Progress progress) {
 		
-		projectService.update(project);
+		progressService.update(progress);
+
 		return JsonResult.getSuccessResult();
 	}
 	

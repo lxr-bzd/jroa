@@ -96,7 +96,7 @@ var toInfoUrl = '${path}/personnel/organize/place.do';
     function operatorFormatter(value, row, index) {
     	var operator='<div class="btn-group">';
 		    <shiro:hasPermission name="personnel/organize/place:auth">
-				operator+= $app.btn('auth','授权','editById(\''+row.id+'\')');
+				operator+= $app.btn('auth','授权','toAuth(\''+row.roleid+'\')');
 			</shiro:hasPermission>
 		    
 	    	<shiro:hasPermission name="personnel/organize/place:edit">
@@ -196,6 +196,12 @@ function getChilds(ds){
 }
 
 
+function toAuth(roleId){
+	$app.dialog("${path}/sysResourceController/toSelectTree.do?roleId="+roleId,function(){
+		refleshData('mainTable');
+	},{width:"500px",height:"600px"});
+}
+
 </script>
 </head>
 <body class="mlr15">
@@ -237,7 +243,6 @@ function getChilds(ds){
 					<th data-field="name" >职位名称</th>
 					<th data-field="deptName">所属部门</th>
 					<th data-field="manNum">职位人数</th>
-					
 					<th data-field="state" data-formatter="$app.tableUi.state" >状态</th>
 					<th data-field="operator" data-formatter="operatorFormatter">操作</th>
 				</tr>

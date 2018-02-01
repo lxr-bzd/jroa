@@ -7,21 +7,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.foxtail.bean.ServiceManager;
 import com.foxtail.common.AppModelMap;
 import com.foxtail.common.DataGridResult;
 import com.foxtail.common.JsonResult;
 import com.foxtail.common.base.BaseMybatisController;
-import com.foxtail.model.project.PrjProgress;
-import com.foxtail.service.project.PrjProgressService;
+import com.foxtail.model.project.PrjLog;
+import com.foxtail.service.project.PrjLogService;
 
 
 @Controller
-@RequestMapping("project/project/prjProgress")
+@RequestMapping("project/project/prjLog")
 @AppModelMap("部门")
-public class PrjProgressController extends BaseMybatisController{
+public class PrjLogController extends BaseMybatisController{
 
 	@Autowired
-	PrjProgressService prjProgressService;
+	PrjLogService prjLogService;
 	
 	
 	@RequestMapping()
@@ -35,7 +37,7 @@ public class PrjProgressController extends BaseMybatisController{
 		String jsp= getEditJsp();
 		
 		if("edit".equals(sysAction))
-		modelMap.put("vo", prjProgressService.getById(id));
+		modelMap.put("vo", prjLogService.getById(id));
 		return jsp;
 	}
 	
@@ -46,17 +48,17 @@ public class PrjProgressController extends BaseMybatisController{
 	public Object view(String sysType,HttpServletRequest request) {
 		
 		if("info".equals(sysType))
-			return JsonResult.getSuccessResult(prjProgressService.getById(request.getParameter("id")));
+			return JsonResult.getSuccessResult(prjLogService.getById(request.getParameter("id")));
 		else 
-		return DataGridResult.getResult(prjProgressService.findForPage(getPagination(request),request.getParameter("prjid")));
+		return DataGridResult.getResult(prjLogService.findForPage(getPagination(request),request.getParameter("prjid")));
 	}
 	
 	
 	@RequestMapping("save")
 	@ResponseBody
-	public Object save(PrjProgress prjProgress) {
-		
-		prjProgressService.save(prjProgress);
+	public Object save(PrjLog prjLog) {
+		prjLog.setEmpid(ServiceManager.securityService.getUid());
+		prjLogService.save(prjLog);
 
 		return JsonResult.getSuccessResult();
 	}
@@ -65,7 +67,7 @@ public class PrjProgressController extends BaseMybatisController{
 	@ResponseBody
 	public Object delete(String ids) {
 		
-		prjProgressService.delete(ids.split(","));
+		prjLogService.delete(ids.split(","));
 
 		return JsonResult.getSuccessResult();
 	}
@@ -73,9 +75,9 @@ public class PrjProgressController extends BaseMybatisController{
 	
 	@RequestMapping("update")
 	@ResponseBody
-	public Object update(PrjProgress prjProgress) {
-		
-		prjProgressService.update(prjProgress);
+	public Object update(PrjLog prjLog) {
+		prjLog.setEmpid(ServiceManager.securityService.getUid());
+		prjLogService.update(prjLog);
 
 		return JsonResult.getSuccessResult();
 	}

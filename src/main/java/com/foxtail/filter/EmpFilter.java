@@ -1,8 +1,5 @@
 package com.foxtail.filter;
 
-import javax.xml.crypto.Data;
-
-import com.foxtail.common.util.DateUtils;
 
 public class EmpFilter {
 
@@ -13,9 +10,8 @@ public class EmpFilter {
 	Long regStart;
 	Long regEnd;
 	
+	
 	Integer month;
-	Long monthFirst;
-	Long monthLast;
 	
 	Integer sex;
 	
@@ -42,28 +38,13 @@ public class EmpFilter {
 		this.placeid = placeid;
 	}
 	
+	
+
 	public Integer getMonth() {
 		return month;
 	}
-	
 	public void setMonth(Integer month) {
-		
 		this.month = month;
-		setMonthLast(DateUtils.getLastDayOfMonth().getTime());
-		setMonthFirst(DateUtils.getFirstDayOfMonth().getTime());
-		
-	}
-	public Long getMonthFirst() {
-		return monthFirst;
-	}
-	public void setMonthFirst(Long monthFirst) {
-		this.monthFirst = monthFirst;
-	}
-	public Long getMonthLast() {
-		return monthLast;
-	}
-	public void setMonthLast(Long monthLast) {
-		this.monthLast = monthLast;
 	}
 	public Long getRegStart() {
 		return regStart;

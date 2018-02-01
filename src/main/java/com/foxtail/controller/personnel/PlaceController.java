@@ -86,4 +86,6 @@ public class PlaceController extends BaseMybatisController{
 		return JsonResult.getSuccessResult();
 	}
 	
+	
+	
 }

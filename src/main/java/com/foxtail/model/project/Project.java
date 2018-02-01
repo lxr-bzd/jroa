@@ -1,5 +1,8 @@
 package com.foxtail.model.project;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.xmlgraphics.java2d.StrokingTextHandler;
 
 public class Project {
@@ -16,25 +19,26 @@ public class Project {
 	String managerName;
 	Integer pro_state;//int(2)	 '项目状态 1：正常，2：紧急'
 	String receivable;//decimal(10,2)	 '应收帐款'
-	String received;//decimal(10,2)	 '已收帐款'
+	Double received;//decimal(10,2)	 '已收帐款'
 	String uncollected;//decimal(10,2)	 '尾款'
 	String salesmanid;
 	String salesmanName;
 	Long ordertime;//bigint(20)
 	Long signtime;
 	Integer state;
-	Integer progress;
+	Integer progressid;
+	String progressName;
 	String member;
 	
 	String remark;
 	String orderempid;//下单人id
 	String orderempName;
 	
-	
+	List<Map<String, Object>> products;
 	String[] productids;
 	
 	
-	String renew;
+	Double renew;
 	Long renewtime;
 	String renew_content;
 	
@@ -111,10 +115,11 @@ public class Project {
 	public void setReceivable(String receivable) {
 		this.receivable = receivable;
 	}
-	public String getReceived() {
+	
+	public Double getReceived() {
 		return received;
 	}
-	public void setReceived(String received) {
+	public void setReceived(Double received) {
 		this.received = received;
 	}
 	public String getUncollected() {
@@ -123,7 +128,6 @@ public class Project {
 	public void setUncollected(String uncollected) {
 		this.uncollected = uncollected;
 	}
-
 	
 	public String getSalesmanid() {
 		return salesmanid;
@@ -155,11 +159,20 @@ public class Project {
 	public void setState(Integer state) {
 		this.state = state;
 	}
-	public Integer getProgress() {
-		return progress;
+	
+	public Integer getProgressid() {
+		return progressid;
 	}
-	public void setProgress(Integer progress) {
-		this.progress = progress;
+	public void setProgressid(Integer progressid) {
+		this.progressid = progressid;
+	}
+	
+	
+	public String getProgressName() {
+		return progressName;
+	}
+	public void setProgressName(String progressName) {
+		this.progressName = progressName;
 	}
 	public String getRemark() {
 		return remark;
@@ -192,10 +205,11 @@ public class Project {
 	public void setProductids(String[] productids) {
 		this.productids = productids;
 	}
-	public String getRenew() {
+
+	public Double getRenew() {
 		return renew;
 	}
-	public void setRenew(String renew) {
+	public void setRenew(Double renew) {
 		this.renew = renew;
 	}
 	public Long getRenewtime() {
@@ -210,6 +224,13 @@ public class Project {
 	public void setRenew_content(String renew_content) {
 		this.renew_content = renew_content;
 	}
+	public List<Map<String, Object>> getProducts() {
+		return products;
+	}
+	public void setProducts(List<Map<String, Object>> products) {
+		this.products = products;
+	}
+	
 	
 	
 	

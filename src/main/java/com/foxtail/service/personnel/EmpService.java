@@ -90,6 +90,7 @@ public class EmpService {
 		}
 		
 		SysUser sysUser = new SysUser();
+		sysUser.setUserName(emp.getName());
 		sysUser.setAccount(emp.getAccount());
 		sysUser.setPassword(emp.getPwd());
 		Place place = placeService.getById(pEmp.getPlaceid());

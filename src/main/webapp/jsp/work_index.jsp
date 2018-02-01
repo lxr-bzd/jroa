@@ -38,8 +38,10 @@
 	    			</div>
 	    			<div class="Ranking-rank">
 	    				<div class="Ranking-inner">
-	    					<div class="Ranking-strip"></div>
-	    					<span class="Ranking-number" data-rank="15000">1.5万</span>
+	    					<div class="Ranking-strip">
+	    						<span class="strip" data-number="15000"></span>
+	    					</div>
+	    					<span class="Ranking-number">1.5万</span>
 	    				</div>
 	    			</div>
     			</div>
@@ -49,8 +51,10 @@
 	    			</div>
 	    			<div class="Ranking-rank">
 	    				<div class="Ranking-inner">
-	    					<div class="Ranking-strip"></div>
-	    					<span class="Ranking-number" data-rank="14000">1.4万</span>
+	    					<div class="Ranking-strip">
+	    						<span class="strip" data-number="14000"></span>
+	    					</div>
+	    					<span class="Ranking-number">1.4万</span>
 	    				</div>
 	    			</div>
     			</div>
@@ -60,8 +64,10 @@
 	    			</div>
 	    			<div class="Ranking-rank">
 	    				<div class="Ranking-inner">
-	    					<div class="Ranking-strip"></div>
-	    					<span class="Ranking-number" data-rank="13000">1.3万</span>
+	    					<div class="Ranking-strip">
+	    						<span class="strip" data-number="13000"></span>
+	    					</div>
+	    					<span class="Ranking-number">1.3万</span>
 	    				</div>
 	    			</div>
     			</div>
@@ -71,8 +77,10 @@
 	    			</div>
 	    			<div class="Ranking-rank">
 	    				<div class="Ranking-inner">
-	    					<div class="Ranking-strip"></div>
-	    					<span class="Ranking-number" data-rank="12000">1.2万</span>
+	    					<div class="Ranking-strip">
+	    						<span class="strip" data-number="12000"></span>
+	    					</div>
+	    					<span class="Ranking-number">1.2万</span>
 	    				</div>
 	    			</div>
     			</div>
@@ -82,8 +90,10 @@
 	    			</div>
 	    			<div class="Ranking-rank">
 	    				<div class="Ranking-inner">
-	    					<div class="Ranking-strip"></div>
-	    					<span class="Ranking-number" data-rank="13000">1.1万</span>
+	    					<div class="Ranking-strip">
+	    						<span class="strip" data-number="11000"></span>
+	    					</div>
+	    					<span class="Ranking-number">1.1万</span>
 	    				</div>
 	    			</div>
     			</div>
@@ -93,8 +103,10 @@
 	    			</div>
 	    			<div class="Ranking-rank">
 	    				<div class="Ranking-inner">
-	    					<div class="Ranking-strip"></div>
-	    					<span class="Ranking-number" data-rank="12000">1.0万</span>
+	    					<div class="Ranking-strip">
+	    						<span class="strip" data-number="10000"></span>
+	    					</div>
+	    					<span class="Ranking-number">1.0万</span>
 	    				</div>
 	    			</div>
     			</div>
@@ -110,35 +122,35 @@
     	</div>
     </div>
 	<div class="listMain pd20">
-		<ul class="cd">
+		<ul class="cd" id="monthStatistics">
 			<li class="listInner">
 				<div class="list1">
 					<p class="listText">本月新增用户</p>
-					<div class="listNum">28个</div>
+					<div class="listNum"><span class="attr-map listNum" data-map="customerNum">--</span>个</div>
 				</div>
 			</li>
 			<li class="listInner">
 				<div class="list2">
 					<p class="listText">本月签单数</p>
-					<div class="listNum">2单</div>
+					<div class="listNum"><span class="attr-map listNum" data-map="projectNum">--</span>单</div>
 				</div>
 			</li>
 			<li class="listInner">
 				<div class="list3">
 					<p class="listText">本月销售业绩</p>
-					<div class="listNum">18万</div>
+					<div class="listNum"><span class="attr-map listNum" data-map="collectNum">--</span>万</div>
 				</div>
-			</li>
+			</li>	
 			<li class="listInner">
 				<div class="list4">
 					<p class="listText">本月请假人数</p>
-					<div class="listNum">15人</div>
+					<div class="listNum"><span class="attr-map listNum" data-map="leaveNum">--</span>人</div>
 				</div>
 			</li>
 			<li class="listInner">
 				<div class="list5">
 					<p class="listText">本月生日人数</p>
-					<div class="listNum">13人</div>
+					<div class="listNum"><span class="attr-map listNum" data-map="birthdayNum">--</span>人</div>
 				</div>
 			</li>
 		</ul>
@@ -173,6 +185,14 @@
     <script src="jslib/g2.min.js"></script>
     <script src="jslib/data-set.min.js"></script>
 	<script>
+		
+		
+		$('.strip').each(function(){
+			var _this=$(this),number=_this.attr('data-number'),
+				thisW=(number/100000)*100;
+				_this.css('width',thisW+"%");
+		})
+		
 		layui.use('form', function(){
   			var form = layui.form;
 		})
@@ -336,7 +356,7 @@
 
 
 $(function() {
-	
+	//渲染部门
 	$app.request("${path}/personnel/organize/dept/view.do",function(data){
 		var depts = data.data;
 		var deptModel = $lxr.tree(data.data,{pidname:"parentid"});
@@ -351,6 +371,7 @@ $(function() {
 		
 	});
 	
+	//渲染公告
 	$app.request("${path}/admin/information/article/view.do?type=1&state=0&limit=10&offset=0",function(data){
 		var rows = data.rows;
 		
@@ -361,6 +382,25 @@ $(function() {
 		}
 		
 		$("#notice_guoup").html(template("tem_notice",data));
+		
+	});
+	
+	//渲染月统计
+	$app.request("${path}/index/statistics.do",function(data){
+
+		
+		if(data.status!=0)return;
+		$("#monthStatistics .attr-map").each(function(i,e){
+			var vname= $(e).attr("data-map");
+			if(!vname)return;
+			if(vname=='collectNum')
+				$(e).html(data.data[vname]/10000);
+			else
+			$(e).html(data.data[vname]);
+			
+		});
+		
+		
 		
 	});
 	

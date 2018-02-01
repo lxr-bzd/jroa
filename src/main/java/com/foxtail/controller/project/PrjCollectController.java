@@ -1,29 +1,29 @@
 package com.foxtail.controller.project;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.alibaba.fastjson.JSONArray;
+
 import com.foxtail.bean.ServiceManager;
 import com.foxtail.common.AppModelMap;
 import com.foxtail.common.DataGridResult;
 import com.foxtail.common.JsonResult;
 import com.foxtail.common.base.BaseMybatisController;
-import com.foxtail.filter.ProjectFilter;
-import com.foxtail.model.project.Project;
-import com.foxtail.service.project.ProjectService;
+import com.foxtail.model.project.PrjCollect;
+import com.foxtail.service.project.PrjCollectService;
 
 
 @Controller
-@RequestMapping("project/project/project")
+@RequestMapping("project/project/prjCollect")
 @AppModelMap("部门")
-public class ProjectController extends BaseMybatisController{
+public class PrjCollectController extends BaseMybatisController{
 
 	@Autowired
-	ProjectService projectService;
+	PrjCollectService prjCollectService;
 	
 	
 	@RequestMapping() 
@@ -36,12 +36,8 @@ public class ProjectController extends BaseMybatisController{
 	public String toEdit(String sysAction,String id,ModelMap modelMap){
 		String jsp= getEditJsp();
 		
-		if("edit".equals(sysAction)) {
-			Project project = projectService.getById(id);
-			modelMap.put("productsJson",JSONArray.toJSONString(project.getProducts()) );
-			modelMap.put("vo", project);
-		}
-		
+		if("edit".equals(sysAction))
+		modelMap.put("vo", prjCollectService.getById(id));
 		return jsp;
 	}
 	
@@ -49,21 +45,22 @@ public class ProjectController extends BaseMybatisController{
 	
 	@RequestMapping("view")
 	@ResponseBody
-	public Object view(String sysType,ProjectFilter filter,HttpServletRequest request) {
+	public Object view(String sysType,String prjid,HttpServletRequest request) {
 		
 		if("info".equals(sysType))
-			return JsonResult.getSuccessResult(projectService.getById(request.getParameter("id")));
+			return JsonResult.getSuccessResult(prjCollectService.getById(request.getParameter("id")));
 		else 
-		return DataGridResult.getResult(projectService.findForPage(getPagination(request),filter));
+		return DataGridResult.getResult(prjCollectService.findForPage(getPagination(request),prjid));
 	}
 	
 	
 	@RequestMapping("save")
 	@ResponseBody
-	public Object save(Project project) {
-		project.setOrdertime(System.currentTimeMillis());
-		project.setOrderempid(ServiceManager.securityService.getUid());
-		projectService.save(project);
+	public Object save(PrjCollect prjCollect) {
+		prjCollect.setEmpid(ServiceManager.securityService.getUid());
+		if(prjCollect.getTime()==null)
+		prjCollect.setTime(System.currentTimeMillis());
+		prjCollectService.save(prjCollect);
 
 		return JsonResult.getSuccessResult();
 	}
@@ -72,7 +69,7 @@ public class ProjectController extends BaseMybatisController{
 	@ResponseBody
 	public Object delete(String ids) {
 		
-		projectService.delete(ids.split(","));
+		prjCollectService.delete(ids.split(","));
 
 		return JsonResult.getSuccessResult();
 	}
@@ -80,9 +77,10 @@ public class ProjectController extends BaseMybatisController{
 	
 	@RequestMapping("update")
 	@ResponseBody
-	public Object update(Project project) {
+	public Object update(PrjCollect prjCollect) {
 		
-		projectService.update(project);
+		prjCollectService.update(prjCollect);
+
 		return JsonResult.getSuccessResult();
 	}
 	

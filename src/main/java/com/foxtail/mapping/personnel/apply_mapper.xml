@@ -36,7 +36,7 @@
 
 	 <!-- 根据对象主键更新 -->
   	<insert id="save"  >
-     INSERT INTO man_apply(uid, type,leave_type, starttime, endtime, info) VALUES(#{ model.uid },#{ model.type },#{ model.leave_type },#{ model.starttime },#{ model.endtime },#{ model.info })
+     INSERT INTO man_apply(uid, type,leave_type, starttime, endtime, info,createtime) VALUES(#{ model.uid },#{ model.type },#{ model.leave_type },#{ model.starttime },#{ model.endtime },#{ model.info },unix_timestamp(now())*1000)
      </insert>
 	
   	

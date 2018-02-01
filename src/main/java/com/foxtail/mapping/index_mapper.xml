@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.foxtail.dao.mybatis.IndexDao">
+	  
+	<select id="getStatistics" resultType="map" >
+	select a.customerNum,b.projectNum,c.collectNum,d.leaveNum,e.birthdayNum from
+(select count(id) customerNum from cus_customer WHERE createtime>#{cmonthTime}) a,
+(select count(id) projectNum from prj_project WHERE signtime>#{cmonthTime}) b ,
+(select ifnull(sum(money),0) collectNum from prj_collect WHERE time>#{cmonthTime}) c ,
+(select  count(id) leaveNum from man_apply WHERE type=1 AND createtime>#{cmonthTime}) d,
+(select count(id) birthdayNum from man_emp WHERE FROM_UNIXTIME(birthday/1000,'%m')=#{cmonth}) e
+  	</select>
+ </mapper>
+ 

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.foxtail.dao.mybatis.project.ProgressDao">
+	
+	<sql id="base_column">
+		a.*
+	</sql>
+
+	  
+	<select id="findForPage2" resultType="com.foxtail.model.project.Progress" >
+  		select  <include refid="base_column" /> from prj_progress a
+  	</select>
+  
+		
+	<select id="getById" resultType="com.foxtail.model.project.Progress" >
+  		select  <include refid="base_column" /> from prj_progress a where a.id=#{id}
+  	</select> 
+
+	
+	
+	<update id="update" >
+	 UPDATE prj_progress SET
+name=#{ model.name }
+,state=#{ model.state }
+ WHERE id=#{model.id}
+	</update>
+
+	 <!-- 根据对象主键更新 -->
+  	<insert id="save"  >
+INSERT INTO prj_progress( name, state) VALUES(#{ model.name },#{ model.state })
+     </insert>
+	
+	
+	
+	<select id="countProject" resultType="int" >
+  		select ifnull(count(id),0)  from prj_project a where a.progressid in
+	      <foreach collection="ids" item="id" index="index"
+             open="(" close=")" separator=",">
+              #{id}
+          </foreach>
+  	</select> 
+  	
+  
+</mapper>   
