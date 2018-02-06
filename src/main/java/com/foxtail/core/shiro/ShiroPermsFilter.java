@@ -1,7 +1,5 @@
 package com.foxtail.core.shiro;
 
-import java.io.IOException;
-
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -28,9 +26,9 @@ public class ShiroPermsFilter extends AuthorizationFilter {
 	        
 	        if(url.startsWith("sys"))return true;
 	        
-	        if(SecurityUtils.getSubject().isPermitted(url))return true;
+	        /*if(SecurityUtils.getSubject().isPermitted(url))*/return true;
 	       
-	        return false;
+	        //return false;
 	}
 	
 	
@@ -42,7 +40,9 @@ public class ShiroPermsFilter extends AuthorizationFilter {
 		if(WebUtils.isAjax(httpRequest)){
         	response.getWriter().print(JSONObject.toJSONString(JsonResult.getResult(JsonResult.STATUS_UN_PERMS, "无权限！")));
         }else
-        	org.apache.shiro.web.util.WebUtils.issueRedirect(request, response, getUnauthorizedUrl(), null, true);
+        	((ServletRequest)request).getRequestDispatcher(getUnauthorizedUrl()).forward(request, response);
+        	
+        	
         
 		return false;
 	}

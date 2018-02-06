@@ -28,7 +28,6 @@
 				<!-- 将自定义 的FormAuthenticationFilter注入shiroFilter中-->
 				
 				<entry key="authc" value-ref="formAuthenticationFilter" />
-				<entry key="login"  ><bean class="com.foxtail.core.shiro.ShiroLoginFilter"></bean></entry>
 				<entry key="permsFilter"  ><bean class="com.foxtail.core.shiro.ShiroPermsFilter"></bean></entry>
 			</map>
 		</property>
@@ -55,7 +54,7 @@
 				<!-- 配置记住我或认证通过可以访问的地址 -->
 				<!-- /loadAuthorization/pass.do  = user -->
 				<!-- /** = authc 所有url都必须认证通过才可以访问-->
-				<!-- 、、/admin/**=authc,permsFilter -->
+				/admin/**=authc,permsFilter
 				/** =authc
 				
 			</value>

@@ -13,6 +13,7 @@ $app.request = function(url,call,param){
 		type: "post", 
 		dataType:"json",
 		url: url, 
+		data:((param&&param.param)?param.param:""),	
 		beforeSend: function(XMLHttpRequest){ 
 		
 		}, 
@@ -137,7 +138,7 @@ $app.dialog = function(url,onclose,param){
           }
 		});
 	
-	
+	  
 	
 }
 

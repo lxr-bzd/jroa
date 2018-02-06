@@ -15,6 +15,7 @@
   		<if test="ft.type != null ">AND a.type=#{ft.type}</if>
   		<if test="ft.startTime != null ">AND a.createtime > #{ft.startTime}</if>
   		<if test="ft.endTime != null ">AND a.createtime &lt; #{ft.endTime}</if>
+  		<if test="ft.sysView == 'def' ">AND a.empid = #{ft.uid}</if>
   		<if test="ft.deptids != null "> AND b.deptid in
   		  <foreach collection="ft.deptids" item="deptid" index="index"
              open="(" close=")" separator=",">

@@ -1,5 +1,6 @@
 package com.foxtail.controller.personnel;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -65,7 +66,8 @@ public class EmpController extends BaseMybatisController{
 			if(!StringUtils.isEmpty(deptStr))
 				filter.setDeptids(deptStr.split(","));
 			if(filter.getMonth()!=null) {
-				filter.setMonth(new Date().getMonth());
+				Calendar cal = Calendar.getInstance();
+				filter.setMonth(cal.get(Calendar.MONTH )+1);
 				
 			}
 			
@@ -101,6 +103,10 @@ public class EmpController extends BaseMybatisController{
 		empService.update(emp);
 
 		return JsonResult.getSuccessResult();
+	}
+	
+	public static void main(String[] args) {
+		
 	}
 	
 }

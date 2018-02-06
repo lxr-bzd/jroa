@@ -1,8 +1,5 @@
 package com.foxtail.service.admin;
 
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.foxtail.bean.ServiceManager;
@@ -56,6 +53,19 @@ public class WorkReportService {
 	}
 	
 	public Pagination findForPage(Pagination page,WorkReportFilter filter) {
+		
+		switch (filter.getSysView()) {
+		case "all":filter.setDeptids(null);
+			break;
+		case "below":filter.setDeptids(null);
+		break;
+		case "def":filter.setDeptids(null);
+		break;
+		default:filter.setDeptids(new String[0]);
+			break;
+		}
+		
+		
 		PageHelper.startPage(page.getPageNo(), page.getPageSize());
 		Page listCountry  = (Page)workReportDao.findForPage2(filter);
 		page.setTotalCount((int)listCountry.getTotal());

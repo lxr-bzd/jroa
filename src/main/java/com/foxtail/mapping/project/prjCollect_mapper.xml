@@ -22,11 +22,11 @@
 	
 	
 	<update id="update" >
-	   UPDATE prj_collect SET 
-money=#{ model.money }
+	   UPDATE prj_collect SET
+time=#{model.time }
+,money=#{ model.money }
 ,remark=#{ model.remark }
  WHERE id=#{model.id}
- 
 	</update>
 
 	 <!-- 根据对象主键更新 -->

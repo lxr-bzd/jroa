@@ -2,6 +2,7 @@ package com.foxtail.controller.admin;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -78,8 +79,49 @@ public class WorkReportController extends BaseMybatisController{
 		
 		if("info".equals(sysType))
 			return JsonResult.getSuccessResult(workReportService.getById(request.getParameter("id")));
-		else 
-		return DataGridResult.getResult(workReportService.findForPage(getPagination(request),filter));
+		else {
+			
+			resolveSysView(filter);
+			String uid = ServiceManager.securityService.getUid();
+			filter.setUid(uid);
+			return DataGridResult.getResult(workReportService.findForPage(getPagination(request),filter));
+			
+		}
+	
+	}
+	
+	 private void resolveSysView(WorkReportFilter filter) {
+		 String pString = null;
+		switch (filter.getType()) {
+		case 1:pString ="admin/work/workReport?sysModule=daily";
+			
+			break;
+		case 2:pString ="admin/work/workReport?sysModule=weekly";
+		
+		break;
+		case 3:pString ="admin/work/workReport?sysModule=monthly";
+		
+		break;
+
+		default:
+			break;
+		}
+		
+		if (pString==null)return;
+		
+		filter.setSysView("def");
+		
+		if(SecurityUtils.getSubject().isPermitted(pString+"&$sysView=all")) {
+			filter.setSysView("all");
+			return;
+		}
+		
+		if(SecurityUtils.getSubject().isPermitted(pString+"&$sysView=below")) {
+			filter.setSysView("below");
+			return;
+		}
+		
+
 	}
 	
 	

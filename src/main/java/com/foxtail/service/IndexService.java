@@ -2,8 +2,10 @@ package com.foxtail.service;
 
 import java.net.URLDecoder;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -33,28 +35,12 @@ public class IndexService {
 	
 	
 	
-	public void savetest() {
+	public List<Map<String, Object>> findSale(Long starttime,Long endtime) {
 		
-	
-		jdbcTemplate.update("insert into _log(name,val) values(1,2)");
-		
-		if(false)
-		throw new ApplicationException();
-		
-		
-		jdbcTemplate.update("insert into _log(name,val) values(2,3)");
+		return indexDao.findSale(starttime,endtime);
 		
 	}
 	
-	public void save(BaseModel baseModel) {
-		
-		System.out.println(baseModel.getCreator());
-		// TODO Auto-generated method stub
-
-	}
 	
-	public static void main(String[] args) {
-		System.out.println(URLDecoder.decode("&lt;p&gt;21433534543&lt;/p&gt;"));
-	}
 
 }

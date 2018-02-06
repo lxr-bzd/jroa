@@ -23,93 +23,14 @@
     		<div class="header_wrap cd">
     			<h4 class="fl">销售排行</h4>
     			<div class="layui-form fr">
-			     	<select>
-				        <option value="0">2017年10月</option>
-				        <option value="1">2017年11月</option>
-				        <option value="2">2017年12月</option>
-				        <option value="2">2018年01月</option>
+			     	<select id="sale_select" lay-filter="sale_select">
+				    
 			      	</select>
     			</div>
     		</div>
-    		<div class="Ranking-box">
-    			<div class="Ranking-wrap">
-	    			<div class="Ranking-name">01.宋科
-	    				<span class="Ranking-icon"><img src="images/layout/rank_01.png" alt="" /></span>
-	    			</div>
-	    			<div class="Ranking-rank">
-	    				<div class="Ranking-inner">
-	    					<div class="Ranking-strip">
-	    						<span class="strip" data-number="15000"></span>
-	    					</div>
-	    					<span class="Ranking-number">1.5万</span>
-	    				</div>
-	    			</div>
-    			</div>
-    			<div class="Ranking-wrap">
-	    			<div class="Ranking-name">02.艾鹏鹏
-	    				<span class="Ranking-icon"><img src="images/layout/rank_02.png" alt="" /></span>
-	    			</div>
-	    			<div class="Ranking-rank">
-	    				<div class="Ranking-inner">
-	    					<div class="Ranking-strip">
-	    						<span class="strip" data-number="14000"></span>
-	    					</div>
-	    					<span class="Ranking-number">1.4万</span>
-	    				</div>
-	    			</div>
-    			</div>
-    			<div class="Ranking-wrap">
-	    			<div class="Ranking-name">03.李培
-	    				<!--<span class="Ranking-icon"><img src="images/layout/rank_02.png" alt="" /></span>-->
-	    			</div>
-	    			<div class="Ranking-rank">
-	    				<div class="Ranking-inner">
-	    					<div class="Ranking-strip">
-	    						<span class="strip" data-number="13000"></span>
-	    					</div>
-	    					<span class="Ranking-number">1.3万</span>
-	    				</div>
-	    			</div>
-    			</div>
-    			<div class="Ranking-wrap">
-	    			<div class="Ranking-name">04.傅黎明
-	    				<!--<span class="Ranking-icon"><img src="images/layout/rank_02.png" alt="" /></span>-->
-	    			</div>
-	    			<div class="Ranking-rank">
-	    				<div class="Ranking-inner">
-	    					<div class="Ranking-strip">
-	    						<span class="strip" data-number="12000"></span>
-	    					</div>
-	    					<span class="Ranking-number">1.2万</span>
-	    				</div>
-	    			</div>
-    			</div>
-    			<div class="Ranking-wrap">
-	    			<div class="Ranking-name">05.涂国庆
-	    				<!--<span class="Ranking-icon"><img src="images/layout/rank_02.png" alt="" /></span>-->
-	    			</div>
-	    			<div class="Ranking-rank">
-	    				<div class="Ranking-inner">
-	    					<div class="Ranking-strip">
-	    						<span class="strip" data-number="11000"></span>
-	    					</div>
-	    					<span class="Ranking-number">1.1万</span>
-	    				</div>
-	    			</div>
-    			</div>
-    			<div class="Ranking-wrap">
-	    			<div class="Ranking-name">04.刘丽
-	    				<!--<span class="Ranking-icon"><img src="images/layout/rank_02.png" alt="" /></span>-->
-	    			</div>
-	    			<div class="Ranking-rank">
-	    				<div class="Ranking-inner">
-	    					<div class="Ranking-strip">
-	    						<span class="strip" data-number="10000"></span>
-	    					</div>
-	    					<span class="Ranking-number">1.0万</span>
-	    				</div>
-	    			</div>
-    			</div>
+    		<div class="Ranking-box" id="sale_group">
+    		
+    		
     		</div>
     	</div>
     	<div class="calendar">
@@ -161,10 +82,7 @@
 				<h4 class="fl">销售业绩及单数</h4>
 				<div class="layui-form fr">
 			     	<select>
-				        <option value="0">2017年10月</option>
-				        <option value="1">2017年11月</option>
-				        <option value="2">2017年12月</option>
-				        <option value="2">2018年01月</option>
+				      
 			      	</select>
 				</div>
 			</div>
@@ -404,7 +322,59 @@ $(function() {
 		
 	});
 	
+	
+	//渲染销售额排行
+	layui.use('form', function(){
+		  var form = layui.form;
+		  form.on('select(sale_select)', function(data){
+				onChangeSale(data.value);
+				}); 
+		});
+	
+	
+	for (var i = 0; i < 5; i++) {
+		var vdate = getMonthFirst(i);
+		
+		$("#sale_select").append('<option value="'+vdate.getTime()+'">'+vdate.format("yyyy-MM")+'</option>');
+		
+	}
+	
+	onChangeSale($("#sale_select").val());
+	
+	
+	
+	
+	
+	
 });
+
+
+
+
+function onChangeSale(val){
+	var starttime = val;
+	var endtime = getMonthLast(new Date(new Number(starttime))).getTime();
+	
+	
+	//渲染x销售月统计
+	$app.request("${path}/index/sale.do",function(data){
+		if(data.status!=0)return;
+		
+		$("#sale_group").empty();
+		if(!data.data)return;
+		
+		for (var i = 0; i < data.data.length; i++) {
+			data.data[i].sort = i+1;
+			data.data[i].collectNumView = data.data[i].collectNum/10000;
+			var html = template("tem_sale",data.data[i]);
+			$("#sale_group").append(html);
+		}
+		refSale();
+		
+		
+		
+	},{param:{starttime:starttime,endtime:endtime}});
+}
 
 
 
@@ -412,6 +382,42 @@ function viewNotice(id){
 	$app.dialog("${path}/admin/information/article/toinfo.do?id="+id,null,{width:"800px",height:"500px"});
 }
 
+
+
+
+function refSale(){
+	
+	
+	
+	$("#sale_group>.Ranking-wrap .Ranking-strip").each(function(i,e){
+		//以30万为基数
+		var bl =  $(e).find(".strip").attr("data-number")/300000;
+		var width = $(e).width()*bl
+		 $(e).find(".strip").css("width",width);
+		
+	});
+	
+}
+
+
+</script>
+<script type="text/javascript">
+
+function getMonthFirst(n){ 
+	var cdate = new Date();
+	var monthStartDate = new Date(cdate.getFullYear() , cdate.getMonth()-n, 1); 
+	return monthStartDate; 
+	} 
+
+
+function getMonthLast(cdate)     
+{     
+    var Nowdate=cdate;     
+    var MonthNextFirstDay=new Date(Nowdate.getFullYear(),Nowdate.getMonth()+1,1);     
+    var MonthLastDay=new Date(MonthNextFirstDay-86400000);     
+    M=Number(MonthLastDay.getMonth())+1     
+    return MonthLastDay;     
+}
 
 </script>
 </body>
@@ -428,5 +434,22 @@ function viewNotice(id){
 </a>
 </li>
 {{/each}}
+</script>
+
+<script type="text/html" id="tem_sale">
+
+<div class="Ranking-wrap">
+	    			<div class="Ranking-name">{{sort}}.{{empName}}
+	    				<!--<span class="Ranking-icon"><img src="images/layout/rank_02.png" alt="" /></span>-->
+	    			</div>
+	    			<div class="Ranking-rank">
+	    				<div class="Ranking-inner">
+	    					<div class="Ranking-strip">
+	    						<span class="strip" data-number="{{collectNum}}"></span>
+	    					</div>
+	    					<span class="Ranking-number">{{collectNumView}}万</span>
+	    				</div>
+	    			</div>
+    			</div>
 </script>
 </html>

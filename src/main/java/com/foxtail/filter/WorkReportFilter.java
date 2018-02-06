@@ -6,8 +6,12 @@ public class WorkReportFilter {
 	
 	String[] deptids;
 	
+	String sysView;
+	
 	Long startTime;
 	Long endTime;
+	
+	String uid;
 
 	public Integer getType() {
 		return type;
@@ -39,6 +43,22 @@ public class WorkReportFilter {
 
 	public void setEndTime(Long endTime) {
 		this.endTime = endTime;
+	}
+
+	public String getSysView() {
+		return sysView;
+	}
+
+	public void setSysView(String sysView) {
+		this.sysView = sysView;
+	}
+
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 
 	

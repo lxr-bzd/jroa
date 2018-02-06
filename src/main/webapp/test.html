@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<script src="/myEMIS/jslib/jquery.min-1.11.js"></script>
+<script type="text/javascript" src="/myEMIS/js/foxtail/Tools.js"></script>
+<script type="text/javascript">
+/* var getTree = function(array,op){
+	
+	
+	if(!op)op = {};
+	
+	var pidname = !op.pidname?"pid":op.pidname;
+	var childname = op.childname?op.childname:"childs";
+	var idname = op.idname?op.idname:"id";
+	
+	var root = [];
+	for (var i = 0; i < array.length; i++) {
+		if(op.rootval==array[i][pidname])
+			root.push(array[i]);
+		
+		
+		var pid = array[i][idname];
+		
+		array[i].childs = getbyPid(array,pid);
+	}
+	
+	
+	
+	function getbyPid(array,pid){
+		
+		var l = [];
+		 for (var i = 0; i < array.length; i++) {
+			if(array[i][pidname]==pid)
+				l.push(array[i]);
+		}
+		 
+		 return l;
+	}
+	
+	
+	
+	
+	
+	
+	return root;
+	
+}
+
+
+
+var zNodes = [];
+var tree = getTree(zNodes,{pidname:"pId",rootval:'0'})
+
+var roothtml = $('<tbody id="treeTable2" class="ztree tree_table"></tbody>')
+
+for (var i = 0; i < tree.length; i++) {
+	roothtml.append('<tr id="'+tree[i].id+'" '+(tree[i].childs.length>0?'hasChild="true"':'')+'><td><span controller="true">'+tree[i].id+'</span></td> <td>内容</td></tr>');
+	readerChilds(tree[i],roothtml);
+}
+
+
+console.log(roothtml.html());
+
+function readerChilds(pnode,$html){
+	
+	for (var i = 0; i < pnode.childs.length; i++) {
+		$html.find('#'+pnode.id).after('<tr id="'+pnode.childs[i].id+'" pId="'+pnode.childs[i].pId+'" '+(tree[i].childs.length>0?'hasChild="true"':'')+'><td><span controller="true">'+pnode.childs[i].id+'</span></td> <td>内容</td></tr>');
+		readerChilds(pnode.childs[i],$html);
+	}
+	
+	
+}
+
+
+
+ */
+ 
+ 
+ 
+
+</script>
+
+</head>
+<body onload="alert('egfer')">
+<a href="www.baidu.com">dfhfgjn </a>
+
+</body>
+</html>

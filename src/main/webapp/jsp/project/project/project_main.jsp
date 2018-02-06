@@ -7,6 +7,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/common/global.jsp"%>	
+<script type="text/javascript" src="${path}/js/tableExport.min.js"></script>
+<script type="text/javascript" src="${path}/js/jquery.base64.js"></script>
 <title>查询列表</title>
 <script>
 var toAddUrl = '${path}/project/project/project/toedit.do';
@@ -156,9 +158,7 @@ function pro_stateFormatter(val){
 	case 1:
 		return "正常";
 		break;
-case 2:return "紧急";
-		
-		break;
+case 2:return "紧急";break;
 
 	default:
 		break;
@@ -171,6 +171,48 @@ $(function(){
 	
 	
 });
+
+
+function onExcell(){
+	 if($("#mainTable").bootstrapTable('getSelections').length<1){
+		 $app.alert("请选中要导出的数据");
+		 return;
+	 }
+		
+	
+var unselect = getUnSelectRows();
+	$('#mainTable').tableExport({type:'excel',ignoreColumn: [0,1,11],ignoreRow:unselect
+		, separator:';', escape:'false'
+			,bootstrap: true
+	,fileName: '通讯录表格-'+new Date().format("yyyy-MM-dd")});
+	
+}
+
+function getUnSelectRows(){
+	var tb= $("#mainTable");
+	var conunt = tb.bootstrapTable('getOptions').totalRows;
+	var rowSelected = tb.bootstrapTable('getSelections');
+	var all = tb.bootstrapTable('getData');
+	var ret = [];
+	for (var i = 0; i < all.length; i++) {
+		
+		var selected = false;
+		
+		for (var j = 0; j < rowSelected.length; j++) 
+			if(all[i].id==rowSelected[j].id){
+				selected=true;
+				break;
+			}
+		
+		
+		if(!selected)ret.push(i+1);
+		
+	}
+	
+	return ret;
+	
+}
+
 
 </script>
 </head>
@@ -199,7 +241,9 @@ $(function(){
     		</form>
     	</div>
 	    <div id="toolbar" class="btn-group">
-	   
+	    <button class="btn btn-success btn-round btn-sm" onclick="onExcell()">
+						<i class="glyphicon glyphicon-folder-open"></i>  &nbsp;导出excell
+				</button>
 	   <button class="btn btn-info btn-round  btn-sm" onclick="toAdd();" >
 					<i class="glyphicon glyphicon-plus"></i> 添加
 		</button>

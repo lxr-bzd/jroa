@@ -42,20 +42,16 @@ public class IndexControler extends BaseMybatisController{
 	
 	 
 	
-	@RequestMapping("update")
-	private Object getResult(String name) {
-		SqlExcute excute = jdbcTemplate.queryForObject("select * from sys_plan where name = ?", new String[]{name}, SqlExcute.class);
-
-		if("list".equals(excute.getExpect()))
-			return jdbcTemplate.queryForList(excute.sql);
-		else if("map".equals(excute.getExpect()))
-			return jdbcTemplate.queryForMap(excute.sql);
-		else if("int".equals(excute.getExpect()))
-			return jdbcTemplate.queryForInt(excute.sql);
+	@RequestMapping("sale")
+	@ResponseBody
+	public Object getResult(Long starttime,Long endtime) {
 		
-		return null;
+		return JsonResult.getSuccessResult(indexService.findSale(starttime, endtime));
 		
 	}
+	
+	
+	
 	
 
 }

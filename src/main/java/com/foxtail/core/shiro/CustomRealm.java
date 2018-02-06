@@ -2,7 +2,6 @@ package com.foxtail.core.shiro;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -15,7 +14,6 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.foxtail.model.sys.SysResource;
 import com.foxtail.model.sys.SysUser;
 import com.foxtail.service.sys.SysResourceService;
@@ -106,6 +104,7 @@ public class CustomRealm extends AuthorizingRealm{
 		List<String> roleList = sysRoleService.findRoleTypesByUserId(sysUser.getId());
 		SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
 		simpleAuthorizationInfo.addStringPermissions(permissions);
+		
 		simpleAuthorizationInfo.addRoles(roleList);//角色类型
 		
 		return simpleAuthorizationInfo;

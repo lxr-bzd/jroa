@@ -80,12 +80,7 @@ public class CustomFormAuthenticationFilter extends FormAuthenticationFilter {
 		return b;
 	}
 	
-	@Override
-	protected boolean onAccessDenied(ServletRequest request, ServletResponse response, Object mappedValue)
-			throws Exception {
-		// TODO Auto-generated method stub
-		return super.onAccessDenied(request, response, mappedValue);
-	}
+	
 
 	//重写认证通过后的页面跳转，shiro会默认跳转到上一次请求的页面，不适用于iframe的框架
 	@Override
