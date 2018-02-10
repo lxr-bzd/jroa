@@ -39,7 +39,7 @@ var backurl = "${path}/personnel/organize/level.do";
 					});
 				
 				}else
-					$app.alert('编辑失败');
+					$app.alert(data.msg?data.msg:'编辑失败');
 				
 			}
 		});

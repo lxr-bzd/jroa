@@ -84,10 +84,10 @@ var toInfoUrl = '${path}/admin/information/article/view.do';
     	  <shiro:hasPermission name="personnel/organize/place:info">
  	     operator+=$app.btn('info','查看','toInfo(\''+row.id+'\')');
  			</shiro:hasPermission> 
-	    	<shiro:hasPermission name="personnel/organize/place:edit">
+	    	<shiro:hasPermission name="admin/institution/article/update?sysModule=institution&sysAction=edit">
 	    		operator+=$app.btn('edit','编辑','editById(\''+row.id+'\')');
 		    </shiro:hasPermission>
-		    <shiro:hasPermission name="personnel/organize/place:delete">
+		    <shiro:hasPermission name="admin/institution/article/delete?sysModule=institution">
 				operator+=$app.btn('delete','删除','toRemove(\''+row.id+'\')');
 	    	</shiro:hasPermission>
 	   
@@ -119,9 +119,12 @@ var toInfoUrl = '${path}/admin/information/article/view.do';
     	</div>
 	    <div id="toolbar" class="btn-group">
 	   
-	   <button class="btn btn-info btn-round  btn-sm" onclick="toAdd();" >
+	   <shiro:hasPermission name="admin/institution/article/update?sysModule=institution">
+				<button class="btn btn-info btn-round  btn-sm" onclick="toAdd();" >
 					<i class="glyphicon glyphicon-plus"></i> 添加
 		</button>
+	    	</shiro:hasPermission>
+	   
 		</div>
     </div>
     	<table class="table_list" id="mainTable" data-toggle="table"
@@ -148,11 +151,15 @@ var toInfoUrl = '${path}/admin/information/article/view.do';
 			</thead>
 		</table>
 		
+		<shiro:hasPermission name="admin/institution/article/delete?sysModule=institution">
+			
+	    	
     <div class="select_btn">
 	   	<label class="select_all">
 	   		<input type="checkbox" name="checkall" onclick="if($('#mainTable thead input[name=btSelectAll]').prop('checked')!=this.checked)$('#mainTable thead input[name=btSelectAll]').click();"> 全选/取消
 	   	</label>
 	   	<button class="btn btn-danger btn-round btn-xs" onclick="toRemove()"><i class="glyphicon glyphicon-trash"></i> 批量删除</button>
 	</div>
+	</shiro:hasPermission>
 </body>
 </html>

@@ -36,7 +36,7 @@ var backurl = "${path}/project/project/prjProgress.do";
 						goBackList();
 					});
 				
-				else $app.alert('编辑失败');
+				else $app.alert(data.msg?data.msg:'编辑失败');
 				
 			}
 		});

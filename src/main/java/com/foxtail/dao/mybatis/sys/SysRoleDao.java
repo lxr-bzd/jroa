@@ -11,7 +11,7 @@ import com.foxtail.vo.sys.SysRoleVo;
 
 public interface SysRoleDao extends BaseMybatisDao<SysRole,Integer> {	
     
-    public void deleteByIds(@Param("ids") List<Integer> ids);
+    public void deleteByIds(@Param("ids")String[] ids);
     
     public List<SysRole> selectList(SysRole sysRole);
   

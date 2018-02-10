@@ -33,7 +33,7 @@
 		 					});
 						 
 					   }else
-						   $app.alert("删除失败");
+						   $app.alert(json.msg);
 						   
 					   
 				},"json");

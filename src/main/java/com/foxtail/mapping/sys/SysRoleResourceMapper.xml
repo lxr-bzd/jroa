@@ -136,4 +136,11 @@
 		delete from t_sys_role_resource
 		where role_id= #{roleId,jdbcType=INTEGER}
 	</delete>
+	
+	<delete id="deleteByRoleIds" >
+		delete from t_sys_role_resource
+		where role_id in  
+		<foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+              #{id}</foreach>
+	</delete>
 </mapper>   

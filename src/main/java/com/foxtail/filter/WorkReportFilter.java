@@ -12,6 +12,8 @@ public class WorkReportFilter {
 	Long endTime;
 	
 	String uid;
+	
+	String udeptid;
 
 	public Integer getType() {
 		return type;
@@ -59,6 +61,14 @@ public class WorkReportFilter {
 
 	public void setUid(String uid) {
 		this.uid = uid;
+	}
+
+	public String getUdeptid() {
+		return udeptid;
+	}
+
+	public void setUdeptid(String udeptid) {
+		this.udeptid = udeptid;
 	}
 
 	

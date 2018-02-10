@@ -8,6 +8,11 @@ public class ProjectFilter {
 	Long startTime;
 	Long endTime;
 	String progressid;
+	
+	
+	String uid;
+	String sysView;
+	
 
 	public String getKw() {
 		return kw;
@@ -49,6 +54,22 @@ public class ProjectFilter {
 
 	public void setProgressid(String progressid) {
 		this.progressid = progressid;
+	}
+
+	public String getSysView() {
+		return sysView;
+	}
+
+	public void setSysView(String sysView) {
+		this.sysView = sysView;
+	}
+
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 	
 	

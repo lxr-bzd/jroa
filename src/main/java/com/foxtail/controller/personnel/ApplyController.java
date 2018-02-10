@@ -52,6 +52,7 @@ public class ApplyController extends BaseMybatisController{
 			return JsonResult.getSuccessResult(applyService.getById(request.getParameter("id")));
 		else {
 			filter.setUid(ServiceManager.securityService.getUid());
+			filter.setSysView("def");
 			return DataGridResult.getResult(applyService.findForPage(getPagination(request),filter));
 			
 		}

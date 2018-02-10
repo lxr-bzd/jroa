@@ -12,5 +12,12 @@
 		diskExpiryThreadIntervalSeconds="120"
 		memoryStoreEvictionPolicy="LRU">
 	</defaultCache>
+	 <cache name="shiro-activeSessionCache"  
+           maxElementsInMemory="1000"  
+           overflowToDisk="true"  
+           timeToLiveSeconds="0"  
+           timeToIdleSeconds="0"  
+           diskPersistent="true"  
+           diskExpiryThreadIntervalSeconds="600"/>  
 </ehcache>
 

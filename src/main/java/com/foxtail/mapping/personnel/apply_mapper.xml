@@ -7,11 +7,19 @@
 	</sql>
 
 	  
-	<select id="findForPage" resultType="com.foxtail.model.personnel.Apply" >
-  		select  <include refid="base_column" />,b.name uname,b.identifier from man_apply a left join man_emp b
+	<select id="findForPage2" resultType="com.foxtail.model.personnel.Apply" >
+  		select  <include refid="base_column" />,b.name uname,b.identifier,c.name deptName from man_apply a left join man_emp b
   		on a.uid = b.id
-  		 WHERE uid = #{ft.uid}
+  		left join man_dept c on b.deptid = c.id
+  		 WHERE 1=1 
+  		 <if test="ft.uid != null ">AND a.uid = #{ft.uid}</if>
   		<if test="ft.applytype != null ">AND a.type = #{ ft.applytype }</if>
+  		<if test="ft.deptids != null ">AND b.deptid in
+	      <foreach collection="ft.deptids" item="id" index="index"
+             open="(" close=")" separator=",">
+              #{id}
+          </foreach>
+  		</if>
   		ORDER BY a.createtime DESC
   	</select>
   

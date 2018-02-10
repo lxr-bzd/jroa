@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.foxtail.common.JsonResult;
 import com.foxtail.common.base.BaseMybatisController;
 import com.foxtail.common.page.Pagination;
 import com.foxtail.common.util.PinyinUtil;
@@ -104,16 +105,11 @@ public class SysUserController extends BaseMybatisController {
 	 */
 	@RequestMapping("/deleteById")
 	@ResponseBody
-	public JsonData deleteById(String  ids) {
-		JsonData json = new JsonData();
-		try {
+	public Object deleteById(String  ids) {
+		
 			this.sysUserService.deleteIds(ids);
-			json.setSuccess(true);
-			json.setMsg("删除成功");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return json;
+			
+			return JsonResult.getSuccessResult("删除成功");
 	}
 	
 	/**

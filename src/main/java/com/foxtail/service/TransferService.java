@@ -1,10 +1,14 @@
 package com.foxtail.service;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.foxtail.model.personnel.Emp;
+import com.foxtail.model.personnel.Place;
 import com.foxtail.model.sys.SysUser;
 import com.foxtail.model.sys.SysUserRole;
+import com.foxtail.service.personnel.PlaceService;
 import com.foxtail.service.sys.SysUserRoleService;
 import com.foxtail.service.sys.SysUserService;
 
@@ -23,20 +27,56 @@ public class TransferService {
 	@Autowired
 	SysUserRoleService sysUserRoleService;
 	
-	public void updateAccount(SysUser sysUser,String roleid) {	
-     SysUser user = sysUserService.findSingleUser(sysUser.getAccount());
+	@Autowired
+	PlaceService placeService;
+	
+	
+	
+	public void updateAccountByEmp(Emp emp,Emp pEmp) {	
 		
-		if(user==null) 
-			createAccount(sysUser, roleid);
-		else {
-			sysUserService.updateByAccount(sysUser);
-			SysUserRole sysUserRole = new SysUserRole();
-			sysUserRole.setRoleId(Integer.parseInt(roleid));
-			sysUserRole.setUserId(user.getId());
-			sysUserService.setUserRole(new SysUserRole[] {sysUserRole});
-		}
+		
+		Place place = placeService.getById(pEmp.getPlaceid());
+		String roleid = place.getRoleid();
+		if(StringUtils.isEmpty(emp.getAccount())){
+			if(!StringUtils.isEmpty(pEmp.getAccount()))
+				sysUserService.deleteByAccouts(new String[]{pEmp.getAccount()});
 			
+			
+		}else {
+			
+			
+			if(!StringUtils.isEmpty(pEmp.getAccount())) {
+				 SysUser user = sysUserService.findSingleUser(pEmp.getAccount());
+					user.setUserName(emp.getName());
+					user.setAccount(emp.getAccount());
+					user.setPassword(emp.getPwd());
+					updateAccount(user, roleid);
+					
+			}else {
+				SysUser sysUser = new SysUser();
+				sysUser.setUserName(emp.getName());
+				sysUser.setAccount(emp.getAccount());
+				sysUser.setPassword(emp.getPwd());
+				createAccount(sysUser, roleid);
+				
+			}
+			
+			
+		}
+		
+		
+		}
+	
+	
+	public void updateAccount(SysUser sysUser,String roleid) {
+		sysUserService.updateByPrimaryKey(sysUser);
+
+		SysUserRole sysUserRole = new SysUserRole();
+		sysUserRole.setRoleId(Integer.parseInt(roleid));
+		sysUserRole.setUserId(sysUser.getId());
+		sysUserService.setUserRole(new SysUserRole[] {sysUserRole});
 	}
+	
 	
 	
 	public void createAccount(SysUser sysUser,String roleid) {
@@ -47,6 +87,7 @@ public class TransferService {
 		userRole.setRoleId(Integer.parseInt(roleid));
 		userRole.setUserId(sysUser.getId());
 		sysUserRoleService.insert(userRole);
+		
 
 	}
 	

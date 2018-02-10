@@ -10,7 +10,6 @@ import com.foxtail.vo.sys.SysRoleVo;
 
 public interface SysRoleService extends BaseMybatisService<SysRole,Integer> {	
     
-    public void deleteIds(String ids);
     
      public void deleteIds(String[] ids);
     

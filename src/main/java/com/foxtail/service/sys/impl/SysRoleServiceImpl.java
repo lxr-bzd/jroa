@@ -83,12 +83,6 @@ public class SysRoleServiceImpl implements SysRoleService{
     public void deleteAll() {
 		this.sysRoleDao.deleteAll();
     }
-
-    @Override
-    public void deleteIds(String ids){
-    	String [] idArr=ids.split(",");
-    	deleteIds(idArr);
-    }
     
     @Override
 	public void deleteIds(String[] ids) {
@@ -96,29 +90,13 @@ public class SysRoleServiceImpl implements SysRoleService{
 		if(ids==null||ids.length<1)
 			throw new ApplicationException("删除数量不能为空");
 		
+			sysRoleResourceDao.deleteByRoleIds(ids);
+			sysUserRoleDao.deleteByRoleIds(ids);
+			
+			this.sysRoleDao.deleteByIds(ids);
 		
-    	if (ids.length>1) {
-			List<Integer> idsList=new ArrayList<Integer>();
-			for (int i = 0; i < ids.length; i++) {
-				Integer roleId=Integer.valueOf(ids[i]);
-				Integer count = sysUserRoleDao.selectCountByRoleId(roleId);
-				if (count<1) {
-					idsList.add(roleId);
-					//删除角色和资源的关系
-					sysRoleResourceDao.deleteByRoleId(roleId);
-				}
-			}
-			if (!PublicUtil.checkEmptyList(idsList)) {
-				this.sysRoleDao.deleteByIds(idsList);
-			}
-		}else {
-			Integer roleId=Integer.valueOf(ids[0]);
-			Integer count = sysUserRoleDao.selectCountByRoleId(roleId);
-			if (count<1) {
-				this.sysRoleDao.deleteByPrimaryKey(roleId);
-			}
-		}
 	}
+    
 
     @Override
     public Pagination findListByPage(int rows, int page,SysRoleVo vo) {

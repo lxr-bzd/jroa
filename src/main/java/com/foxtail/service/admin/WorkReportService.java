@@ -9,6 +9,7 @@ import com.foxtail.filter.WorkReportFilter;
 import com.foxtail.model.admin.ReportDetail;
 import com.foxtail.model.admin.ReportExamine;
 import com.foxtail.model.admin.WorkReport;
+import com.foxtail.service.personnel.DeptService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.lxr.commons.exception.ApplicationException;
@@ -20,6 +21,8 @@ public class WorkReportService {
 	@Autowired
 	WorkReportDao workReportDao;
 	
+	@Autowired
+	DeptService deptService;
 	
 	public void save(WorkReport workReport) {
 		
@@ -55,13 +58,13 @@ public class WorkReportService {
 	public Pagination findForPage(Pagination page,WorkReportFilter filter) {
 		
 		switch (filter.getSysView()) {
+		case "def":
 		case "all":filter.setDeptids(null);
 			break;
-		case "below":filter.setDeptids(null);
+		case "below":filter.setDeptids(deptService.findBelowIds(filter.getUdeptid()));
 		break;
-		case "def":filter.setDeptids(null);
-		break;
-		default:filter.setDeptids(new String[0]);
+		 
+		default:filter.setDeptids(new String[] {"-1"});
 			break;
 		}
 		

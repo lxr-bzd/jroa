@@ -108,7 +108,7 @@ function operatorFormatter(value, row, index) {
 	var operator='<div class="btn-group">';
 	switch (row.state) {
 	case 1:
-		operator+= $app.btn({type:'btn-warning',img:'glyphicon-remove'},'取消','goCancel(\''+row.id+'\')');
+		operator+= $app.btn({type:'btn-warning',img:'glyphicon-remove'},'取消','toRemove(\''+row.id+'\')');
 		operator+= $app.btn('edit','编辑','editById(\''+row.id+'\')');
 	break;
 	case 2:

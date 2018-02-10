@@ -1,6 +1,8 @@
 package com.foxtail.controller.project;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -12,6 +14,7 @@ import com.foxtail.common.AppModelMap;
 import com.foxtail.common.DataGridResult;
 import com.foxtail.common.JsonResult;
 import com.foxtail.common.base.BaseMybatisController;
+import com.foxtail.filter.ApplyFilter;
 import com.foxtail.filter.ProjectFilter;
 import com.foxtail.model.project.Project;
 import com.foxtail.service.project.ProjectService;
@@ -54,7 +57,22 @@ public class ProjectController extends BaseMybatisController{
 		if("info".equals(sysType))
 			return JsonResult.getSuccessResult(projectService.getById(request.getParameter("id")));
 		else 
+			filter.setUid(ServiceManager.securityService.getUid());
+			resolveSysView(filter);
 		return DataGridResult.getResult(projectService.findForPage(getPagination(request),filter));
+	}
+	
+	 private void resolveSysView(ProjectFilter filter) {
+		
+		filter.setSysView("def");
+	
+		if(SecurityUtils.getSubject().isPermitted("project/project/project?$sysView=all")) {
+			filter.setSysView("all");
+			return;
+		}
+		
+		
+
 	}
 	
 	

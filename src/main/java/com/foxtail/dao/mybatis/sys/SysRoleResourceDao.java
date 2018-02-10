@@ -19,6 +19,8 @@ public interface SysRoleResourceDao extends BaseMybatisDao<SysRoleResource,Integ
     
     public void deleteByRoleId(Integer roleId);
     
+    public void deleteByRoleIds(@Param("ids")String[] roleId);
+    
     public void deleteByResources(@Param("ids") List<Integer> ids);
 
 }

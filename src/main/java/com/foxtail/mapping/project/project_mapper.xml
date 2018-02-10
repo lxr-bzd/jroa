@@ -20,6 +20,7 @@
   		<if test="ft.progressid != null ">AND a.progressid = #{ft.progressid}</if>
   		
   		<if test="ft.empKw != null ">AND c.name like CONCAT('%',#{ft.empKw},'%')</if>
+  		<if test="ft.uid != null ">AND a.managerid = #{ft.uid}</if>
   		ORDER BY signtime DESC
   		
   	</select>

@@ -1,18 +1,18 @@
 package com.foxtail.service.sys.impl;
 
-import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.foxtail.bean.ServiceManager;
 import com.foxtail.common.page.Pagination;
 import com.foxtail.common.util.MD5Util;
 import com.foxtail.common.util.PublicUtil;
@@ -25,12 +25,13 @@ import com.foxtail.model.sys.SysUser;
 import com.foxtail.model.sys.SysUserRole;
 import com.foxtail.service.sys.SysUserService;
 import com.foxtail.vo.sys.SysUserVo;
+import com.lxr.commons.exception.ApplicationException;
 
 @Transactional
 @Service("sysUserService")
 public class SysUserServiceImpl implements SysUserService{
 
-	private final static Logger log= Logger.getLogger(SysUserServiceImpl.class);
+	private final static Logger log = Logger.getLogger(SysUserServiceImpl.class);
 
 	@Autowired
 	private SysUserDao sysUserDao;
@@ -80,6 +81,16 @@ public class SysUserServiceImpl implements SysUserService{
     }
 
     public void updateByPrimaryKey(SysUser model) {
+    	if (!StringUtils.isEmpty(model.getPassword())) {
+    		String rawPwd=model.getPassword();
+        	if (PublicUtil.checkEmptyString(rawPwd)) {
+    			rawPwd=PropertiesUtil.getString("sys.defaultPwd");
+    		}
+        	String password = MD5Util.string2MD5(rawPwd);
+        	model.setPassword(password);
+		}
+    	
+    	
 		this.sysUserDao.updateByPrimaryKey(model);
     }
     
@@ -98,19 +109,22 @@ public class SysUserServiceImpl implements SysUserService{
     @Override
     public void deleteIds(String ids){
     	String [] idArr=ids.split(",");
-    	if (idArr.length>1) {
-			List<Integer> idsList=new ArrayList<Integer>();
-			for (int i = 0; i < idArr.length; i++) {
-				Integer userId=Integer.valueOf(idArr[i]);
-				idsList.add(userId);
-				sysUserRoleDao.deleteByUserId(userId);
-			}
-			if (!PublicUtil.checkEmptyList(idsList)) {
-				this.sysUserDao.deleteByIds(idsList);
-			}
-		}else {
-			this.sysUserDao.deleteByPrimaryKey(Integer.valueOf(ids));
-		}
+    	deleteIds(idArr);
+    }
+    
+  
+    public void deleteIds(String[] ids){
+    	
+    	if(ids==null||ids.length<1)throw new ApplicationException("删除数量不能为空");
+    	
+    	if(ServiceManager.securityService.isOnline(ids))
+    		throw new ApplicationException("存在在线用户不能删除");
+    	
+    	sysUserRoleDao.deleteByUserIds(ids);
+		
+		this.sysUserDao.deleteByIds(ids);
+			
+		
     }
 
     @Override

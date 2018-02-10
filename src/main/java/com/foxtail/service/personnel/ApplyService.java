@@ -8,6 +8,8 @@ import com.foxtail.common.page.Pagination;
 import com.foxtail.dao.mybatis.personnel.ApplyDao;
 import com.foxtail.filter.ApplyFilter;
 import com.foxtail.model.personnel.Apply;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 
 
 @Service
@@ -15,6 +17,10 @@ public class ApplyService {
 
 	@Autowired
 	ApplyDao applyDao;
+	
+	
+	@Autowired
+	DeptService deptService;
 	
 	
 	public void save(Apply apply) {
@@ -41,8 +47,22 @@ public class ApplyService {
 	
 	public Pagination findForPage(Pagination page,ApplyFilter filter) {
 		
-		List  list = applyDao.findForPage(page,filter);
-		page.setList(list);
+		switch (filter.getSysView()) {
+		case "def":
+		case "all":filter.setDeptids(null);
+			break;
+		case "below":filter.setDeptids(deptService.findBelowIds(filter.getUdeptid()));
+		break;
+		
+		default:filter.setDeptids(new String[]{"-1"});
+			break;
+		} 
+		
+		
+		PageHelper.startPage(page.getPageNo(), page.getPageSize());
+		Page listCountry  = (Page)applyDao.findForPage2(filter);
+		page.setTotalCount((int)listCountry.getTotal());
+		page.setList(listCountry.getResult());
 		return page;
 
 	}

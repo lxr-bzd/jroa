@@ -14,6 +14,6 @@ public interface ApplyDao {
 	
 	Apply getById(@Param("id")String id);
 	
-	List<Apply> findForPage(@Param("page")Pagination page,@Param("ft")ApplyFilter filter);
+	List<Apply> findForPage2(@Param("ft")ApplyFilter filter);
 }
 

@@ -3,10 +3,8 @@ package com.foxtail.service.personnel;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.foxtail.dao.mybatis.personnel.DeptDao;
 import com.foxtail.model.personnel.Dept;
 import com.lxr.commons.exception.ApplicationException;
@@ -67,6 +65,15 @@ public class DeptService {
 	}
 	
 	
+	public String[] findBelowIds(String id) {
+		Set<String> idSet = new HashSet<>();
+		
+
+		queryChild(idSet, id);
+		idSet.add(id);
+		return idSet.toArray(new String[idSet.size()]);
+	}
+	
 	private void queryChild(Set<String> ids,String pid) {
 		
     	List<String> list = deptDao.findByParentid(pid);
@@ -81,6 +88,9 @@ public class DeptService {
 		}
 
 	}
+	
+	
+	
 	
 	
 	

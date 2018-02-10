@@ -12,7 +12,7 @@ import com.foxtail.vo.sys.SysUserVo;
 
 public interface SysUserDao extends BaseMybatisDao<SysUser,Integer> {	
     
-    public void deleteByIds(@Param("ids") List<Integer> ids);
+    public void deleteByIds(@Param("ids")String[] ids);
     
     public List<SysUser> selectList(SysUser sysUser);
   

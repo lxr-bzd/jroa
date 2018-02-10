@@ -81,20 +81,13 @@ public class EmpService {
 		
 		Emp pEmp =  getById(emp.getId());
 		empDao.update(emp);
-		if(StringUtils.isEmpty(emp.getAccount())) {
-			return;
-		}
+		if(!StringUtils.isEmpty(emp.getAccount())&&StringUtils.isEmpty(emp.getPwd())) {
 		
-		if(StringUtils.isEmpty(emp.getPwd())) {
 			throw new ApplicationException("密码不能为空");
 		}
 		
-		SysUser sysUser = new SysUser();
-		sysUser.setUserName(emp.getName());
-		sysUser.setAccount(emp.getAccount());
-		sysUser.setPassword(emp.getPwd());
-		Place place = placeService.getById(pEmp.getPlaceid());
-		transferService.updateAccount(sysUser,place.getRoleid());
+		
+		transferService.updateAccountByEmp(emp, pEmp);
 	}
 	
 	public Pagination findForPage(Pagination page,EmpFilter filter) {

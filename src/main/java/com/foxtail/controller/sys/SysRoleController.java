@@ -116,7 +116,7 @@ public class SysRoleController extends BaseMybatisController {
 	public JsonData deleteById(String  ids) {
 		JsonData json = new JsonData();
 		try {
-			this.sysRoleService.deleteIds(ids);
+			this.sysRoleService.deleteIds(ids.split(","));
 			json.setSuccess(true);
 			json.setMsg("删除成功");
 		} catch (Exception e) {

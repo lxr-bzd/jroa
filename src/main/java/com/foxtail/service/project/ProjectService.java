@@ -63,6 +63,20 @@ public class ProjectService {
 	}
 	
 	public Pagination findForPage(Pagination page,ProjectFilter filter) {
+		
+		switch (filter.getSysView()) {
+		case "def":
+			
+			break;
+		case "all":
+			filter.setUid(null);
+			break;
+
+		default:
+			break;
+		}
+		
+		
 		PageHelper.startPage(page.getPageNo(), page.getPageSize());
 		Page listCountry  = (Page)projectDao.findForPage2(filter);
 		page.setTotalCount((int)listCountry.getTotal());

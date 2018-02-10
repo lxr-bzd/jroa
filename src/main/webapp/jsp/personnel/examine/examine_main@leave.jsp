@@ -157,7 +157,7 @@ function lengthFormatter(val,row,index){
 		</div>
    
     	<table class="table_list" id="mainTable" data-toggle="table"
-			data-url="${path}/personnel/apply/apply/view.do?applytype=1" data-pagination="ture" 
+			data-url="${path}/personnel/examine/examine/view.do?applytype=1" data-pagination="ture" 
 			data-side-pagination="server" data-cache="false" data-query-params="postQueryParams"
 			data-page-list="[10, 20, 35, 50]" data-page-size= "10" data-method="post"
 			data-show-refresh="false" data-show-toggle="false"

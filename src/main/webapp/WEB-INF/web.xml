@@ -15,11 +15,10 @@
       <param-value>UTF-8</param-value>
     </init-param>
   </filter>
-    <filter-mapping>
+  <filter-mapping>
     <filter-name>encodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-  
   <filter>
     <filter-name>shiroFilter</filter-name>
     <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -32,16 +31,10 @@
       <param-value>shiroFilter</param-value>
     </init-param>
   </filter>
-  
-  
- 
-  
   <filter-mapping>
     <filter-name>shiroFilter</filter-name>
     <url-pattern>*.do</url-pattern>
   </filter-mapping>
-  
- 
   <filter>
     <filter-name>characterFilter</filter-name>
     <filter-class>com.foxtail.core.filter.CharacterFilter</filter-class>
@@ -60,9 +53,9 @@
   <listener>
     <listener-class> org.apache.commons.fileupload.servlet.FileCleanerCleanup</listener-class>
   </listener>
-   <listener >
-      <listener-class>com.foxtail.common.LoginSessionListener</listener-class>
-    </listener>
+  <listener>
+    <listener-class>com.foxtail.common.LoginSessionListener</listener-class>
+  </listener>
   <context-param>
     <param-name>tempXlsPath</param-name>
     <param-value>WEB-INF/uploadFiles/</param-value>
@@ -82,18 +75,14 @@
     <servlet-name>springMvc</servlet-name>
     <url-pattern>*.do</url-pattern>
   </servlet-mapping>
-  
-  
-   <servlet>
-      <servlet-name>DruidStatView</servlet-name>
-      <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+  <servlet>
+    <servlet-name>DruidStatView</servlet-name>
+    <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-      <servlet-name>DruidStatView</servlet-name>
-      <url-pattern>/druid/*</url-pattern>
+    <servlet-name>DruidStatView</servlet-name>
+    <url-pattern>/druid/*</url-pattern>
   </servlet-mapping>
-  
-  
   <session-config>
     <session-timeout>30</session-timeout>
   </session-config>
@@ -118,6 +107,6 @@
     <location>/common/500error.jsp</location>
   </error-page>
   <welcome-file-list>
-    <welcome-file>/WEB-INF/index.jsp</welcome-file>
+    <welcome-file>/loadAuthorization/pass.do</welcome-file>
   </welcome-file-list>
 </web-app>

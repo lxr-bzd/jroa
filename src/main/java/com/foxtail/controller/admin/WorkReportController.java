@@ -18,6 +18,7 @@ import com.foxtail.filter.WorkReportFilter;
 import com.foxtail.model.admin.ReportExamine;
 import com.foxtail.model.admin.WorkReport;
 import com.foxtail.service.admin.WorkReportService;
+import com.foxtail.service.personnel.EmpService;
 
 
 @Controller
@@ -28,6 +29,8 @@ public class WorkReportController extends BaseMybatisController{
 	@Autowired
 	WorkReportService workReportService;
 	
+	@Autowired
+	EmpService  empService;
 	
 	@RequestMapping() 
 	public String toMain(String sysModule){
@@ -84,6 +87,7 @@ public class WorkReportController extends BaseMybatisController{
 			resolveSysView(filter);
 			String uid = ServiceManager.securityService.getUid();
 			filter.setUid(uid);
+			filter.setUdeptid(empService.getById(ServiceManager.securityService.getUid()).getDeptid());
 			return DataGridResult.getResult(workReportService.findForPage(getPagination(request),filter));
 			
 		}

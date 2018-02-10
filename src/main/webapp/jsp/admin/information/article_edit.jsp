@@ -38,7 +38,7 @@ var backurl = "${path}/admin/information/article.do";
 						goBackList();
 					});
 				
-				else $app.alert('编辑失败');
+				else c
 				
 			}
 		});

@@ -105,6 +105,7 @@
                         		</div>
                         		<div class="loginWrap">
                         			<div class="loginIpt">
+                        			<span style="color: red;">${warn }</span>
 	                        			<input type="text" id="loginName" name="loginName" class="text login-user" placeHolder="请输入用户名">
 	                        			<input type="password" id="password" name="password" class="text login-pass" placeHolder="请输入登录密码">
                         			</div>

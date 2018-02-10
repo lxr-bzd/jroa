@@ -25,10 +25,14 @@ public interface SysUserRoleDao extends BaseMybatisDao<SysUserRole,Integer> {
      */
     public void deleteByRoleId(Integer roleId);
     
+    public void deleteByRoleIds(@Param("ids")String[] roleIds);
+    
     /**
      * 根据用户id删除角色
      */
     public void deleteByUserId(Integer userId);
+    
+    public void deleteByUserIds(@Param("ids")String[] uids);
     
     /**
      * 

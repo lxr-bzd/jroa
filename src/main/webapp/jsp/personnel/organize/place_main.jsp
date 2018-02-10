@@ -95,14 +95,14 @@ var toInfoUrl = '${path}/personnel/organize/place.do';
     //操作工具栏
     function operatorFormatter(value, row, index) {
     	var operator='<div class="btn-group">';
-		    <shiro:hasPermission name="personnel/organize/place:auth">
+		    <shiro:hasPermission name="personnel/organize/place/auth">
 				operator+= $app.btn('auth','授权','toAuth(\''+row.roleid+'\')');
 			</shiro:hasPermission>
 		    
-	    	<shiro:hasPermission name="personnel/organize/place:edit">
+	    	<shiro:hasPermission name="personnel/organize/place">
 	    	operator+= $app.btn('edit','编辑','editById(\''+row.id+'\')');
 	    	</shiro:hasPermission>
-		    <shiro:hasPermission name="personnel/organize/place:delete">
+		    <shiro:hasPermission name="personnel/organize/place">
 		    operator+= $app.btn('delete','删除','toRemove(\''+row.id+'\')');
 	    	</shiro:hasPermission>
 	    

@@ -133,9 +133,25 @@
 		where user_id= #{userId,jdbcType=INTEGER}
 	</delete>
 	
+	<delete id="deleteByUserIds" >
+		delete from t_sys_user_role
+		where user_id in  
+		<foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+              #{id}
+          </foreach>
+	</delete>
+	
 	<delete id="deleteByRoleId" parameterType="java.lang.Integer">
 		delete from t_sys_user_role
 		where role_id= #{roleId,jdbcType=INTEGER}
+	</delete>
+	
+	<delete id="deleteByRoleIds" >
+		delete from t_sys_user_role
+		where role_id in  
+		<foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+              #{id}
+          </foreach>
 	</delete>
 	
 	

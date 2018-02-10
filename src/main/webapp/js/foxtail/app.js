@@ -1,5 +1,5 @@
 
-$app = {loginUrl:'/myEMIS/login.do',imgUpload:"/myEMIS/image/upload.do"};
+$app = {loginUrl:'/jroa/login.do',imgUpload:"/jroa/image/upload.do"};
 
 $app.getContext = function(){
 	

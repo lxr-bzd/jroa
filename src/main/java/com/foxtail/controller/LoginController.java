@@ -18,6 +18,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.foxtail.bean.ServiceManager;
 import com.foxtail.common.LoggerUtils;
 import com.foxtail.common.util.VerifyCodeUtils;
 import com.foxtail.core.shiro.IncorrectCaptchaException;
@@ -112,6 +113,7 @@ public class LoginController {
 	
 	@RequestMapping("/workIndex")
 	public String workIndex(){
+	
 		return "work_index";
 	}
 }
