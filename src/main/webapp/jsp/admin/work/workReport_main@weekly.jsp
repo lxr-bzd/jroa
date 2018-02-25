@@ -87,7 +87,7 @@ var toInfoUrl = '${path}/admin/work/workReport/view.do';
 	    		operator+=$app.btn('edit','编辑','editById(\''+row.id+'\')');
 		    </shiro:hasPermission>
 		    <shiro:hasPermission name="personnel/organize/place:delete">
-				operator+=$app.btn('delete','编辑','toRemove(\''+row.id+'\')');
+				operator+=$app.btn('delete','删除','toRemove(\''+row.id+'\')');
 	    	</shiro:hasPermission>
 	    	/* <shiro:hasPermission name="personnel/organize/place:delete">
 				operator+='<button class="btn btn-danger btn-round btn-xs" onclick="deleteById(\''+row.id+'\')"><i class="glyphicon glyphicon-trash"></i>删除</button>';

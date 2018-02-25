@@ -23,6 +23,7 @@
   			<foreach collection="ft.deptids" item="id" index="index"
   			 open="(" close=")" separator=",">#{id}</foreach>
   		</if>
+  		<if test="ft.state != null ">AND a.state = #{ft.state}</if>
   		<if test="ft.placeKw != null ">AND a.placeid in (SELECT id FROM man_place WHERE name like CONCAT('%',#{ft.placeKw},'%'))</if>
   		ORDER BY a.createtime DESC
   		
@@ -91,6 +92,13 @@
               #{id}
           </foreach>
   	</select> 
+	
+	
+	<update id="updateEmp" >
+	   UPDATE man_emp SET 
+		pwd=#{ model.pwd }
+		 WHERE id=#{model.id}
+	</update>
 	
   	
   

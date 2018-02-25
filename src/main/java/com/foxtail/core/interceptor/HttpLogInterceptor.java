@@ -41,7 +41,7 @@ public class HttpLogInterceptor extends HandlerInterceptorAdapter{
 		if (StringUtils.isNotBlank(queryStr)) {  
 			targetUrl = targetUrl + "?" + queryStr;
 		}
-		logger.info("start handle, url:" + targetUrl);
+		logger.info("start-["+request.getRemoteAddr()+"] url:" + targetUrl);
 		long l1 = System.currentTimeMillis();
 		threadTime.set(l1);
 		return super.preHandle(request, response, handler);
@@ -65,7 +65,7 @@ public class HttpLogInterceptor extends HandlerInterceptorAdapter{
 			targetUrl = targetUrl + "?" + queryStr;
 		}
 		long l1 = threadTime.get();
-		logger.info("end handle, cost["+(System.currentTimeMillis() -l1)+"ms] url:" + targetUrl);
+		logger.info("end, cost["+(System.currentTimeMillis() -l1)+"ms] url:" + targetUrl);
 		super.afterCompletion(request, response, handler, ex);
 	}
 

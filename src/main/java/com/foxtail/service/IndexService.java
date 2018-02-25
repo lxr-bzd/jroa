@@ -28,8 +28,8 @@ public class IndexService {
 	
 	public Map<String, Object> getStatistics() {
 		Long cmonthTime = DateUtils.getSpecficMonthStart(new Date(), 0).getTime();
-		
-		return indexDao.getStatistics(cmonthTime, new Date().getMonth());
+		Long cmonthEndTime = DateUtils.getSpecficMonthEnd(new Date(), 0).getTime();
+		return indexDao.getStatistics(cmonthTime,cmonthEndTime, new Date().getMonth());
 
 	}
 	

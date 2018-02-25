@@ -13,6 +13,7 @@
 <script src="${path}/jslib/artDialog/jquery.artDialog.js?skin=blue"></script>   
 <script src="${path}/jslib/artDialog/plugins/iframeTools.js"></script>  
 <script src="${path}/js/foxtail/artDialogExt.js"></script>
+<script type="text/javascript" src="${path}/js/foxtail/app.js"></script>
 
 <script type="text/javascript">
 $(function(){	
@@ -63,36 +64,22 @@ function changeList(menu){
 	var currentModule=$('[class^='+menu+'_]').show();
 	currentModule.find('.title').trigger('click');
 }
-//下列为公共方法
-function showArtDiaglog(title,msg,closeFun,okFunction){
-	art.dialog({
-		id:'artDialogTop',
-		 lock:true,
-		title:title,
-	    content: msg,
-	    ok: okFunction,
-	    close:closeFun
-	});
+
+
+
+
+
+
+function touPwd(){
+	$app.dialog("${path}/index/user/toedit.do",function(){
+	
+	},{width:"600px",height:"500px"});
+	
+	
 }
 
-//关闭窗口
-function closeDialog(){
-	art.dialog.list["artDialogTop"].close();
-}
 
-//弹出确认窗口
-function showConfirmDiaglog(title,msg,closeFun,okFunction){
-	art.dialog({
-		id:'artDialogTop',
-		 lock:true,
-		title:title,
-	    content: msg,
-	    cancelVal: '取消',
-	    cancel: true,
-	    ok: okFunction,
-	    close:closeFun
-	});
-}
+
 </script>
 </head>
 <div>
@@ -101,15 +88,10 @@ function showConfirmDiaglog(title,msg,closeFun,okFunction){
 	    	<a href="${path}/workIndex.do" target="rightFrame"><img src="../images/layout/logo.png" title="系统首页" /></a>
 	    </div>
     <ul class="nav">
-<!-- 	    <li><a href="#" onclick="changeMenu()" class="selected"><img src="../images/layout/icon01.png" title="工作台" /><h2>工作台</h2></a></li> -->
-<!-- 	    <li><a href="#" onclick="changeList('sys_11')" id="sys_11" ><img src="../images/layout/icon02.png" title="模块设计" /><h2 >模型管理</h2></a></li> -->
-<!-- 	    <li><a href="#" onclick="changeList('sys_12')" id="sys_12"><img src="../images/layout/icon03.png" title="模块设计" /><h2>模块设计</h2></a></li> -->
-<!-- 	    <li><a href="#" onclick="changeList('sys_13')" id="sys_13"><img src="../images/layout/icon04.png" title="常用工具" /><h2>常用工具</h2></a></li> -->
-<!-- 	    <li><a href="#" onclick="changeList('sys_14')" id="sys_14"><img src="../images/layout/icon05.png" title="文件管理" /><h2>文件管理</h2></a></li> -->
-    	
+	
     	<c:forEach var="res" items="${resList }" varStatus="status">
     		<c:if test="${res.level==1 }">
-    			<li><a href="javascript:void(0)" id="sys_${res.id }" onclick="changeList('sys_${res.id }')" ><img src="../images/layout/${res.resourceIcon}" title="模块设计" /><h2 >${res.resourceName }</h2></a></li>
+    			<li><a href="javascript:void(0)" id="sys_${res.id }" onclick="changeList('sys_${res.id }')" ><img src="../images/layout/${res.resourceIcon}" title="${res.resourceName }" /><h2 >${res.resourceName }</h2></a></li>
     			
     		</c:if>
     	
@@ -117,14 +99,11 @@ function showConfirmDiaglog(title,msg,closeFun,okFunction){
     
     </ul>
     <div class="topright">    
-	    <!--<ul>
-		    <li><span><img src="../images/layout/help.png" title="帮助"  class="helpimg"/></span><a href="#">帮助</a></li>
-		    <li><a href="#">关于</a></li>
-		    <li><a href="#" onclick="javascript:window.location='${path}/logout.do'" target="_parent">退出</a></li>
-	    </ul>-->
+	    
 		<div class="user">
 			<span>您好：${user.userName }</span>
 			<a href="#" onclick="javascript:window.location='${path}/logout.do'" target="_parent">安全退出</a>
+			<a href="#" onclick="touPwd()" target="_parent">修改密码</a>
 		</div>    
     </div>
 	<!-- topEnd -->

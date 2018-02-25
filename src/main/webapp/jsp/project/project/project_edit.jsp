@@ -18,6 +18,7 @@ var backurl = "${path}/project/project/project.do";
 
 	
 	function toSubmit(){
+		updateMebs();
 		$app.form.preSubmit("#submit_form");
 		//表单验证
 		if(!$("#submit_form").valid())
@@ -65,7 +66,10 @@ var backurl = "${path}/project/project/project.do";
 	<script type="text/javascript">
 	$(document).ready(function () {
 		if(isedit())$app.form.format($('#submit_form'));
-		if(isedit())initProducts();
+		if(isedit()){
+			initProducts();
+			initMebs();
+		}
 		 
 		 $("#submit_form").validate({
 			 ignore: [],
@@ -97,6 +101,22 @@ var backurl = "${path}/project/project/project.do";
 	function initProducts(){
 		var ps =  $.parseJSON($("#submit_form .products_group").attr("data-val"));
 		renderProducts(ps);
+	}
+	
+	function initMebs(){
+		
+		var ps =  $.parseJSON($("#member_group").attr("data-val"));
+
+		if(!(ps instanceof Array))return;
+		
+		for (var i = 0; i < ps.length; i++) {
+			ps[i].index=i;
+			$('#member_group>tbody').append(template("mebTmp",ps[i]));
+		}
+		
+		
+		
+		
 	}
 	
 	
@@ -141,6 +161,41 @@ var backurl = "${path}/project/project/project.do";
 		//$("#submit_form input[name=productid]").val(data.id);
 			
 		},{content:content,title:"选择产品"});
+	}
+	
+	
+	
+	function onSelectMeb(){
+		
+		onSelectMan(function(data){
+			var rolename = data.placeName;
+			
+			if(!rolename){
+				$app.alert("角色名不能为空");
+				return false;
+			}			
+			
+			var index = parseInt($('#member_group>tbody>tr:last').attr('data-index'))+1;
+			if(isNaN(index))index = 0;
+			
+			var model = {index:index,empid:data.id,empName:data.name,role:rolename};
+			
+			
+			$('#member_group>tbody').append(template("mebTmp",model));
+				
+			});
+		
+		
+	}
+	
+	
+
+	function updateMebs(){
+		$('#member_group>tbody>tr').each(function(i,e){
+			$(e).find(".role").attr("name","mebs["+i+"][role]")
+			$(e).find(".empid").attr("name","mebs["+i+"][empid]")
+		});
+		
 	}
 	
 	
@@ -213,6 +268,10 @@ var backurl = "${path}/project/project/project.do";
 	}
 	
 	
+	
+	
+	
+	
 	$(function(){
 		$app.form("#submit_form");
 		
@@ -278,6 +337,30 @@ var backurl = "${path}/project/project/project.do";
 					</li>
 				<li><label>项目成员：</label><textarea name="member" rows="" cols="" class="form-control input-primary  w260"></textarea>
 					</li>
+				<li><label>项目成员：</label>
+				<div class="table-responsive">
+						  <table id="member_group" class="table table-bordered" >
+						  
+						    <thead>
+						      <tr>
+						        <th>项目角色</th>
+						        <th>成员</th>
+						        <th>操作</th>
+						        </tr>
+						    </thead>
+						    <tbody>
+						      
+						    </tbody>
+						    <tfoot>
+						    	<tr>
+						   		 <td colspan="3" ><a href="javascript:onSelectMeb()">添加</a></td>
+						   		 <tr>
+						    </tfoot>
+						  </table>
+				</div>	
+								
+				
+				</li>
 					
 					<li><label>应收帐款：</label><input name="receivable"  type="text" class="form-control input-primary w260" />
 					</li>
@@ -354,8 +437,6 @@ var backurl = "${path}/project/project/project.do";
 								<input name="customrid" value="${vo.customrid }" type="hidden" />
 					</li>
 					
-					
-					
 					<li><label>产品：</label><div class="products_group" data-val='${productsJson }' style="display:inline;"></div>
 					
 					<input name="" type="button" class="btn btn-primary" value="选择产品" onclick="onSelectProduct()" />
@@ -385,6 +466,31 @@ var backurl = "${path}/project/project/project.do";
 					</li>
 					<li><label>项目成员：</label><textarea name="member" rows="" cols="" class="form-control input-primary  w260">${vo.member }</textarea>
 					</li>
+					
+					<li><label>项目成员：</label>
+				<div class="table-responsive">
+						  <table id="member_group" data-val='${mebsJson }' class="table table-bordered" >
+						  
+						    <thead>
+						      <tr>
+						        <th>项目角色</th>
+						        <th>成员</th>
+						        <th>操作</th>
+						        </tr>
+						    </thead>
+						    <tbody>
+						      
+						    </tbody>
+						    <tfoot>
+						    	<tr>
+						   		 <td colspan="3" ><a href="javascript:onSelectMeb()">添加</a></td>
+						   		 <tr>
+						    </tfoot>
+						  </table>
+				</div>	
+								
+				
+				</li>
 					
 					<li><label>应收帐款：</label><input name="receivable" value="${vo.receivable }" type="text" class="form-control input-primary w260" />
 					</li>
@@ -435,6 +541,7 @@ var backurl = "${path}/project/project/project.do";
 					
 					
 	    		</ul>
+	    		
 	    		<div class="btnWrap">
 					<input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()">&nbsp;&nbsp;&nbsp;&nbsp;
 					<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();">
@@ -548,6 +655,39 @@ var backurl = "${path}/project/project/project.do";
 				</tr>
 			</thead>
 		</table>
+</script>
+
+<script type="text/html" id="mebHtml">
+<table class="table_list" id="productTable" data-toggle="table"
+			data-url="${path}/customer/customer/product/view.do" data-pagination="ture" 
+			data-side-pagination="server" data-cache="false" data-query-params=""
+			data-page-list="[10, 20, 35, 50]" data-page-size= "10" data-method="post"
+			data-show-refresh="false" data-show-toggle="false"
+			data-show-columns="false" data-toolbar="#toolbar"
+			data-click-to-select="false" data-single-select="false"
+			data-striped="false" data-content-type="application/x-www-form-urlencoded"
+			>
+			<thead>
+				<tr>
+					<th data-field="" data-checkbox="true"></th>
+					<th data-field="id" >ID</th>
+					<th data-field="name" >产品名称</th>
+					<th data-field="info"  >产品介绍</th>
+					<th data-field="createtime"  >录入时间</th>
+				</tr>
+			</thead>
+		</table>
+</script>
+
+<script type="text/html" id="mebTmp">
+<tr data-index="{{index}}">
+<input class="role" name="mebs[{{index}}][role]" value="{{role}}"  type="hidden" />
+<td>{{role}}</td>
+<input class="empid" name="mebs[{{index}}][empid]" value="{{empid}}" type="hidden" />
+<td>{{empName}}</td>
+<td><a onclick="$(this).parent().parent().remove();">移除</a></td>
+</tr>
+
 </script>
 <script type="text/javascript">
 //设置查询参数

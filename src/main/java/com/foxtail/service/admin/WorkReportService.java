@@ -58,13 +58,16 @@ public class WorkReportService {
 	public Pagination findForPage(Pagination page,WorkReportFilter filter) {
 		
 		switch (filter.getSysView()) {
-		case "def":
-		case "all":filter.setDeptids(null);
+		
+		case "all":
+			filter.setUid(null);
+			filter.setUdeptids(null);
 			break;
-		case "below":filter.setDeptids(deptService.findBelowIds(filter.getUdeptid()));
+		case "below":filter.setUdeptids(deptService.findBelowIds(filter.getDeptid()));
 		break;
-		 
-		default:filter.setDeptids(new String[] {"-1"});
+		
+		case "def":
+		default:filter.setUdeptids(null);
 			break;
 		}
 		

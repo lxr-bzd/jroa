@@ -1,5 +1,7 @@
 package com.foxtail.controller.personnel;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
 import com.foxtail.bean.ServiceManager;
 import com.foxtail.common.AppModelMap;
 import com.foxtail.common.DataGridResult;
@@ -16,6 +19,7 @@ import com.foxtail.common.base.BaseMybatisController;
 import com.foxtail.filter.ApplyFilter;
 import com.foxtail.model.personnel.Apply;
 import com.foxtail.service.personnel.ApplyService;
+import com.foxtail.service.personnel.ExamineService;
 
 
 @Controller
@@ -26,22 +30,39 @@ public class ApplyController extends BaseMybatisController{
 	@Autowired
 	ApplyService applyService;
 	
+	@Autowired 
+	ExamineService examineService;
+	
 	
 	@RequestMapping() 
 	public String toMain(String module){
+		
 		return getMainJsp(module);
 	}
 	
 	
 	@RequestMapping("toedit") 
-	public String toEdit(String module,String id,String action,ModelMap modelMap){
-		String jsp= getEditJsp(module);
+	public String toEdit(String sysModule,String id,String action,ModelMap modelMap){
+		String jsp= getEditJsp(sysModule);
 		
 		if("edit".equals(action))
 		modelMap.put("vo", applyService.getById(id));
 		return jsp;
 	}
 	
+	
+	@RequestMapping("toinfo")
+	public String toinfo(String sysModule,String id,String action,ModelMap modelMap){
+		String jsp= getInfoJsp(sysModule);
+		Apply apply =  applyService.getById(id);
+		modelMap.put("vo", apply);
+		if(apply.getState()!=null&&(apply.getState()==2||apply.getState()==4)) {
+			Object exas = examineService.findByApplyid(apply.getId());
+			modelMap.put("exasJson", JSONObject.toJSONString(new ArrayList<>()));
+		}
+			
+		return jsp; 
+	}
 	
 	
 	@RequestMapping("view")

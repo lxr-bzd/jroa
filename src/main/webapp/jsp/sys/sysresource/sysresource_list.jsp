@@ -41,7 +41,10 @@ border-left: 1px solid #eee;
 		if(nodeId){
 			var option=$('#SysResourceList').bootstrapTable('getOptions');
 			var total=option.totalRows;
-			window.location='${path}/sysResourceController/toAdd.do?parentId='+nodeId+"&orderNum="+total;
+			$app.dialog('${path}/sysResourceController/toAdd.do?parentId='+nodeId+"&orderNum="+total,function(){
+				refMainTable();
+			},{width:"900px",height:"600px"});
+		
 		}else
 			$app.alert("请选择左边的目录");
 			
@@ -122,7 +125,10 @@ border-left: 1px solid #eee;
     }
     
     function editById(id){
-		window.location='${path}/sysResourceController/editById.do?id='+id;
+    	$app.dialog('${path}/sysResourceController/editById.do?id='+id,function(){
+			refMainTable();
+		},{width:"900px",height:"600px"});
+		
 	}
       
 	//根据id删除

@@ -107,6 +107,13 @@ public class EmpService {
 	}
 
 	
+	public void updateEmp(Emp emp) {
+		
+		empDao.updateEmp(emp);
+		transferService.updateAccount(emp);
+	}
+	
+	
 	
 	
 	

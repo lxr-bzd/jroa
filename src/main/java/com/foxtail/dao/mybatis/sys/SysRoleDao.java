@@ -18,4 +18,6 @@ public interface SysRoleDao extends BaseMybatisDao<SysRole,Integer> {
     List<SysRoleVo> findListByPage(@Param("vo") SysRoleVo vo,@Param("page")Pagination page);
 
     List<String> findRoleTypesByUserId(Integer userId); 
+    
+    public void copyResources(@Param("roleid")String roleid, @Param("copyRoleid")String copyRoleid);
 }

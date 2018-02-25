@@ -26,7 +26,11 @@
 		<property name="filters">
 			<map>
 				<!-- 将自定义 的FormAuthenticationFilter注入shiroFilter中-->
-				
+				<entry key="logout"  >
+					<bean class="org.apache.shiro.web.filter.authc.LogoutFilter"> 
+	        			<property name="redirectUrl" value="/login.do" /> 
+	    			</bean> 
+	    		</entry>
 				<entry key="authc" value-ref="formAuthenticationFilter" />
 				<entry key="permsFilter"  ><bean class="com.foxtail.core.shiro.ShiroPermsFilter"></bean></entry>
 			</map>

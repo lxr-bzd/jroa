@@ -1,6 +1,8 @@
 package com.foxtail.service;
 
 import java.util.Collection;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.subject.SimplePrincipalCollection;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.foxtail.bean.ServiceManager;
+import com.foxtail.common.util.MD5Util;
 import com.foxtail.core.shiro.ShiroUser;
 import com.foxtail.vo.sys.SysUserActiveVo;
 
@@ -26,6 +29,20 @@ public class SecurityService {
 		
 		
 		return id;
+
+	}
+	
+	public boolean equestPwd(String pwd) {
+		
+		if(StringUtils.isEmpty(pwd))return false;
+		
+		return MD5Util.string2MD5(pwd).equals(ShiroUser.getUser().getPassword());
+		
+	}
+	
+	
+	public String getAccount() {
+		return ShiroUser.getUser().getAccount();
 
 	}
 	

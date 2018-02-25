@@ -15,6 +15,11 @@
 	<select id="getById" resultType="com.foxtail.model.personnel.Examine" >
   		select  <include refid="base_column" /> from man_examine a where a.id=#{id}
   	</select> 
+  	
+  	<select id="findByApplyid" resultType="com.foxtail.model.personnel.Examine" >
+  		select  <include refid="base_column" />,b.name exaName from man_examine a left join man_emp b on a.exaid=b.id     
+  		 where a.applyid=#{id}
+  	</select>
 
 	
 	
@@ -26,8 +31,16 @@
 
 	 <!-- 根据对象主键更新 -->
   	<insert id="save"  >
-     INSERT INTO man_examine (name) VALUES (#{model.name})
+    INSERT INTO man_examine(applyid, exaid, exatime,result, info) VALUES(#{ model.applyid },#{ model.exaid },#{ model.exatime },#{ model.result },#{ model.info })
      </insert>
+	
+	
+	<update id="setApplyState" >
+	   update man_apply set
+		  	state = #{state}
+	   where id = #{id}
+	</update>
+	
 	
   	
   

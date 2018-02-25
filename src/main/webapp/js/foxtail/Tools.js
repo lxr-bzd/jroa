@@ -113,8 +113,8 @@ Tools.endMonth = function(date){
 var $lxr = {};
 
 $lxr.dialog = function(init,fun,params) {
-    if ($("#lxr_dialog").length > 0) {
-        $("#lxr_dialog").remove();
+    if ($(".lxr_dialog").length > 0) {
+        $(".lxr_dialog").remove();
     } 
     
     
@@ -127,30 +127,31 @@ $lxr.dialog = function(init,fun,params) {
     
     
     
-    var html = "<div class='modal fade' id='lxr_dialog' >"
+    var html = "<div class='modal fade lxr_dialog'  >"
             + "<div class='modal-backdrop in' style='opacity:0; '></div>"
             + "<div class='modal-dialog' style='z-index:2901; margin-top:60px; width:80%; '>"
             + "<div class='modal-content'>"
             + "<div class='modal-header'  style='font-size:16px; '>"
             + "<span class='glyphicon glyphicon-envelope'>&nbsp;</span>"+title+"<button type='button' class='close' data-dismiss='modal'>"
             + "<span style='font-size:20px;  ' class='glyphicon glyphicon-remove'></span><tton></div>"
-            + "<div class='modal-body text-center' id='myConfirmContent' style='font-size:18px; '>"
+            + "<div class='modal-body text-center'  style='font-size:18px; '>"
             + content
             + "</div>"
             + "<div class='modal-footer ' style=''>"
             + "<button class='btn btn-danger ' id='confirmOk' >确定<tton>"
             + "<button class='btn btn-info ' data-dismiss='modal'>取消<tton>"
             + "</div>" + "</div></div></div>";
-    $("body").append(html);
+    var lxr_dialog = $(html);
+    $("body").append(lxr_dialog);
 
     if(typeof(init)=="function")
-    	init($("#lxr_dialog .modal-body"));
+    	init(lxr_dialog.find('.modal-body'));
     
-    $("#lxr_dialog").modal("show");
+    lxr_dialog.modal("show");
     $("#confirmOk").on("click", function() {
-    	if(typeof(fun)=="function"&& fun($("#lxr_dialog .modal-body"),$("#lxr_dialog"))===false)
+    	if(typeof(fun)=="function"&& fun(lxr_dialog.find('.modal-body'),lxr_dialog)===false)
     		return;
-        $("#lxr_dialog").modal("hide");
+    	lxr_dialog.modal("hide");
       ; // 执行函数
     });
 }

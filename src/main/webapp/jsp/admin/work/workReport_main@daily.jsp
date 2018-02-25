@@ -54,7 +54,10 @@ var toInfoUrl = '${path}/admin/work/workReport/toinfo.do';
 	
 	//设置查询参数
 	function postQueryParams(params) {
+		$app.form.preSubmit("#searchForm");
 		var queryParams = $("#searchForm").serializeObject();
+		var id =  $app.form.multipleSelectVal("#searchForm .lxr_multipleSelect");
+		if(id||id==0)queryParams.deptStr=deptUnder(id).join(",");
 		queryParams.limit=params.limit;
 		queryParams.offset=params.offset;
 		return queryParams;
@@ -83,18 +86,25 @@ var toInfoUrl = '${path}/admin/work/workReport/toinfo.do';
     //操作工具栏
     function operatorFormatter(value, row, index) {
     	var operator='<div class="btn-group">';
-    	if(row.report_state!=2)
-    	operator+=$app.btn('auth','审核','toExamine(\''+row.id+'\')');
+    	
+    	<shiro:hasPermission name="admin/work/workReport/examine?sysModule=daily">
+    	if(row.report_state!=2)operator+=$app.btn({type:"btn-warning",img:"glyphicon-ok"},'审核','toExamine(\''+row.id+'\')');
+    	</shiro:hasPermission>
+    	
     	operator+=$app.btn('info','详情','viewById(\''+row.id+'\')');
-	    	<shiro:hasPermission name="personnel/organize/place:edit">
-	    		operator+=$app.btn('edit','编辑','editById(\''+row.id+'\')');
-		    </shiro:hasPermission>
-		    <shiro:hasPermission name="personnel/organize/place:delete">
-				operator+=$app.btn('delete','编辑','toRemove(\''+row.id+'\')');
-	    	</shiro:hasPermission>
-	    	/* <shiro:hasPermission name="personnel/organize/place:delete">
-				operator+='<button class="btn btn-danger btn-round btn-xs" onclick="deleteById(\''+row.id+'\')"><i class="glyphicon glyphicon-trash"></i>删除</button>';
-			</shiro:hasPermission> */
+    	
+    	if(row.report_state==1){
+    	<shiro:hasPermission name="admin/work/workReport/update?sysModule=daily&sysAction=edit">
+    		operator+=$app.btn('edit','编辑','editById(\''+row.id+'\')');
+	    </shiro:hasPermission>
+	    
+	    <shiro:hasPermission name="admin/work/workReport/delete?sysModule=daily">
+			operator+=$app.btn('delete','删除','toRemove(\''+row.id+'\')');
+    	</shiro:hasPermission>
+    	}
+	    	
+	    	
+	    	
 		return operator+'</div>';
 	}
     
@@ -131,6 +141,85 @@ function examineNameFormatter(val){
 }
 
 </script>
+
+<script type="text/javascript">
+
+ 
+var deptModel;
+var depts;
+
+$(function() {
+	
+	$app.request("${path}/personnel/organize/dept/view.do",function(data){
+		deptModel = $lxr.tree(data.data,{pidname:"parentid"});
+		depts = data.data;
+		$app.form("#searchForm");
+	});
+});
+
+function findByPid(pid){
+	for (var i = 0; i < depts.length; i++) {
+		if(depts[i].id == pid)
+			return depts[i].childs;
+	}
+}
+
+
+var deptSelect = {
+		 name:"name"
+		,val:"id"
+		,getRoot:function(render){
+			render(deptModel);
+		}
+		,onSelect:function(pid,render){
+			render(findByPid(pid));
+			//if(pid)renderPlace($app.form.multipleSelectVal("#searchForm .lxr_multipleSelect"));
+		}
+};
+
+
+function renderPlace(did){
+	$app.request("${path}/personnel/organize/place/view.do?type=bydeptid&deptid="+did,function(data){
+		
+		var html = '<select name = "placeid" class="form-control lxr_select"  style="display: inline;width:110px;" onchange=""><option value="">--请选择--</option>';
+		if(!$lxr.isEmpty(data.data))
+	for (var i = 0; i < data.data.length; i++) {
+			html+='<option value="'+data.data[i].id+'">'+data.data[i].name+'</option>';
+		}
+		html+='</select>';
+		
+		 $("#searchForm select[name=placeid]").replaceWith(html);
+	});
+	
+}
+
+function deptUnder(id){
+	var ids = [id];
+	var dept;
+	for (var i = 0; i < depts.length; i++) {
+		if(depts[i].id == id){
+			dept = depts[i];
+			break;
+		}
+	}
+	if(dept.childs.length>0)
+		ids.push(getChilds(dept.childs));
+	
+	return ids;
+}
+
+function getChilds(ds){
+	var ids = [];
+	for (var i = 0; i < ds.length; i++) {
+		ids.push(ds[i].id);
+		if(ds[i].childs.length>0)
+			ids.push(getChilds(ds[i].childs));
+	}
+	return ids;
+	
+}
+
+</script>
 </head>
 <body class="mlr15">
 
@@ -138,7 +227,14 @@ function examineNameFormatter(val){
     <div class="rightinfo explain_col">
 		<div>
     		<form id="searchForm" name="searchForm"  method="post">
-    			
+    		<span>所属部门：</span>
+    			<div style="display: inline;" class="lxr_multipleSelect" data-name="deptid" data-model="deptSelect"> </div>
+				
+    			<span>时间：</span>
+    			<input placeholder="开始" data-lxr="{type:'time',format:'yyyy-MM-dd'}" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary" onfocus="WdatePicker({isShowClear:false})">
+    			<input type="hidden" name="startTime">--
+				<input placeholder="结束" data-lxr="{type:'time',format:'yyyy-MM-dd'}" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary" onfocus="WdatePicker({isShowClear:false})">
+				<input type="hidden" name="endTime">
     			<span>关键词：</span>
     			<input name="kw" value="" placeholder="关键词"  class="form-control input-sm w200" type="text" style="display: inline;" >
     			<input type="button" class="btn btn-info btn-round btn-sm" value="查询" onclick="refTable()">

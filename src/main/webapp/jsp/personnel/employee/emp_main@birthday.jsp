@@ -70,6 +70,7 @@ var toInfoUrl = '${path}/personnel/employee/emp/view.do';
 		var id =  $app.form.multipleSelectVal("#searchForm .lxr_multipleSelect");
 		if(id||id==0)queryParams.deptStr=deptUnder(id).join(",");
 		queryParams.month = 1;
+		queryParams.state=0;
 		return $lxr.trimObject(queryParams);
 	}
 	//查询列表

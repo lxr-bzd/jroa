@@ -7,10 +7,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>查询列表</title>
 <script>
-var toAddUrl = '${path}/personnel/apply/apply/toedit.do?module=leave';
+var toAddUrl = '${path}/personnel/apply/apply/toedit.do?sysModule=leave';
 var deleteUrl = '${path}/personnel/apply/apply/delete.do';
 var toEditUrl = '${path}/personnel/apply/apply/toedit.do';
-var toInfoUrl = '${path}/personnel/apply/apply/view.do';
+var toInfoUrl = '${path}/personnel/apply/apply/toinfo.do?sysModule=leave';
 var updateUrl = '${path}/personnel/apply/apply/update.do';
 
 	//添加
@@ -44,15 +44,10 @@ var updateUrl = '${path}/personnel/apply/apply/update.do';
 	
     //查看
     function toInfo(id){
+    	$app.dialog(toInfoUrl+"&id="+id,function(){
+			refleshData('mainTable');
+		},{width:"600px",height:"700px"});
     	
-    	
-    	if(selected.length>0&&selected.length<2){
-    		
-    		$lxr.modal({url:toInfoUrl+'?id='+selected});
-    		
-    	}else{
-    		$app.alert('请选择一条数据进行操作');
-    	}
 	}
 	
 	//设置查询参数
@@ -68,18 +63,10 @@ var updateUrl = '${path}/personnel/apply/apply/update.do';
     }
     
     function editById(id){
-    	$app.dialog(toEditUrl+'?module=leave&id='+id+"&action=edit",function(){
+    	$app.dialog(toEditUrl+'?sysModule=leave&id='+id+"&action=edit",function(){
 			refleshData('mainTable');
 		},{width:"520px",height:"380px"});
 	}
-
-	
-
-	//根据id查看
-	function viewById(id){
-		$lxr.modal({url:toInfoUrl+'?id='+id+"&type=info"});
-	}
-	
    
     
     
@@ -116,7 +103,7 @@ function operatorFormatter(value, row, index) {
 	case 3:
 	break;
 	case 4:
-		operator+= $app.btn('info','查看原因','toInfo(\''+row.id+'\')');
+		
 	break;
 	}
 	
@@ -128,13 +115,13 @@ function operatorFormatter(value, row, index) {
 function stateFormatter(value,row,index){
 	switch (value) {
 	case 1:
-	return '审核中';
+	return '未审核';
 	break;
 	case 2:
 	return '通过';
 	break;
 	case 3:
-	return '已取消';
+	return '审核中';
 	break;
 	case 4:
 	return '未通过';

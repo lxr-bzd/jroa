@@ -83,29 +83,44 @@ var backurl = "${path}/admin/work/workReport.do";
 		
 		<div class="formbody">
 
+<div class="panel panel-success">
+	<div class="panel-heading">
+		<h3 class="panel-title">今日工作</h3>
+	</div>
+	<div class="panel-body">
+		${vo.content }
+	</div>
+	</div>
+	
+<div class="panel panel-info">
+	<div class="panel-heading">
+		<h3 class="panel-title">今日学习</h3>
+	</div>
+	<div class="panel-body">
+		${vo.study }
+	</div>
+	</div>
 
 
-   			<form id="submit_form"  method="post" data-action="${path}/admin/work/workReport/examine.do">
-   				<input name="reportid" value="${vo.id }" type="hidden"  />
-   				<ul class="forminfo">
-					<li><label>今日工作：</label><span>${vo.content }</span>
-					</li>
-					
-					<li><label>今日学习：</label><span>${vo.study }</span>
-					</li>
-					<li><label>状态：</label><span id="report_state" data-val="${vo.report_state }"></span>
-					</li>
-					
-				<c:if test="${vo.report_state==2 }">
-				<li><label>审批人：</label><span >${vo.examineName }</span>
-				</li>
-				<li><label>审批意见：</label><span >${vo.examineInfo }</span>
-				</li>
-				</c:if>
-					
-					
-	    		</ul>
-    		</form>
+
+<table class="table table-bordered">
+	
+	<tbody>
+		<tr>
+			<td>状态</td>
+			<td><span id="report_state" data-val="${vo.report_state }"></span></td></tr>
+	<c:if test="${vo.report_state==2 }">
+		<tr>
+			<td>审批人</td>
+			<td>${vo.examineName }</td></tr>
+			
+		<tr>
+			<td>审批意见</td>
+			<td>${vo.examineInfo }</td></tr>
+	</c:if>
+	</tbody>
+</table>
+
     		
 	    </div>
 </body>

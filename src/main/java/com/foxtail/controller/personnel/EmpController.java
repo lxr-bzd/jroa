@@ -50,7 +50,6 @@ public class EmpController extends BaseMybatisController{
 	@RequestMapping("toinfo") 
 	public String toinfo(String id,ModelMap modelMap){
 		String jsp= getInfoJsp(null);
-
 		modelMap.put("vo", empService.getById(id));
 		return jsp;
 	}

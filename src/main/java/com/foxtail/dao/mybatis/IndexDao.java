@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface IndexDao {
 
-	Map<String, Object> getStatistics(@Param("cmonthTime")Long cmonthTime,@Param("cmonth")Integer cmonth);
+	Map<String, Object> getStatistics(@Param("cmonthTime")Long cmonthTime,@Param("cmonthEndTime")Long cmonthEndTime,@Param("cmonth")Integer cmonth);
 	List<Map<String, Object>> findSale(@Param("starttime")Long starttime,@Param("endtime")Long endtime);
 
 

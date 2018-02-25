@@ -94,12 +94,12 @@ var toInfoUrl = '${path}/customer/customer/customer/view.do';
     	var operator='<div class="btn-group">';
 		    
     	operator+=$app.btn('auth','回访','tovisit(\''+row.id+'\',\''+row.name+'\')');
-	    	<shiro:hasPermission name="personnel/organize/place:edit">
+	    	
 	    	operator+= $app.btn('edit','编辑','editById(\''+row.id+'\')');
-		    </shiro:hasPermission>
-		    <shiro:hasPermission name="personnel/organize/place:delete">
+		  
+		   
 		    operator+= $app.btn('delete','删除','toRemove(\''+row.id+'\')');
-	    	</shiro:hasPermission>
+	    	
 	    
 			
 			

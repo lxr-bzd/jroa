@@ -3,6 +3,7 @@ package com.foxtail.controller.customer;
 
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -15,8 +16,10 @@ import com.foxtail.common.DataGridResult;
 import com.foxtail.common.JsonResult;
 import com.foxtail.common.base.BaseMybatisController;
 import com.foxtail.filter.CustomerFilter;
+import com.foxtail.filter.WorkReportFilter;
 import com.foxtail.model.customer.Customer;
 import com.foxtail.service.customer.CustomerService;
+import com.foxtail.service.personnel.EmpService;
 
 
 @Controller
@@ -26,6 +29,9 @@ public class CustomerController extends BaseMybatisController{
 
 	@Autowired
 	CustomerService customerService;
+	
+	@Autowired
+	EmpService empService;
 	
 	
 	@RequestMapping() 
@@ -51,18 +57,37 @@ public class CustomerController extends BaseMybatisController{
 	
 	@RequestMapping("view")
 	@ResponseBody
-	public Object view(String type,CustomerFilter filter,String deptStr,String ismy,HttpServletRequest request) {
+	public Object view(String type,CustomerFilter filter,String deptStr,HttpServletRequest request) {
 		
 		if("info".equals(type))
 			return JsonResult.getSuccessResult(customerService.getById(request.getParameter("id")));
 		else {
 			if(!StringUtils.isEmpty(deptStr))
 			filter.setDeptids(deptStr.split(","));
-			if(ismy!=null)
+			
+			resolveSysView(filter);
 			filter.setEmpid(ServiceManager.securityService.getUid());
+			filter.setUdeptids(new String[] {empService.getById(ServiceManager.securityService.getUid()).getDeptid()});
+			
 			return DataGridResult.getResult(customerService.findForPage(getPagination(request),filter));
 		}
 		
+	}
+	
+	
+	 private void resolveSysView(CustomerFilter filter) {
+		 filter.setSysView("def");
+		 if(SecurityUtils.getSubject().isPermitted("customer/customer/customer?$sysView=all")) {
+			 filter.setSysView("all");
+			 return ;
+		 }
+		 if(SecurityUtils.getSubject().isPermitted("customer/customer/customer?$sysView=below")) {
+				filter.setSysView("below");
+			 
+		 }
+		 
+		
+
 	}
 	
 	

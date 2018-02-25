@@ -548,7 +548,13 @@ body .table_list tr:hover{ background:#F4F4F4;}
 .tableForm select,.tableForm textarea{border-color: transparent;}
 .autograph input{border-bottom: 1px  dashed #dbdbdb;}
 
-
+.input-group{display: inherit !important;width: 100%;}
+.input-group .form-control{
+	width: 75% !important;
+}
+.input-group .input-group-addon{
+	padding: 10px 12px !important;
+}
 /*列表全选按钮*/
 .select_btn{margin-top: 10px ;}
 .select_all{height: 32px;line-height: 32px;margin-right: 4px;}

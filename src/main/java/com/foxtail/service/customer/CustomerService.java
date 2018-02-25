@@ -73,6 +73,21 @@ public class CustomerService {
 	}
 	
 	public Pagination findForPage(Pagination page,CustomerFilter filter) {
+		switch (filter.getSysView()) {
+		
+		case "all":filter.setEmpid(null);
+		filter.setUdeptids(null);
+		break;
+		case "below":
+			filter.setEmpid(null);
+		break;
+		case "def":
+		default:filter.setDeptids(new String[] {"-1"});
+			break;
+		}
+		
+		
+		
 		PageHelper.startPage(page.getPageNo(), page.getPageSize());
 		Page listCountry  = (Page)customerDao.findForPag(page,filter,filter.getDeptids());
 		page.setTotalCount((int)listCountry.getTotal());

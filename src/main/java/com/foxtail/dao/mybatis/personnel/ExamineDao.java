@@ -14,6 +14,11 @@ public interface ExamineDao {
 	
 	Examine getById(@Param("id")String id);
 	
+	List<Examine> findByApplyid(@Param("id")String id);
+	
 	List<Examine> findForPage(@Param("page")Pagination page,@Param("ft")ApplyFilter filter);
+	
+	void setApplyState(@Param("id")String id,@Param("state")Integer state);
+	
 }
 

@@ -84,6 +84,16 @@
                     layui.use('form', function(){
 					  var form = layui.form;
 					});
+                    
+                    
+
+                    $(function(){
+                    	$("#password").val("");
+                    	
+                    })
+                    
+                    
+                    
                 </script>
                 <style type="text/css">
                     span { display: block; } 

@@ -20,8 +20,16 @@ public interface ProjectDao {
 	
 	void saveProduct(@Param("projectid")String prjectid,@Param("productid")String productid);
 	
+	void saveMebs(@Param("prjid")String prjid,@Param("mebs")List<Map<String, Object>> list);
+	
 	List<Map<String, Object>> findProducts(@Param("projectid")String prjectid);
 	
+	List<Map<String, Object>> findMebs(@Param("projectid")String prjectid);
+	
 	void deleteAllProduct(@Param("ids")String[] prjectids);
+	
+	void deleteAllCollect(@Param("ids")String[] prjectids);
+	
+	void deleteAllMebs(@Param("ids")String[] prjectids);
 }
 

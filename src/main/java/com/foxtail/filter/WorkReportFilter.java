@@ -4,7 +4,7 @@ public class WorkReportFilter {
 	
 	Integer type;
 	
-	String[] deptids;
+	String[] udeptids;
 	
 	String sysView;
 	
@@ -12,8 +12,9 @@ public class WorkReportFilter {
 	Long endTime;
 	
 	String uid;
+	String deptid;
 	
-	String udeptid;
+	String[] deptids;
 
 	public Integer getType() {
 		return type;
@@ -23,12 +24,14 @@ public class WorkReportFilter {
 		this.type = type;
 	}
 
-	public String[] getDeptids() {
-		return deptids;
+	
+
+	public String[] getUdeptids() {
+		return udeptids;
 	}
 
-	public void setDeptids(String[] deptids) {
-		this.deptids = deptids;
+	public void setUdeptids(String[] udeptids) {
+		this.udeptids = udeptids;
 	}
 
 	public Long getStartTime() {
@@ -63,13 +66,23 @@ public class WorkReportFilter {
 		this.uid = uid;
 	}
 
-	public String getUdeptid() {
-		return udeptid;
+	public String[] getDeptids() {
+		return deptids;
 	}
 
-	public void setUdeptid(String udeptid) {
-		this.udeptid = udeptid;
+	public void setDeptids(String[] deptids) {
+		this.deptids = deptids;
 	}
+
+	public String getDeptid() {
+		return deptid;
+	}
+
+	public void setDeptid(String deptid) {
+		this.deptid = deptid;
+	}
+
+	
 
 	
 	

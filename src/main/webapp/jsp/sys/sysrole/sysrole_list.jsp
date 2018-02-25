@@ -127,6 +127,7 @@
 	    	<shiro:hasPermission name="SysRole:remove">
 				operator+='<button class="btn btn-danger btn-round btn-xs" onclick="deleteById(\''+row.id+'\')"><i class="glyphicon glyphicon-trash"></i> 删除</button>';
     		</shiro:hasPermission>
+    		operator+='<button class="btn btn-warning btn-round btn-xs" onclick="copyRes(\''+row.id+'\')"><i class="glyphicon glyphicon-trash"></i> 复制权限</button>';
 		return operator;
 	}
      
@@ -154,6 +155,17 @@
     	}
     }
 
+    function copyRes(roleid){
+    	
+    	$app.prompt("被复制id",function(pass){
+    		$app.request("${path}/sysRoleController/copyRes.do",function(data){
+    			
+    			
+    		},{param:{roleid:roleid,copyRoleid:pass}});
+    		
+    	});
+    }
+    
     //授权
     function toAuth(id){
     	

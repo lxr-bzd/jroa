@@ -18,9 +18,14 @@
   		<if test="ft.startTime != null ">AND a.ordertime > #{ft.startTime}</if>
   		<if test="ft.endTime != null ">AND a.ordertime &lt; #{ft.endTime}</if>
   		<if test="ft.progressid != null ">AND a.progressid = #{ft.progressid}</if>
-  		
   		<if test="ft.empKw != null ">AND c.name like CONCAT('%',#{ft.empKw},'%')</if>
-  		<if test="ft.uid != null ">AND a.managerid = #{ft.uid}</if>
+  		<if test="ft.uid != null ">AND (a.managerid = #{ft.uid} OR #{ft.uid} in (select empid from prj_project_meb where prjid=a.id))</if>
+  		<if test="ft.udeptids != null ">AND (a.managerid = #{ft.uid2} OR 
+  		exists (select bb.deptid from prj_project_meb aa left join man_emp bb on aa.empid=bb.id where aa.prjid=a.id AND bb.deptid in
+  		<foreach collection="ft.udeptids" item="deptid" index="index" open="(" close=")" separator=",">
+              #{deptid}</foreach>)
+  		
+  		)</if>
   		ORDER BY signtime DESC
   		
   	</select>
@@ -39,6 +44,13 @@
 	select a.id,a.name from cus_product a
   		 where a.id in (select productid from prj_project_prduct where projectid=#{projectid})
   	</select> 
+  	
+  	<select id="findMebs" resultType="map" >
+	select a.*,b.name empName from prj_project_meb a left join man_emp b on a.empid=b.id
+  		 where a.prjid=#{projectid}
+  	</select> 
+  	
+  	
 
 	
 	
@@ -74,6 +86,15 @@
      VALUES(#{projectid },#{productid })
     </insert>
     
+    <insert id="saveMebs"  >
+     INSERT INTO prj_project_meb(empid, role,prjid) 
+     VALUES<foreach collection="mebs" item="meb" index="index" open="" close="" separator=",">
+              (#{meb.empid },#{meb.role },#{prjid })
+          </foreach>
+     
+    </insert>
+    
+    
     
     
      <!--批量删除-->
@@ -83,6 +104,23 @@
               #{id}
           </foreach>
 	</delete>
+	
+	<delete id="deleteAllCollect" >
+	   delete from prj_collect  where prjid in
+	   <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+              #{id}
+       </foreach>
+	</delete>
+	
+	
+	<delete id="deleteAllMebs" >
+	   delete from prj_project_meb where prjid in
+	   <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+              #{id}
+       </foreach>
+	</delete>
+	
+	
     
 	
 </mapper>   

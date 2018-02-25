@@ -81,9 +81,9 @@ var toInfoUrl = '${path}/admin/information/article/view.do';
     //操作工具栏
     function operatorFormatter(value, row, index) {
     	var operator='<div class="btn-group">';
-    	  <shiro:hasPermission name="personnel/organize/place:info">
+    	 
  	     operator+=$app.btn('info','查看','toInfo(\''+row.id+'\')');
- 			</shiro:hasPermission> 
+ 			
 	    	<shiro:hasPermission name="admin/institution/article/update?sysModule=institution&sysAction=edit">
 	    		operator+=$app.btn('edit','编辑','editById(\''+row.id+'\')');
 		    </shiro:hasPermission>
@@ -95,6 +95,14 @@ var toInfoUrl = '${path}/admin/information/article/view.do';
 	}
     
    
+    
+    function formatterSummary(value, row, index){
+    	var len = 25;
+    	
+    	if(value.length>len)return value.substring(0,len-1)+"..."
+    	return value;
+    	
+    }
     
  
     
@@ -142,7 +150,7 @@ var toInfoUrl = '${path}/admin/information/article/view.do';
 					<th data-field="" data-checkbox="true"></th>
 					<th data-field="id">id</th>
 					<th data-field="title" >标题</th>
-					<th data-field="summary" >概要</th>
+					<th data-field="summary" data-formatter="formatterSummary">概要</th>
 					<th data-field="author" >发布人</th>
 					<th data-field="createtime" data-formatter="$app.tableUi.time">发布时间</th>
 					<th data-field="state" data-formatter="$app.tableUi.state" >状态</th>

@@ -9,12 +9,14 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
 import com.foxtail.bean.ServiceManager;
 import com.foxtail.common.AppModelMap;
 import com.foxtail.common.DataGridResult;
 import com.foxtail.common.JsonResult;
 import com.foxtail.common.base.BaseMybatisController;
 import com.foxtail.filter.ApplyFilter;
+import com.foxtail.model.personnel.Apply;
 import com.foxtail.model.personnel.Examine;
 import com.foxtail.service.personnel.ApplyService;
 import com.foxtail.service.personnel.EmpService;
@@ -38,6 +40,7 @@ public class ExamineController extends BaseMybatisController{
 	
 	@RequestMapping() 
 	public String toMain(String sysModule){
+		String rString = getMainJsp(sysModule);
 		return getMainJsp(sysModule);
 	}
 	
@@ -46,7 +49,11 @@ public class ExamineController extends BaseMybatisController{
 	public String toEdit(String sysModule,String sysAction,String id,ModelMap modelMap){
 		String jsp= getEditJsp(sysModule);
 		
-		if("edit".equals(sysAction))modelMap.put("vo", applyService.getById(id));
+		if("edit".equals(sysAction)) {
+			Apply apply = applyService.getById(id);
+			modelMap.put("vo", apply);
+			modelMap.put("exaJson", JSONObject.toJSONString(examineService.findByApplyid(apply.getId())));
+		}
 		return jsp;
 	}
 	
@@ -107,10 +114,12 @@ public class ExamineController extends BaseMybatisController{
 	
 	@RequestMapping("save")
 	@ResponseBody
-	public Object save(Examine examine) {
+	public Object save(Examine examine,String isend) {
+		examine.setExatime(System.currentTimeMillis()+"");
+		examine.setExaid(ServiceManager.securityService.getUid());
 		
-		examineService.save(examine);
-
+		examineService.save(examine,("true".equals(isend))?true:false);
+		
 		return JsonResult.getSuccessResult();
 	}
 	

@@ -81,11 +81,10 @@ var toInfoUrl = '${path}/admin/information/article/view.do';
     //操作工具栏
     function operatorFormatter(value, row, index) {
     	var operator='<div class="btn-group">';
-    	  <shiro:hasPermission name="personnel/organize/place">
+    	
  	     operator+=$app.btn('info','查看','toInfo(\''+row.id+'\')');
- 			</shiro:hasPermission> 
-	    	<shiro:hasPermission name="admin/information/article/update?sysModule=notice&sysAction=edit">
-	    		operator+=$app.btn('edit','编辑','editById(\''+row.id+'\')');
+ 			<shiro:hasPermission name="admin/information/article/update?sysModule=notice&sysAction=edit">
+	    	operator+=$app.btn('edit','编辑','editById(\''+row.id+'\')');
 		    </shiro:hasPermission>
 		    <shiro:hasPermission name="admin/information/article/delete?sysModule=notice">
 				operator+=$app.btn('delete','删除','toRemove(\''+row.id+'\')');

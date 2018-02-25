@@ -12,6 +12,8 @@ public interface EmpDao {
 	
 	void update(@Param("model")Emp emp);
 	
+	void updateEmp(@Param("model")Emp emp);
+	
 	Emp getById(@Param("id")String id);
 	
 	List<Emp> findForPage2(@Param("ft")EmpFilter filter);

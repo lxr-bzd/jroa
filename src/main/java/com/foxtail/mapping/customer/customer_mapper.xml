@@ -19,6 +19,11 @@
   		<if test="ft.endTime != null ">AND a.createtime &lt; #{ft.endTime}</if>
   		<if test="ft.follow != null ">AND a.follow = #{ft.follow}</if>
   		<if test="ft.empid != null ">AND a.empid = #{ft.empid}</if>
+  		<if test="ft.udeptids != null ">AND c.deptid in 
+  		<foreach collection="ft.udeptids" item="id" index="index" open="(" close=")" separator=",">
+              #{id}
+          	</foreach>
+         </if>
   		<if test="deptids != null "> AND c.deptid in
   			<foreach collection="deptids" item="id" index="index" open="(" close=")" separator=",">
               #{id}

@@ -50,6 +50,7 @@ public class TransferService {
 					user.setUserName(emp.getName());
 					user.setAccount(emp.getAccount());
 					user.setPassword(emp.getPwd());
+					user.setStatus(Integer.parseInt(emp.getState()));
 					updateAccount(user, roleid);
 					
 			}else {
@@ -57,6 +58,7 @@ public class TransferService {
 				sysUser.setUserName(emp.getName());
 				sysUser.setAccount(emp.getAccount());
 				sysUser.setPassword(emp.getPwd());
+				sysUser.setStatus(Integer.parseInt(emp.getState()));
 				createAccount(sysUser, roleid);
 				
 			}
@@ -71,10 +73,22 @@ public class TransferService {
 	public void updateAccount(SysUser sysUser,String roleid) {
 		sysUserService.updateByPrimaryKey(sysUser);
 
+		if(roleid!=null) {
 		SysUserRole sysUserRole = new SysUserRole();
 		sysUserRole.setRoleId(Integer.parseInt(roleid));
 		sysUserRole.setUserId(sysUser.getId());
 		sysUserService.setUserRole(new SysUserRole[] {sysUserRole});
+		}
+	}
+	
+	
+	public void updateAccount(Emp emp) {
+		SysUser sysUser = new SysUser();
+		sysUser.setAccount(emp.getAccount());
+		sysUser.setPassword(emp.getPwd());
+		
+		sysUserService.updateByAccount(sysUser);
+		
 	}
 	
 	

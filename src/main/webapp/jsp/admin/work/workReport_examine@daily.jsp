@@ -96,12 +96,12 @@ var backurl = "${path}/admin/work/workReport.do";
    				<input name="reportid" value="${vo.id }" type="hidden"  />
    				<ul class="forminfo">
 					<li><label>今日工作：</label>
-					<textarea  rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height:100px;">${vo.content }</textarea>
+					<textarea readonly="readonly"  rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height:100px;">${vo.content }</textarea>
 					
 					</li>
 					
 					<li><label>今日学习：</label>
-					<textarea name="" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height: 200px;">${vo.study }</textarea>
+					<textarea readonly="readonly"  name="" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height: 200px;">${vo.study }</textarea>
 					</li>
 					
 					

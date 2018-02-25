@@ -251,7 +251,7 @@
 			    container: mountNode,
 			    forceFit: true,
 			    height: 300 ,
-			    padding: [ 20, 20, 30, 30 ]
+			    padding: [ 40, 20, 50, 30 ]
 		  	});
 		  	chart.source(data);
 		  	chart.scale('人数', {

@@ -22,6 +22,12 @@
               #{deptid}
           </foreach>
   		</if>
+  		<if test="ft.udeptids != null "> AND b.deptid in
+  		  <foreach collection="ft.udeptids" item="deptid" index="index"
+             open="(" close=")" separator=",">
+              #{deptid}
+          </foreach>
+  		</if>
   		ORDER BY createtime DESC
   	</select>
   

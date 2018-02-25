@@ -29,7 +29,7 @@
 		var setting = {
 				check : {
 					enable : true,
-					 chkboxType:  { "Y": "s", "N": "s" },
+					 chkboxType:  { "Y": "ps", "N": "s" },
 					chkStyle : "checkbox"
 				},
 				async : {
@@ -66,21 +66,21 @@
 		function submitSelect(){
 			
 			var nodes = zTree.getCheckedNodes(true);
-			var parms = [];
-			
+
+			var resids = [];
+			var roleId = '${roleId}';
 			$.each(nodes,function(i,node){
 				var resid = node.id;
-				var roleId = '${roleId}';
-				var po = {"roleId":roleId,"resourceId":resid};
-				parms.push(po);
+				resids.push(resid);
 			});
 			MaskUtil.mask();
+			
+			
 			$.ajax({
 				  url:"${path}/sysRoleController/toAuthorization.do",
 				  type:"post",
-				  data:$.toJSON(parms),
+				  data:{roleid:'${roleId}',resids:resids.join(",")},
 				  dataType:"json",
-				  contentType:"application/json",
 				  cache:false,
 				  success:function(json){
 					  if(json.success){

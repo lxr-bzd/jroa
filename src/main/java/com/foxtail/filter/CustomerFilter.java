@@ -16,6 +16,10 @@ public class CustomerFilter {
 	
 	String empid;
 	
+	String[] udeptids;
+	
+	String sysView;
+	
 
 	public Integer getState() {
 		return state;
@@ -73,6 +77,23 @@ public class CustomerFilter {
 		this.empid = empid;
 	}
 
+	public String getSysView() {
+		return sysView;
+	}
+
+	public void setSysView(String sysView) {
+		this.sysView = sysView;
+	}
+
+	public String[] getUdeptids() {
+		return udeptids;
+	}
+
+	public void setUdeptids(String[] udeptids) {
+		this.udeptids = udeptids;
+	}
+
+	
 	
 	
 

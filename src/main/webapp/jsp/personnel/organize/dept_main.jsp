@@ -113,9 +113,14 @@ var toInfoUrl = '${path}/personnel/organize/dept/view.do';
 		
 		<div id="toolbar" class="btn-group" style="margin:15px auto">
 	   
-	   		<button class="btn btn-info btn-round  btn-sm" onclick="toAdd();" >
+	   <shiro:hasPermission name="personnel/organize/dept/save">
+	   		 <button class="btn btn-info btn-round  btn-sm" onclick="toAdd();" >
 					<i class="glyphicon glyphicon-plus"></i> 新增部门
 			</button>
+
+		</shiro:hasPermission>
+	   
+	   		
 		</div>
     
     	<table id ="mtable"  data-toggle="table" class="table_list" >
@@ -372,9 +377,13 @@ function onclickNode(id,ck){
 	<td style="">
 <div class="btn-group">
 		
+<shiro:hasPermission name="personnel/organize/dept/update">
+	    	
 		{{#formatBtn({type:' btn-success',img:'glyphicon-plus'},'添加子部门','toAdd(\''+id+'\')')}}
 		{{#formatBtn('edit','编辑','editById(\''+id+'\')')}}
 		{{#formatBtn('delete','删除','toRemove(\''+id+'\')')}}
+
+</shiro:hasPermission>
 		
 </div>
 	</td>

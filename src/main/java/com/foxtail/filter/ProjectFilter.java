@@ -9,8 +9,12 @@ public class ProjectFilter {
 	Long endTime;
 	String progressid;
 	
-	
+	String uid2;
 	String uid;
+	String deptid;
+	
+	String[] udeptids;
+	
 	String sysView;
 	
 
@@ -71,6 +75,32 @@ public class ProjectFilter {
 	public void setUid(String uid) {
 		this.uid = uid;
 	}
+
+	public String getDeptid() {
+		return deptid;
+	}
+
+	public void setDeptid(String deptid) {
+		this.deptid = deptid;
+	}
+
+	public String[] getUdeptids() {
+		return udeptids;
+	}
+
+	public void setUdeptids(String[] udeptids) {
+		this.udeptids = udeptids;
+	}
+
+	public String getUid2() {
+		return uid2;
+	}
+
+	public void setUid2(String uid2) {
+		this.uid2 = uid2;
+	}
+
+	
 	
 	
 	

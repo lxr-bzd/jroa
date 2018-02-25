@@ -37,10 +37,14 @@ public class Project {
 	List<Map<String, Object>> products;
 	String[] productids;
 	
+	List<Map<String, Object>> mebs;
+	
 	
 	Double renew;
 	Long renewtime;
 	String renew_content;
+	
+	
 	
 	public String getId() {
 		return id;
@@ -230,6 +234,13 @@ public class Project {
 	public void setProducts(List<Map<String, Object>> products) {
 		this.products = products;
 	}
+	public List<Map<String, Object>> getMebs() {
+		return mebs;
+	}
+	public void setMebs(List<Map<String, Object>> mebs) {
+		this.mebs = mebs;
+	}
+	
 	
 	
 	

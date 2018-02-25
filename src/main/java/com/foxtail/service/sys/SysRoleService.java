@@ -23,7 +23,7 @@ public interface SysRoleService extends BaseMybatisService<SysRole,Integer> {
     * @Title: setRoleResources  
 
      */
-    public void setRoleResources(SysRoleResource[] resources);
+    public void setRoleResources(String roleid,String[] resids);
     
     /**
      * 
@@ -31,5 +31,11 @@ public interface SysRoleService extends BaseMybatisService<SysRole,Integer> {
     * @Title: findRoleTypesByUserId  
      */
     public List<String> findRoleTypesByUserId(Integer userId);
+    
+    
+    void copyResources(String roleid,String copyRoleid);
+    
+    
+    
 }
 

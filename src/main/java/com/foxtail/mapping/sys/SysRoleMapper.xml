@@ -194,6 +194,10 @@
 	</select>
 	
 	
+	<insert id="copyResources" >
+	  insert into t_sys_role_resource(role_id,resource_id) select #{roleid} role_id,resource_id from t_sys_role_resource where role_id=#{copyRoleid}
+	</insert>
+	
 	
 	
 </mapper>   

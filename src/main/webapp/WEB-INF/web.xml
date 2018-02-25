@@ -107,6 +107,6 @@
     <location>/common/500error.jsp</location>
   </error-page>
   <welcome-file-list>
-    <welcome-file>/loadAuthorization/pass.do</welcome-file>
+    <welcome-file>loadAuthorization/pass.do0</welcome-file>
   </welcome-file-list>
 </web-app>

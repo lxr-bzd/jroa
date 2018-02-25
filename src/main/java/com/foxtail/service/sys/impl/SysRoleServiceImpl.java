@@ -109,21 +109,31 @@ public class SysRoleServiceImpl implements SysRoleService{
     }
 
 	@Override
-	public void setRoleResources(SysRoleResource[] resources) {
-		if (null != resources && resources.length > 0) {
-			Integer roleId = resources[0].getRoleId();
-			sysRoleResourceDao.deleteByRoleId(roleId);
-			for (SysRoleResource roleResource : resources) {
+	public void setRoleResources(String roleid,String[] resids) {
+	
+			sysRoleResourceDao.deleteByRoleId(Integer.parseInt(roleid));
+			for (String resid : resids) {
+				SysRoleResource roleResource = new SysRoleResource();
+				roleResource.setRoleId(Integer.parseInt(roleid));
+				roleResource.setResourceId(Integer.parseInt(resid));
 				sysRoleResourceDao.insertSelective(roleResource);
 			}
 			customRealm.clearCached();
-		}
+		
 	}
 
 	@Override
 	public List<String> findRoleTypesByUserId(Integer userId) {
 		System.out.println("findRoleTypesByUserId");
 		return sysRoleDao.findRoleTypesByUserId(userId);
+	}
+
+	@Override
+	public void copyResources(String roleid, String copyRoleid) {
+		
+		sysRoleResourceDao.deleteByRoleId(Integer.valueOf(roleid));
+		sysRoleDao.copyResources(roleid, copyRoleid);
+		
 	}
 
 	

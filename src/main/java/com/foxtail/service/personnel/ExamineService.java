@@ -1,6 +1,7 @@
 package com.foxtail.service.personnel;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.foxtail.bean.ServiceManager;
@@ -21,13 +22,18 @@ public class ExamineService {
 	ApplyDao applyDao;
 	
 	
-	public void save(Examine examine) {
+	public void save(Examine examine,boolean isend) {
+		
+		int state = 4;//不通过
+		
+		if(examine.getResult()!=null&&examine.getResult()==1)
+			state = 2;//通过
+		if(!isend)state = 3;//审核中
 		
 		examineDao.save(examine);
+		examineDao.setApplyState(examine.getApplyid(), state);
 
 	}
-	
-	
 	
 	
 	public void delete(String[] ids) {
@@ -64,6 +70,12 @@ public class ExamineService {
 	public Examine getById(String id) {
 		
 		return examineDao.getById(id);
+
+	}
+	
+	public List<Examine> findByApplyid(String id) {
+		
+		return examineDao.findByApplyid(id);
 
 	}
 

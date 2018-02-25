@@ -12,15 +12,8 @@
 
 var depts = [];
 
-
 var backurl = "${path}/admin/work/workReport.do";
 
-
-	$(function() {
-		
-		
-	
-	});
 	function toSubmit(){
 		//表单验证
 		if(!$("#submit_form").valid())
@@ -122,26 +115,34 @@ var backurl = "${path}/admin/work/workReport.do";
    				</tbody>
    				</table>
    				
-   				<table  class="table table-bordered">
-   				<tr>
-   				<td colspan="2">本周工作目标</td>
-   				</tr>
-   				<tr>
-	   				<td>未完成目标的原因和障碍</td>
-	   				<td><input name="uncomplete" value="" type="text" class="form-control input-primary" /></td>
    				
-   				</tr>
-   				<tr>
-	   				<td>克服障碍的对策和方法</td>
-	   				<td><input name="answer" value="" type="text" class="form-control input-primary" /></td>
+   				<div class="panel panel-info">
+					<div class="panel-heading">
+						<h3 class="panel-title">本周工作总结</h3>
+					</div>
+					<div class="panel-body">
+									<table  class="table table-bordered">
+			   				
+						   				<tr>
+							   				<td>未完成目标的原因和障碍</td>
+							   				<td><input name="uncomplete" value="" type="text" class="form-control input-primary" /></td>
+						   				
+						   				</tr>
+						   				<tr>
+							   				<td>克服障碍的对策和方法</td>
+							   				<td><input name="answer" value="" type="text" class="form-control input-primary" /></td>
+						   				
+						   				</tr>
+						   				<tr>
+							   				<td>本周创新与收获</td>
+							   				<td><input name="study" value="" type="text" class="form-control input-primary" /></td>
+						   				
+						   				</tr>
+						   				</table>
+					</div>
+				</div>
+				
    				
-   				</tr>
-   				<tr>
-	   				<td>本周创新与收获</td>
-	   				<td><input name="study" value="" type="text" class="form-control input-primary" /></td>
-   				
-   				</tr>
-   				</table>
 					<div class="btnWrap">
 					<input name="" type="button" class="btn btn-primary" value="确认" onclick="toSubmit()">&nbsp;&nbsp;&nbsp;&nbsp;
 					<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();">
@@ -186,7 +187,7 @@ var backurl = "${path}/admin/work/workReport.do";
 	
 	<table  class="table table-bordered">
    				<tr>
-   				<td colspan="2">本周工作目标</td>
+   				<td colspan="2">本周工作总结</td>
    				</tr>
    				<tr>
 	   				<td>未完成目标的原因和障碍</td>
@@ -229,7 +230,7 @@ var backurl = "${path}/admin/work/workReport.do";
    				<td><input onclick="if(this.checked)$(this).next().val('2'); else $(this).next().val('1');" type="checkbox" class="input-primary" />
    				<input name="details[{{sort-1}}].isfinish" type="hidden" value="1"  />
    				</td>
-   				<td><a onclick="$(this).parent().remove()">删除</a></td>
+   				<td><a onclick="$(this).parent().parent().remove()">删除</a></td>
    				</tr>
 
 </script>

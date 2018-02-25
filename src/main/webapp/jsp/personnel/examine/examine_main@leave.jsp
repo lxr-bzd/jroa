@@ -18,7 +18,7 @@ var updateUrl = '${path}/personnel/examine/examine/update.do';
 		$app.dialog(toAddUrl,function(){
 			refleshData('mainTable');
 		});
-		//window.location=toAddUrl;
+		
 	}
 	//删除
 	function toRemove(id){
@@ -67,7 +67,7 @@ var updateUrl = '${path}/personnel/examine/examine/update.do';
     function editById(id){
     	$app.dialog(toEditUrl+'?sysModule=leave&sysAction=edit&id='+id+"",function(){
 			refleshData('mainTable');
-		});
+		},{width:"800px",height:"800px"});
 	}
 
 	
@@ -104,9 +104,9 @@ function operatorFormatter(value, row, index) {
 	case 2:
 	break;
 	case 3:
+		operator+= $app.btn({type:'btn-warning',img:'glyphicon-remove'},'复审','editById(\''+row.id+'\')');
 	break;
 	case 4:
-		operator+= $app.btn('info','查看原因','toInfo(\''+row.id+'\')');
 	break;
 	}
 	
@@ -118,17 +118,17 @@ function operatorFormatter(value, row, index) {
 function stateFormatter(value,row,index){
 	switch (value) {
 	case 1:
-	return '审核中';
-	break;
-	case 2:
-	return '通过';
-	break;
-	case 3:
-	return '已取消';
-	break;
-	case 4:
-	return '未通过';
-	break;
+		return '未审核';
+		break;
+		case 2:
+		return '通过';
+		break;
+		case 3:
+		return '审核中';
+		break;
+		case 4:
+		return '未通过';
+		break;
 
 	default:
 		break;

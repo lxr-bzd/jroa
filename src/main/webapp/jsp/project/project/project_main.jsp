@@ -95,16 +95,16 @@ var toInfoUrl = '${path}/project/project/project/view.do';
     //操作工具栏
     function operatorFormatter(value, row, index) {
     	var operator='<div class="btn-group">';
-    	 	<shiro:hasPermission name="project/project/project:delete">
+    	 	<shiro:hasPermission name="project/project/prjLog">
 				operator+=$app.btn('auth','跟踪','todetail(\''+row.id+'\',\''+row.name+'\')');;
 			</shiro:hasPermission> 
-	    	<shiro:hasPermission name="project/project/project:edit">
+	    	<shiro:hasPermission name="project/project/project/update">
 	    		operator+=$app.btn('edit','编辑','editById(\''+row.id+'\')');
 		    </shiro:hasPermission>
-		    <shiro:hasPermission name="project/project/project:delete">
+		    <shiro:hasPermission name="project/project/project/delete">
 				operator+=$app.btn('delete','删除','toRemove(\''+row.id+'\')');
 	    	</shiro:hasPermission>
-	    	<shiro:hasPermission name="project/project/project:delete">
+	    	<shiro:hasPermission name="project/project/prjCollect">
 			operator+=$app.btn({type:'btn-info',img:'glyphicon-usd'},'收款','toPrjCollect(\''+row.id+'\',\''+row.name+'\')');
 			
     		</shiro:hasPermission>
@@ -244,9 +244,12 @@ function getUnSelectRows(){
 	    <button class="btn btn-success btn-round btn-sm" onclick="onExcell()">
 						<i class="glyphicon glyphicon-folder-open"></i>  &nbsp;导出excell
 				</button>
-	   <button class="btn btn-info btn-round  btn-sm" onclick="toAdd();" >
+			<shiro:hasPermission name="project/project/project/save">
+				<button class="btn btn-info btn-round  btn-sm" onclick="toAdd();" >
 					<i class="glyphicon glyphicon-plus"></i> 添加
-		</button>
+				</button>
+	    	</shiro:hasPermission>
+	   
 		</div>
     </div>
     	<table class="table_list" id="mainTable" data-toggle="table"

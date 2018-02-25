@@ -105,7 +105,7 @@ $app.warning = function(msg,call){
 
 $app.prompt = function(title,call,formType){
 	
-	if(!formType)formType = 1;
+	if(!formType)formType = 2;
 	 
 	layer.prompt({title: title, formType: formType}, function(pass, index){
 		  layer.close(index);
@@ -165,7 +165,6 @@ $app.btn = function(type,name,onclickText){
 	if(typeof type == "object"){
 		return '<button class="btn '+type.type+' btn-round btn-xs" onclick="'+onclickText+'">'
 		+'<i class="glyphicon '+type.img+'"></i> '+name+'</button>';
-		
 	}
 	
 	

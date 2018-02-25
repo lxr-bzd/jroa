@@ -13,6 +13,8 @@ public class Apply {
 	String endtime;//bigint(20)	 '结束时间'
 	String info;//varchar(200)	 '密码'
 	Integer state;
+	
+	
 	public String getId() {
 		return id;
 	}

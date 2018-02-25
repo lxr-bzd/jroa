@@ -3,6 +3,7 @@ package com.foxtail.service.sys.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -32,6 +33,10 @@ public class SysResourceServiceImpl implements SysResourceService{
 	
 	@Autowired
 	SysRoleResourceDao sysRoleResourceDao;
+	
+	List<SysResource> sysResources;
+	
+	boolean ismodify = true;
 
 	
 	public SysResource selectByPrimaryKey(Integer id){
@@ -40,30 +45,35 @@ public class SysResourceServiceImpl implements SysResourceService{
 
     public void deleteByPrimaryKey(Integer id){
     	this.sysResourceDao.deleteByPrimaryKey(id); 
+    	ismodify = true;
     }
 
     public void insert(SysResource model) {
     	model.setCreateTime(new Date());
     	model.setCreateUserId(ShiroUser.getUserId());
     	this.sysResourceDao.insert(model); 
+    	ismodify = true;
     }
     
     public void insertSelective(SysResource model){
     	model.setCreateTime(new Date());
     	model.setCreateUserId(ShiroUser.getUserId());
     	this.sysResourceDao.insertSelective(model); 
+    	ismodify = true;
     }
     
     public void updateByPrimaryKeySelective(SysResource model){
     	model.setModifyTime(new Date());
     	model.setModifyUserId(ShiroUser.getUserId());
     	this.sysResourceDao.updateByPrimaryKeySelective(model); 
+    	ismodify = true;
     }
 
     public void updateByPrimaryKey(SysResource model) {
     	model.setModifyTime(new Date());
     	model.setModifyUserId(ShiroUser.getUserId());
 		this.sysResourceDao.updateByPrimaryKey(model);
+		ismodify = true;
     }
     
     public List<SysResource> selectList(SysResource sysResource){
@@ -71,11 +81,18 @@ public class SysResourceServiceImpl implements SysResourceService{
     }
     
     public List<SysResource> findAll() {
-		return sysResourceDao.findAll();
+    	if(sysResources==null||ismodify) {
+    	
+    		sysResources = sysResourceDao.findAll();
+        	ismodify = false;
+    	} else 	System.out.println("抓取缓存");
+    	
+		return sysResources;
     }
 
     public void deleteAll() {
 		this.sysResourceDao.deleteAll();
+		ismodify = true;
     }
 
     @Override
@@ -85,14 +102,8 @@ public class SysResourceServiceImpl implements SysResourceService{
     	//所有需要删除的ID
     	Set<Integer> idd = new HashSet<>();
     	
-    	
-    	
-    	
     	if (idArr.length<1) throw new ApplicationException("ids="+ids);
 			
-		 
-			
-
 			for (int i = 0; i < idArr.length; i++) {
 				Integer id = Integer.valueOf((idArr[i]));
 				idd.add(id);
@@ -109,29 +120,7 @@ public class SysResourceServiceImpl implements SysResourceService{
 			//删除关联表
 			sysRoleResourceDao.deleteByResources(l);
 			
-			
-			
-		/*	List<Integer> idsList=new ArrayList<Integer>();
-			for (int i = 0; i < idArr.length; i++) {
-				//检查是否有下级或者引用
-				Integer resourceId = Integer.valueOf((idArr[i]));
-				Integer count = sysResourceDao.selectResourceReference(resourceId);
-				if (count<1) {
-					idsList.add(count);
-				}
-			}
-			if (!PublicUtil.checkEmptyList(idsList)) {
-				this.sysResourceDao.deleteByIds(idsList);
-			}
-		}else {
-			Integer resourceId = Integer.valueOf(ids);
-			Integer count = sysResourceDao.selectResourceReference(resourceId);
-			if (count>=1) {
-				this.sysResourceDao.deleteByParentId(resourceId);//删除所有子菜单 
-				this.sysResourceDao.deleteByPrimaryKey(resourceId);//删除菜单本身
-			}
-			
-		}*/
+		ismodify = true;
     }
     
     
@@ -185,6 +174,7 @@ public class SysResourceServiceImpl implements SysResourceService{
     	if(createButton){
     		this.createButtonRes(po);
     	}
+    	ismodify = true;
 	}
 	
 	public SysResourceVo selectVoByPrimaryKey(Integer id) {
@@ -256,6 +246,7 @@ public class SysResourceServiceImpl implements SysResourceService{
 
 	@Override
 	public List<SysResource> findAllByUserId(Integer userId) {
+		
 		return this.sysResourceDao.findAllByUserId(userId);
 	}
 

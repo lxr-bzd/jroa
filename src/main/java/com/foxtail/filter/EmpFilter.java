@@ -17,6 +17,9 @@ public class EmpFilter {
 	
 	String placeKw;
 	
+	
+	Integer state;
+	
 	public String getKw() {
 		return kw;
 	}
@@ -69,6 +72,12 @@ public class EmpFilter {
 	}
 	public void setPlaceKw(String placeKw) {
 		this.placeKw = placeKw;
+	}
+	public Integer getState() {
+		return state;
+	}
+	public void setState(Integer state) {
+		this.state = state;
 	}
 	
 	

@@ -17,6 +17,7 @@ import com.foxtail.common.base.BaseMybatisController;
 import com.foxtail.filter.ApplyFilter;
 import com.foxtail.filter.ProjectFilter;
 import com.foxtail.model.project.Project;
+import com.foxtail.service.personnel.EmpService;
 import com.foxtail.service.project.ProjectService;
 
 
@@ -28,6 +29,8 @@ public class ProjectController extends BaseMybatisController{
 	@Autowired
 	ProjectService projectService;
 	
+	@Autowired
+	EmpService empService;
 	
 	@RequestMapping() 
 	public String toMain(String sysModule){
@@ -42,6 +45,7 @@ public class ProjectController extends BaseMybatisController{
 		if("edit".equals(sysAction)) {
 			Project project = projectService.getById(id);
 			modelMap.put("productsJson",JSONArray.toJSONString(project.getProducts()) );
+			modelMap.put("mebsJson", JSONArray.toJSONString(project.getMebs()));
 			modelMap.put("vo", project);
 		}
 		
@@ -58,6 +62,7 @@ public class ProjectController extends BaseMybatisController{
 			return JsonResult.getSuccessResult(projectService.getById(request.getParameter("id")));
 		else 
 			filter.setUid(ServiceManager.securityService.getUid());
+			filter.setDeptid(empService.getById(ServiceManager.securityService.getUid()).getDeptid());
 			resolveSysView(filter);
 		return DataGridResult.getResult(projectService.findForPage(getPagination(request),filter));
 	}
@@ -68,8 +73,12 @@ public class ProjectController extends BaseMybatisController{
 	
 		if(SecurityUtils.getSubject().isPermitted("project/project/project?$sysView=all")) {
 			filter.setSysView("all");
+			
 			return;
 		}
+		
+		if(SecurityUtils.getSubject().isPermitted("project/project/project?$sysView=below")) 
+			filter.setSysView("below");
 		
 		
 

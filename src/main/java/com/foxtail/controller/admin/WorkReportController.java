@@ -2,6 +2,7 @@ package com.foxtail.controller.admin;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -78,16 +79,17 @@ public class WorkReportController extends BaseMybatisController{
 	
 	@RequestMapping("view")
 	@ResponseBody
-	public Object view(String sysType,WorkReportFilter filter,HttpServletRequest request) {
+	public Object view(String sysType,WorkReportFilter filter,String deptStr,HttpServletRequest request) {
 		
 		if("info".equals(sysType))
 			return JsonResult.getSuccessResult(workReportService.getById(request.getParameter("id")));
 		else {
 			
+			if(!StringUtils.isEmpty(deptStr))filter.setDeptids(deptStr.split(","));
+			
 			resolveSysView(filter);
-			String uid = ServiceManager.securityService.getUid();
-			filter.setUid(uid);
-			filter.setUdeptid(empService.getById(ServiceManager.securityService.getUid()).getDeptid());
+			filter.setUid(ServiceManager.securityService.getUid());
+			filter.setDeptid(empService.getById(ServiceManager.securityService.getUid()).getDeptid());
 			return DataGridResult.getResult(workReportService.findForPage(getPagination(request),filter));
 			
 		}

@@ -3,6 +3,7 @@ package com.foxtail.controller.sys;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.foxtail.common.JsonResult;
 import com.foxtail.common.base.BaseMybatisController;
 import com.foxtail.common.page.Pagination;
 import com.foxtail.common.web.DataGrid;
@@ -218,15 +220,32 @@ public class SysRoleController extends BaseMybatisController {
 	
 	@RequestMapping("/toAuthorization") 
 	@ResponseBody
-	public JsonData toAuthorization(@RequestBody SysRoleResource[] resources){
+	public JsonData toAuthorization(String roleid, String resids){
 		JsonData jsonData = new JsonData();
 		try {
-			this.sysRoleService.setRoleResources(resources);
+			
+			String[] residArr = null;
+			if(StringUtils.isEmpty(resids))residArr = new String[0];
+			else residArr = resids.split(",");
+			this.sysRoleService.setRoleResources(roleid,residArr);
 			jsonData.setSuccess(true);
 		} catch (Exception e) {
+			e.printStackTrace();
 			jsonData.setSuccess(false);
 		}
 	
 		return jsonData;
 	}
+	
+	@RequestMapping("/copyRes") 
+	@ResponseBody
+	public Object copyRes(String roleid,String copyRoleid){
+		
+			this.sysRoleService.copyResources(roleid, copyRoleid);;
+			
+		return JsonResult.getSuccessResult();
+	}
+	
+	
+	
 }
