@@ -35,7 +35,7 @@ public class WorkReportService {
 	}
 	
 	public void delete(String[] ids) {
-		
+		if(workReportDao.countValid(ids)>0)throw new ApplicationException("存在已生效记录");
 		ServiceManager.commonService.delete("adm_work_report", ids);
 		workReportDao.deleteDetail(ids);
 		workReportDao.deleteExamine(ids);

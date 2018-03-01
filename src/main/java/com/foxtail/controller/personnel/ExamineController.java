@@ -2,6 +2,7 @@ package com.foxtail.controller.personnel;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -61,11 +62,13 @@ public class ExamineController extends BaseMybatisController{
 	
 	@RequestMapping("view")
 	@ResponseBody
-	public Object view(String type,ApplyFilter filter,HttpServletRequest request) {
+	public Object view(String type,ApplyFilter filter,String deptStr,HttpServletRequest request) {
 		
 		if("info".equals(type))
 			return JsonResult.getSuccessResult(examineService.getById(request.getParameter("id")));
-		else 
+		
+		if(!StringUtils.isEmpty(deptStr))filter.setDeptids(deptStr.split(","));
+		
 			resolveSysView(filter);
 		filter.setUdeptid(empService.getById(ServiceManager.securityService.getUid()).getDeptid());
 		return DataGridResult.getResult(applyService.findForPage(getPagination(request),filter));
@@ -75,16 +78,16 @@ public class ExamineController extends BaseMybatisController{
 	 private void resolveSysView(ApplyFilter filter) {
 		 String pString = null;
 		switch (filter.getApplytype()) {
-		case 1:pString ="personnel/examine/examine?module=leave";
+		case 1:pString ="personnel/examine/examine?sysModule=leave";
 			
 			break;
-		case 2:pString ="personnel/apply/examine?module=overtime";
+		case 2:pString ="personnel/examine/examine?sysModule=overtime";
 		
 		break;
-		case 3:pString ="personnel/apply/examine?module=goout";
+		case 3:pString ="personnel/examine/examine?sysModule=goout";
 		
 		break;
-		case 4:pString ="personnel/apply/examine?module=quit";
+		case 4:pString ="personnel/examine/examine?sysModule=quit";
 		
 		break;
 

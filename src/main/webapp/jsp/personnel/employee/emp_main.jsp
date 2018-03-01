@@ -31,9 +31,6 @@ var toInfoUrl = '${path}/personnel/employee/emp/toinfo.do';
 					,function(){
 				refleshData('mainTable');
 			});
-			
-			
-			
 		}else{
 			$app.alert("请选择一条数据进行操作");
 		}
@@ -67,7 +64,7 @@ var toInfoUrl = '${path}/personnel/employee/emp/toinfo.do';
 		if(id||id==0)queryParams.deptStr=deptUnder(id).join(",");
 		queryParams.limit=params.limit;
 		queryParams.offset=params.offset;
-			queryParams.deptid = $app.form.multipleSelectVal("#searchForm .lxr_multipleSelect");
+		queryParams.deptid = $app.form.multipleSelectVal("#searchForm .lxr_multipleSelect");
 		return $lxr.trimObject(queryParams);
 	}
 	//查询列表

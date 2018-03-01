@@ -14,6 +14,16 @@
   		 WHERE 1=1 
   		 <if test="ft.uid != null ">AND a.uid = #{ft.uid}</if>
   		<if test="ft.applytype != null ">AND a.type = #{ ft.applytype }</if>
+  		
+  		<if test="ft.udeptids != null ">AND b.deptid in
+	      <foreach collection="ft.udeptids" item="id" index="index"
+             open="(" close=")" separator=",">
+              #{id}
+          </foreach>
+  		</if>
+  		<if test="ft.kw != null ">AND b.name like CONCAT('%',#{ft.kw},'%')</if>
+  		<if test="ft.starttime != null ">AND a.createtime > #{ft.starttime}</if>
+  		<if test="ft.endtime != null ">AND a.createtime &lt; #{ft.endtime}</if>
   		<if test="ft.deptids != null ">AND b.deptid in
 	      <foreach collection="ft.deptids" item="id" index="index"
              open="(" close=")" separator=",">

@@ -42,7 +42,7 @@ var toInfoUrl = '${path}/project/project/project/view.do';
 	
 	//编辑
     function toEdit(){
-    	var selected=getSelectedRowsArr('mainTable');
+    	var selected =getSelectedRowsArr('mainTable');
     	if(selected.length>0&&selected.length<2){
     		window.location=toEditUrl+'?id='+selected+"&sysAction=edit";
     	}else{

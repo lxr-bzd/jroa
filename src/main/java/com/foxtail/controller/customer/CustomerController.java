@@ -1,6 +1,8 @@
 package com.foxtail.controller.customer;
 
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -9,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.foxtail.bean.ServiceManager;
 import com.foxtail.common.AppModelMap;
@@ -93,11 +97,18 @@ public class CustomerController extends BaseMybatisController{
 	
 	@RequestMapping("save")
 	@ResponseBody
-	public Object save(Customer customer) {
-		customer.setEmpid(ServiceManager.securityService.getUid());
+	public Object save(Customer customer,String customersJson) {
 		
-		customerService.save(customer);
-
+		
+		if(!StringUtils.isEmpty(customersJson)) {
+			List<Customer> customers = JSONArray.parseArray(customersJson, Customer.class);
+			Customer[] cuss = new Customer[customers.size()];
+			customers.toArray(cuss);
+			customerService.save(cuss,ServiceManager.securityService.getUid());
+		}else {
+			customer.setEmpid(ServiceManager.securityService.getUid());
+			customerService.save(customer);
+		}
 		return JsonResult.getSuccessResult();
 	}
 	

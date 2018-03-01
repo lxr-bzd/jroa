@@ -29,5 +29,8 @@ public interface WorkReportDao {
 	
 	void deleteDetail(@Param("reportids")String[] reportids);
 	void deleteExamine(@Param("reportids")String[] reportids);
+	
+	
+	Integer countValid(@Param("ids")String[] ids);
 }
 

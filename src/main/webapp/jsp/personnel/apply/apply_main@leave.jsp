@@ -143,6 +143,13 @@ function lengthFormatter(val,row,index){
 }
 
 
+function leave_typeFormatter(val,row,index){
+	
+	var enu = {'1':'事假','2':'病假','3':'婚假','4':'丧假','5':'年假'};
+	return enu[val+""];
+	
+}
+
 
 </script>
 </head>
@@ -172,6 +179,7 @@ function lengthFormatter(val,row,index){
 					<th data-field="id" >id</th>
 					<th data-field="deptName" >部门</th>
 					<th data-field="uname" >姓名</th>
+					<th data-field="leave_type" data-formatter="leave_typeFormatter" >请假类型</th>
 					<th data-field="info" >请假内容</th>
 					<th data-field="starttime"  data-formatter="$app.tableUi.time">开始时间</th>
 					<th data-field="endtime" data-formatter="$app.tableUi.time">结束时间</th>
@@ -181,12 +189,12 @@ function lengthFormatter(val,row,index){
 				</tr>
 			</thead>
 		</table>
-	   <div class="select_btn">
+	   <!-- <div class="select_btn">
 	   	<label class="select_all">
 	   		<input type="checkbox" name="checkall" onclick="$('#mainTable thead input[name=btSelectAll]').click()"> 全选/取消
 	   	</label>
 	   	<button class="btn btn-danger btn-round btn-xs" onclick="toRemove()"><i class="glyphicon glyphicon-trash"></i> 批量删除</button>
-	   </div>
+	   </div> -->
     
 </body>
 </html>

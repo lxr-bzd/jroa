@@ -35,9 +35,9 @@ public class ApplyController extends BaseMybatisController{
 	
 	
 	@RequestMapping() 
-	public String toMain(String module){
+	public String toMain(String sysModule){
 		
-		return getMainJsp(module);
+		return getMainJsp(sysModule);
 	}
 	
 	
@@ -58,7 +58,7 @@ public class ApplyController extends BaseMybatisController{
 		modelMap.put("vo", apply);
 		if(apply.getState()!=null&&(apply.getState()==2||apply.getState()==4)) {
 			Object exas = examineService.findByApplyid(apply.getId());
-			modelMap.put("exasJson", JSONObject.toJSONString(new ArrayList<>()));
+			modelMap.put("exasJson", JSONObject.toJSONString(exas));
 		}
 			
 		return jsp; 

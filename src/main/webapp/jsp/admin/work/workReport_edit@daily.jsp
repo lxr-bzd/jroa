@@ -102,7 +102,7 @@ var backurl = "${path}/admin/work/workReport.do";
 						<h3 class="panel-title">今日工作</h3>
 					</div>
 					<div class="panel-body">
-					<textarea name="content" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height:100px;"></textarea>
+					<textarea name="content" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height:200px;"></textarea>
 					</div>
 					</div>
 					
@@ -111,7 +111,7 @@ var backurl = "${path}/admin/work/workReport.do";
 						<h3 class="panel-title">今日学习</h3>
 					</div>
 					<div class="panel-body">
-						<textarea name="study" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height: 200px;"></textarea>
+						<textarea name="study" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height: 100px;"></textarea>
 					</div>
 					</div>
 					

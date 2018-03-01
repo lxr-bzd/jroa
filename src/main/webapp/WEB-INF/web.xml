@@ -86,6 +86,14 @@
   <session-config>
     <session-timeout>30</session-timeout>
   </session-config>
+  
+  
+  <mime-mapping>
+  <extension>xls</extension>
+  <mime-type>application/msexcel</mime-type>
+  </mime-mapping>
+  
+  
   <error-page>
     <error-code>403</error-code>
     <location>/common/403error.jsp</location>

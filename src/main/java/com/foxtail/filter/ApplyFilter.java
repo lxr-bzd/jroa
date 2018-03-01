@@ -1,5 +1,6 @@
 package com.foxtail.filter;
 
+
 public class ApplyFilter {
 
 	Integer applytype;
@@ -10,7 +11,14 @@ public class ApplyFilter {
 	
 	String udeptid;
 	
+	String[] udeptids;
+	
 	String[] deptids;
+	
+	Long starttime;
+	Long endtime;
+	
+	String kw;
 
 	public Integer getApplytype() {
 		return applytype;
@@ -50,6 +58,38 @@ public class ApplyFilter {
 
 	public void setUdeptid(String udeptid) {
 		this.udeptid = udeptid;
+	}
+
+	public String[] getUdeptids() {
+		return udeptids;
+	}
+
+	public void setUdeptids(String[] udeptids) {
+		this.udeptids = udeptids;
+	}
+
+	public Long getStarttime() {
+		return starttime;
+	}
+
+	public void setStarttime(Long starttime) {
+		this.starttime = starttime;
+	}
+
+	public Long getEndtime() {
+		return endtime;
+	}
+
+	public void setEndtime(Long endtime) {
+		this.endtime = endtime;
+	}
+
+	public String getKw() {
+		return kw;
+	}
+
+	public void setKw(String kw) {
+		this.kw = kw;
 	}
 	
 	

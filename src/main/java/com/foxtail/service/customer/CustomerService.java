@@ -41,6 +41,16 @@ public class CustomerService {
 	}
 	
 	
+	public void save(Customer[] customers,String uid) {
+		
+		for (int i = 0; i < customers.length; i++) {
+			customers[i].setEmpid(uid);
+			save(customers[i]);
+		}
+		
+
+	}
+	
 	
 	
 	public void delete(String[] ids) {
@@ -82,7 +92,7 @@ public class CustomerService {
 			filter.setEmpid(null);
 		break;
 		case "def":
-		default:filter.setDeptids(new String[] {"-1"});
+		default:filter.setDeptids(null);
 			break;
 		}
 		

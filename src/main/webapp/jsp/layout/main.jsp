@@ -5,11 +5,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html style="overflow:hidden">
 <head>
+<meta name=renderer content=webkit>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>工作台首页</title>
-<link href="<%=request.getContextPath()%>/css/layout/main.css" rel="stylesheet" type="text/css" />
-	<script src="${path }/jslib/jquery.min-1.11.js"></script>
-	 <script src="${path }/jslib/layer/layer.js"></script>
+<link href="${path }/css/layout/main.css" rel="stylesheet" type="text/css" />
+<script src="${path }/jslib/jquery.min-1.11.js"></script>
+<script src="${path }/jslib/layer/layer.js"></script>
 <script src="${path}/jslib/artDialog/jquery.artDialog.js?skin=blue"></script>   
 <script src="${path}/jslib/artDialog/plugins/iframeTools.js"></script>  
 <script src="${path}/js/foxtail/artDialogExt.js"></script>
@@ -85,12 +86,12 @@ function touPwd(){
 <div>
 	<div id="top" class="header">
 		<div class="topleft" >
-	    	<a href="${path}/workIndex.do" target="rightFrame"><img src="../images/layout/logo.png" title="系统首页" /></a>
+	    	<a href="${path}/my/main/index.do" target="rightFrame"><img src="../images/layout/logo.png" title="系统首页" /></a>
 	    </div>
     <ul class="nav">
 	
     	<c:forEach var="res" items="${resList }" varStatus="status">
-    		<c:if test="${res.level==1 }">
+    		<c:if test="${res.level==1&&res.permissionStr!='my' }">
     			<li><a href="javascript:void(0)" id="sys_${res.id }" onclick="changeList('sys_${res.id }')" ><img src="../images/layout/${res.resourceIcon}" title="${res.resourceName }" /><h2 >${res.resourceName }</h2></a></li>
     			
     		</c:if>
@@ -110,14 +111,14 @@ function touPwd(){
 	</div>
 	<div id="middle" style="width: 100%;height: 100%;">
 		<div id="middle-left" style="position:fixed;left: 0;top: 80px;bottom: 0;width: 182px;background-color: #EEEEEE;border-right: 1px solid #dbdbdb;float: left;box-sizing: border-box;">
-			<!--<div class="lefttop"><span></span>--</div>--> 
+			
     		<dl class="leftmenu">
     		
     			<c:forEach  var="res" items="${resList }" varStatus="status">
     				<c:if test="${res.level==2 }">
     					<dd style="display: none;" class="sys_${res.parentId }_${res.id}">
 					    <div class="title">
-					    	<!--<span><img src="../images/layout/leftico01.png" /></span>--><span class="J_switchs cu on" title="展开或关闭"></span>${res.resourceName }
+					    	<span class="J_switchs cu on" title="展开或关闭"></span>${res.resourceName }
 	   					</div>
 	    				<ul class="menuson" style="display: none">
 	    					<c:forEach var="r" items="${resList }">
@@ -133,7 +134,7 @@ function touPwd(){
 				</dl>
 		</div>
 		<div id="middle-right" style="" >
-			 <iframe id="rightFrame" name="rightFrame" style="width:100%; border:0;" src="<%=request.getContextPath()%>/workIndex.do"></iframe>
+			 <iframe id="rightFrame" name="rightFrame" style="width:100%; border:0;" src="${path }/my/main/index.do"></iframe>
 		</div>
 		 <div id="clear" style="clear: both;"></div> 
 	</div>

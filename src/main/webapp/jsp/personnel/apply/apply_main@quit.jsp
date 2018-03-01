@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>查询列表</title>
 <script>
-var toAddUrl = '${path}/personnel/apply/apply/toedit.do?module=quit';
+var toAddUrl = '${path}/personnel/apply/apply/toedit.do?sysModule=quit';
 var deleteUrl = '${path}/personnel/apply/apply/delete.do';
 var toEditUrl = '${path}/personnel/apply/apply/toedit.do';
 var toInfoUrl = '${path}/personnel/apply/apply/view.do';
@@ -68,7 +68,7 @@ var updateUrl = '${path}/personnel/apply/apply/update.do';
     }
     
     function editById(id){
-    	$app.dialog(toEditUrl+'?module=leave&id='+id+"&action=edit",function(){
+    	$app.dialog(toEditUrl+'?sysModule=leave&id='+id+"&action=edit",function(){
 			refleshData('mainTable');
 		},{width:"520px",height:"380px"});
 	}

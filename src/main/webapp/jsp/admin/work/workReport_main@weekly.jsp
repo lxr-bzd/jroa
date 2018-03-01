@@ -171,11 +171,11 @@ function examineNameFormatter(val){
 			</thead>
 		</table>
 		
-    <div class="select_btn">
+   <!--  <div class="select_btn">
 	   	<label class="select_all">
 	   		<input type="checkbox" name="checkall" onclick="if($('#mainTable thead input[name=btSelectAll]').prop('checked')!=this.checked)$('#mainTable thead input[name=btSelectAll]').click();"> 全选/取消
 	   	</label>
 	   	<button class="btn btn-danger btn-round btn-xs" onclick="toRemove()"><i class="glyphicon glyphicon-trash"></i> 批量删除</button>
-	</div>
+	</div> -->
 </body>
 </html>

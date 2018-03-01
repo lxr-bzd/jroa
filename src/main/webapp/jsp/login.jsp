@@ -7,6 +7,7 @@
         <html>
             
             <head>
+            <meta name="renderer" content="webkit" />
                 <meta http-equiv="Content-Type" content="IE=edge; charset=UTF-8">
                 <title>嘉瑞云办公管理系统</title>
                 <link href="<%=request.getContextPath()%>/css/layout/style.css" rel="stylesheet" type="text/css" />

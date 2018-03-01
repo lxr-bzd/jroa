@@ -123,7 +123,6 @@ var backurl = "${path}/personnel/apply/apply.do";
 					      <input type="radio" name="leave_type" value="2" title="病假" >
 					      <input type="radio" name="leave_type" value="3" title="婚假" >
 					      <input type="radio" name="leave_type" value="4" title="丧假" >
-					      <input type="radio" name="leave_type" value="5" title="年假" >
 					    </div>
 					</li>
 					
@@ -155,7 +154,7 @@ var backurl = "${path}/personnel/apply/apply.do";
    				<input name="id" value="${vo.id }" type="hidden" class="form-control input-primary w260" />
    				<ul class="forminfo">
    				
-   				<li><label>请假类型：</label><input data-format="{type:'enum',val:'${vo.leave_type }',enum:{'1':'事假','2':'病假','3':'婚假','4':'丧假','5':'年假'}}"  class="lxr-format form-control input-primary w260"  type="text" readonly="readonly">
+   				<li><label>请假类型：</label><input data-format="{type:'enum',val:'${vo.leave_type }',enum:{'1':'事假','2':'病假','3':'婚假','4':'丧假'}}"  class="lxr-format form-control input-primary w260"  type="text" readonly="readonly">
 					
 				</li>
 					

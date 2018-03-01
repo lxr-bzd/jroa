@@ -98,5 +98,14 @@
           </foreach>
 	</delete>
 	
+	
+	<select id="countValid" resultType="int" >
+  		select count(0) from adm_report_detail where report_state != 1 AND id in
+	      <foreach collection="ids" item="id" index="index"
+             open="(" close=")" separator=",">
+              #{id}
+          </foreach>
+  	</select> 
+	
   
 </mapper>   

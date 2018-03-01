@@ -68,7 +68,7 @@ var updateUrl = '${path}/personnel/apply/apply/update.do';
     }
     
     function editById(id){
-    	$app.dialog(toEditUrl+'?module=leave&id='+id+"&action=edit",function(){
+    	$app.dialog(toEditUrl+'?sysModule=leave&id='+id+"&action=edit",function(){
 			refleshData('mainTable');
 		},{width:"520px",height:"380px"});
 	}

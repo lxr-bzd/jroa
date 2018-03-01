@@ -45,6 +45,7 @@
 				/images/** = anon
 				/js/** = anon
 				/jslib/** = anon
+				/file/** = anon
 				/WechatAPI/** = anon
 				<!-- 微信要访问图片 -->
 				/uploadPath/** = anon

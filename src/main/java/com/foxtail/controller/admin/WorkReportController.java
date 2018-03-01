@@ -145,7 +145,6 @@ public class WorkReportController extends BaseMybatisController{
 	public Object delete(String ids) {
 		
 		workReportService.delete(ids.split(","));
-
 		return JsonResult.getSuccessResult();
 	}
 	

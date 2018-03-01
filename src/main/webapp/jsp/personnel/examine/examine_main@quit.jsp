@@ -7,17 +7,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>查询列表</title>
 <script>
-var toAddUrl = '${path}/personnel/apply/apply/toedit.do?sysModule=goout';
-var deleteUrl = '${path}/personnel/apply/apply/delete.do';
-var toEditUrl = '${path}/personnel/apply/apply/toedit.do';
-var toInfoUrl = '${path}/personnel/apply/apply/view.do';
-var updateUrl = '${path}/personnel/apply/apply/update.do';
+var toAddUrl = '${path}/personnel/examine/examine/toedit.do?sysModule=leave';
+var deleteUrl = '${path}/personnel/examine/examine/delete.do';
+var toEditUrl = '${path}/personnel/examine/examine/toedit.do';
+var toInfoUrl = '${path}/personnel/examine/examine/view.do';
+var updateUrl = '${path}/personnel/examine/examine/update.do';
 
 	//添加
 	function toAdd(){
 		$app.dialog(toAddUrl,function(){
 			refleshData('mainTable');
-		},{width:"520px",height:"380px"});
+		});
 		//window.location=toAddUrl;
 	}
 	//删除
@@ -62,15 +62,12 @@ var updateUrl = '${path}/personnel/apply/apply/update.do';
 		queryParams.offset=params.offset;
 		return queryParams;
 	}
-	//查询列表
-    function queryList(){
-    	$('#mainTable').bootstrapTable('refresh');
-    }
+	
     
     function editById(id){
-    	$app.dialog(toEditUrl+'?sysModule=leave&id='+id+"&action=edit",function(){
+    	$app.dialog(toEditUrl+'?sysModule=leave&sysAction=edit&id='+id+"",function(){
 			refleshData('mainTable');
-		},{width:"520px",height:"380px"});
+		});
 	}
 
 	
@@ -87,17 +84,10 @@ var updateUrl = '${path}/personnel/apply/apply/update.do';
 <script type="text/javascript">
 
 
-function goCancel(id){
-	$app.prompt("取消原因",function(content){
-		$app.request(updateUrl+"?state=3&id="+id,function(data){
-			refleshData('mainTable');
-			if(data.status==0)
-				$app.alert("取消成功");
-			else $app.alert("取消失败");
-			
-		});
-		
-	},2);
+function goExamine(id){
+	$app.dialog(toAddUrl,function(){
+		refleshData('mainTable');
+	});
 	
 }
 
@@ -108,8 +98,8 @@ function operatorFormatter(value, row, index) {
 	var operator='<div class="btn-group">';
 	switch (row.state) {
 	case 1:
-		operator+= $app.btn({type:'btn-warning',img:'glyphicon-remove'},'取消','goCancel(\''+row.id+'\')');
-		operator+= $app.btn('edit','编辑','editById(\''+row.id+'\')');
+		operator+= $app.btn({type:'btn-warning',img:'glyphicon-remove'},'审批','editById(\''+row.id+'\')');
+		
 	break;
 	case 2:
 	break;
@@ -161,24 +151,19 @@ function lengthFormatter(val,row,index){
 </head>
 <body class="mlr15">
 
-    
-    
 	    <div id="toolbar" class="btn-group">
 	   
-	   <button class="btn btn-info btn-round  btn-sm" onclick="toAdd();" >
-					 外出申请
-		</button>
+	   
 		</div>
-    
+   
     	<table class="table_list" id="mainTable" data-toggle="table"
-			data-url="${path}/personnel/apply/apply/view.do?applytype=3" data-pagination="ture" 
+			data-url="${path}/personnel/examine/examine/view.do?applytype=4" data-pagination="ture" 
 			data-side-pagination="server" data-cache="false" data-query-params="postQueryParams"
 			data-page-list="[10, 20, 35, 50]" data-page-size= "10" data-method="post"
 			data-show-refresh="false" data-show-toggle="false"
 			data-show-columns="false" data-toolbar="#toolbar"
 			data-click-to-select="false" data-single-select="false"
-			data-striped="false" data-content-type="application/x-www-form-urlencoded"
-			>
+			data-striped="false" data-content-type="application/x-www-form-urlencoded">
 			<thead>
 				<tr>
 					<th data-field="" data-checkbox="true"></th>
@@ -194,7 +179,6 @@ function lengthFormatter(val,row,index){
 			</thead>
 		</table>
 		
-    </div>
     
 </body>
 </html>

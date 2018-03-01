@@ -13,10 +13,14 @@
 var depts = [];
 
 
-var backurl = "${path}/project/setting/progress.do";
+var backurl = "${path}/data/finance/sale.do";
 
 
+	$(function() {
+		
+		
 	
+	});
 	function toSubmit(){
 		//表单验证
 		if(!$("#submit_form").valid())
@@ -36,7 +40,7 @@ var backurl = "${path}/project/setting/progress.do";
 						goBackList();
 					});
 				
-				else $app.alert(data.msg?data.msg:'编辑失败');
+				else $app.alert('编辑失败');
 				
 			}
 		});
@@ -94,11 +98,16 @@ var backurl = "${path}/project/setting/progress.do";
 <c:if test="${empty param.sysAction}">
 		
    			
-   			<form id="submit_form" data-isadd="true" method="post" data-action="${path}/project/setting/progress/save.do">
+   			<form id="submit_form" data-isadd="true" method="post" data-action="${path}/data/finance/sale/save.do">
    				<ul class="forminfo">
-					<li><label>名称：</label><input name="name" type="text" class="form-control input-primary w260" />
+					<li><label>级别：</label><input name="name" type="text" class="form-control input-primary w260" />
 					</li>
 					
+					<li><label>餐补：</label><input name="subs_meal"  type="text" class="form-control input-primary w260" />
+				
+					
+					<li><label>备注：</label><input name="remark"  type="text" class="form-control input-primary w260" />
+					</li>
 					
 				<li><label>状态：</label>
 					<input type="radio"  name="state" value="0" checked="checked">启用
@@ -116,10 +125,15 @@ var backurl = "${path}/project/setting/progress.do";
 <c:if test="${param.sysAction=='edit'}">
 
 
-   			<form id="submit_form"  method="post" data-action="${path}/project/setting/progress/update.do">
+   			<form id="submit_form"  method="post" data-action="${path}/data/finance/sale/update.do">
    				<input name="id" value="${vo.id }" type="hidden"  />
    				<ul class="forminfo">
-					<li><label>名称：</label><input name="name" value="${vo.name }" type="text" class="form-control input-primary w260" />
+					<li><label>级别：</label><input name="name" value="${vo.name }" type="text" class="form-control input-primary w260" />
+					</li>
+					
+				
+					
+					<li><label>备注：</label><input name="remark"  value="${vo.remark }" type="text" class="form-control input-primary w260" />
 					</li>
 					
 				<li><label>状态：</label>

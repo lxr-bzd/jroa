@@ -111,9 +111,5 @@ public class LoginController {
     	return mv;
     }
 	
-	@RequestMapping("/workIndex")
-	public String workIndex(){
 	
-		return "work_index";
-	}
 }

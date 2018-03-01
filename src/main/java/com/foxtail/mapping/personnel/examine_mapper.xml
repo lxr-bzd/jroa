@@ -41,6 +41,14 @@
 	   where id = #{id}
 	</update>
 	
+	<delete id="deleteByApplyids" >
+	   delete from man_examine
+	   where applyid in
+	      <foreach collection="ids" item="id" index="index"
+             open="(" close=")" separator=",">
+              #{id}
+          </foreach>
+	</delete>	
 	
   	
   

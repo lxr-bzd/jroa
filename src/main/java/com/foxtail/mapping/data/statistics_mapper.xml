@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.foxtail.dao.mybatis.data.StatisticsDao">
+	
+	
+	<select id="findYearEmp" resultType="map" >
+  		select count(a.m) cusNum,a.m mdate from (select  FROM_UNIXTIME(createtime/1000,'%Y%m') m from cus_customer where createtime > #{starttime} AND  createtime &lt; #{endtime}) a group by a.m 
+  	</select> 
+	
+	<select id="findYearPrj" resultType="map" >
+  		select count(0) prjNum,sum(a.receivable) receivable,ifnull(sum(b.collect),0) collect,FROM_UNIXTIME(createtime/1000,'%Y%m') mdate  from prj_project a left join (select sum(money) collect,prjid from prj_collect group by prjid) b on a.id=b.prjid
+  		WHERE createtime > #{starttime} AND  createtime &lt; #{endtime}
+group by FROM_UNIXTIME(createtime/1000,'%Y-%m')
+  	</select> 
+	
+	
+		
+	<select id="statisticsDept" resultType="map" >
+  	
+  	
+	select a.id,a.name,ifnull(b.num,0) manNum,ifnull(c.leaveNum,0) leaveNum,ifnull(d.birthdayNum,0) birthdayNum from man_dept a left join 
+  		(select deptid,count(id) num from man_emp where state=0 group by deptid) b on a.id=b.deptid
+  		left join (select b.deptid,count(0) leaveNum from man_apply a left join man_emp b on a.uid=b.id where a.starttime &lt; #{ctime} AND a.endtime > #{ctime} group by b.deptid) c on a.id=c.deptid
+  		left join (select deptid, count(0) birthdayNum from man_emp  WHERE state=0  AND FROM_UNIXTIME(birthday/1000,'%m')=#{cmonth} group by deptid) d on a.id=d.deptid
+	</select> 
+	
+  	<select id="statisticsPrj" resultType="map" >
+  	select a.*,b.name from (select managerid,progressid,count(0) num from prj_project group by managerid,progressid) a left join man_emp b on a.managerid=b.id
+	</select> 
+  	
+</mapper>   

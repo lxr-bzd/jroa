@@ -6,6 +6,9 @@
 <meta name="renderer" content="webkit" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="${path}/js/tableExport.min.js"></script>
+<script type="text/javascript" src="${path}/js/jquery.base64.js"></script>
+<script src="https://cdn.bootcss.com/xlsx/0.12.2/xlsx.full.min.js"></script>
 <title>查询列表</title>
 <script>
 var toAddUrl = '${path}/customer/customer/customer/toedit.do';
@@ -100,15 +103,8 @@ var toInfoUrl = '${path}/customer/customer/customer/view.do';
 		   
 		    operator+= $app.btn('delete','删除','toRemove(\''+row.id+'\')');
 	    	
-	    
-			
-			
 		return operator+'</div>';
 	}
-    
-   
-    
- 
     
 </script>
 
@@ -220,6 +216,183 @@ function getChilds(ds){
 }
 
 </script>
+<script type="text/javascript">
+
+function onExcell(){
+	 if($("#mainTable").bootstrapTable('getSelections').length<1){
+		 $app.alert("请选中要导出的数据");
+		 return;
+	 }
+		
+	
+var unselect = getUnSelectRows();
+	$('#mainTable').tableExport({type:'excel',ignoreColumn: [0,1,10],ignoreRow:unselect
+		, separator:';', escape:'false'
+			,bootstrap: true
+	,fileName: '通讯录表格-'+new Date().format("yyyy-MM-dd")});
+	
+}
+
+function getUnSelectRows(){
+	var tb= $("#mainTable");
+	var conunt = tb.bootstrapTable('getOptions').totalRows;
+	var rowSelected = tb.bootstrapTable('getSelections');
+	var all = tb.bootstrapTable('getData');
+	var ret = [];
+	for (var i = 0; i < all.length; i++) {
+		
+		var selected = false;
+		
+		for (var j = 0; j < rowSelected.length; j++) 
+			if(all[i].id==rowSelected[j].id){
+				selected=true;
+				break;
+			}
+		
+		
+		if(!selected)ret.push(i+1);
+		
+	}
+	
+	return ret;
+	
+}
+
+
+
+
+</script>
+
+  <script type="text/javascript">
+  
+  function inExcell(input){
+	 parseXlsx(input,function(sheet){
+		 
+		 var row = 0;
+		 for (var i = 0; i < 200; i++) {
+			 var v = sheet["A"+(i+2)];
+			 if(typeof(v)   !=   "object"){
+				 row = i;
+				 break;
+			 }
+				 
+		}
+		 var cuss = sheet2Cus(sheet,row);
+		 
+		 var content = template("cusTmp",{data:cuss});
+		 $lxr.dialog(function(body){
+			
+		},function(body){
+			
+			 xlsSubmit(cuss);
+			},{content:content,title:"确认导入"});
+		 
+		 
+	 });
+		
+  }
+  
+  
+  
+  function xlsSubmit(cuss){
+	  
+	  $app.loading(function(onfinsh){
+			$app.request("${path}/customer/customer/customer/save.do",function(data){
+				onfinsh();
+				if(data.status==0)
+					$app.alert('导入成功',function(){  //关闭事件
+						refTable();
+					});
+				
+				else $app.alert(data.msg?data.msg:'导入失败');
+			},{param:{customersJson:JSON.stringify(cuss)}});
+		
+			});
+	  
+	  
+  }
+  
+  
+  
+  function sheet2Cus(sheet,row){
+	  if(row<1)return [];
+	  var cuss = [];
+	  for (var i = 2; i < row+2; i++) {
+		var cus = {};
+			cus.name = sheet["A"+i].v;
+			cus.typeid = 1;//sheet["B"+i].v;
+			cus.contacts = sheet["C"+i]?sheet["C"+i].v:"";
+			cus.phone = sheet["D"+i]?sheet["D"+i].v:"";
+			cus.follow = 1;//sheet["E"+i];
+			cus.source = sheet["F"+i]?sheet["F"+i].v:"";
+			cus.industry = sheet["G"+i]?sheet["G"+i].v:"";
+			cus.scale = sheet["H"+i]?sheet["H"+i].v:"";
+			cus.addr = sheet["I"+i]?sheet["I"+i].v:"";
+			cus.state = 0;
+			cuss.push(cus);
+	}
+	  
+	  return cuss;
+	  
+	  
+  }
+  
+  
+  
+            /*
+            FileReader共有4种读取方法：
+            1.readAsArrayBuffer(file)：将文件读取为ArrayBuffer。
+            2.readAsBinaryString(file)：将文件读取为二进制字符串
+            3.readAsDataURL(file)：将文件读取为Data URL
+            4.readAsText(file, [encoding])：将文件读取为文本，encoding缺省值为'UTF-8'
+                         */
+            function parseXlsx(obj,call) {//导入
+            	
+            	var wb;//读取完成的数据
+            	var rABS = false; //是否将文件读取为二进制字符串
+            	
+            	var ret;
+            	
+                if(!obj.files) {
+                    return;
+                }
+                var f = obj.files[0];
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var data = e.target.result;
+                    if(rABS) {
+                        wb = XLSX.read(btoa(fixdata(data)), {//手动转化
+                            type: 'base64'
+                        });
+                    } else {
+                        wb = XLSX.read(data, {
+                            type: 'binary'
+                        });
+                    }
+                    //wb.SheetNames[0]是获取Sheets中第一个Sheet的名字
+                    //wb.Sheets[Sheet名]获取第一个Sheet的数据
+                    if(call)
+                    	var d = wb.SheetNames[0];
+                    call(wb.Sheets[wb.SheetNames[0]] );
+                };
+                if(rABS) {
+                    reader.readAsArrayBuffer(f);
+                } else {
+                    reader.readAsBinaryString(f);
+                }
+                
+                
+            }
+
+            function fixdata(data) { //文件流转BinaryString
+                var o = "",
+                    l = 0,
+                    w = 10240;
+                for(; l < data.byteLength / w; ++l) o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w, l * w + w)));
+                o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w)));
+                return o;
+            }
+        </script>
  
 </head>
 <body class="mlr15">
@@ -227,7 +400,7 @@ function getChilds(ds){
     
     <div class="rightinfo explain_col" >
 		<div>
-    		<form id="searchForm" name="searchForm"  method="post">
+    		<form id="searchForm"  method="post">
     			<span>所属部门：</span>
     			<div style="display: inline;" class="lxr_multipleSelect" data-name="deptid" data-model="deptSelect"> </div>
 				
@@ -255,7 +428,19 @@ function getChilds(ds){
 	   <button class="btn btn-info btn-round  btn-sm" onclick="toAdd();" >
 					<i class="glyphicon glyphicon-plus"></i> 添加
 		</button>
+		<button class="btn btn-success btn-round btn-sm" onclick="onExcell()">
+						<i class="glyphicon glyphicon-folder-open"></i> 导出excell
+		</button>
+		
+		<button class="btn btn-success btn-round btn-sm" onclick="$('#inexcell').click();">
+						<i class="glyphicon glyphicon-folder-open"></i>  导入excell
+		</button>
+		<input type="file" style="display: none;" id="inexcell" onchange="inExcell(this)" />
+		<button class="btn btn-success btn-round btn-sm" onclick=" ">
+				<a href="${path }/file/template.xls" download="客户模板导入模板.xls">下载导入模板</a>
+		</button>
 		</div>
+		
     </div>
     	<table class="table_list" id="mainTable" data-toggle="table"
 			data-url="${path}/customer/customer/customer/view.do?state=0&ismy=true" data-pagination="ture" 
@@ -291,4 +476,41 @@ function getChilds(ds){
 	   	<button class="btn btn-danger btn-round btn-xs" onclick="toRemove()"><i class="glyphicon glyphicon-trash"></i> 批量删除</button>
 	   </div>
 </body>
+<script type="text/html" id="cusTmp">
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>名称</th>
+			<th>客户类型</th>
+			<th>联系人</th>
+
+			<th>联系电话</th>
+			<th>跟进状态</th>
+			<th>客户来源</th>
+
+			<th>所属行业</th>
+			<th>人员规模</th>
+			<th>地址</th>
+		</tr>
+	</thead>
+	<tbody>
+
+  {{each data as val i}}
+		<tr>
+			<td>{{val.name}}</td>
+			<td>{{val.typeid}}</td>
+			<td>{{val.contacts}}</td>
+			<td>{{val.phone}}</td>
+			<td>{{val.follow}}</td>
+			<td>{{val.source}}</td>
+			<td>{{val.industry}}</td>
+			<td>{{val.scale}}</td>
+			<td>{{val.addr}}</td>
+		</tr>
+ {{/each}}
+		
+	</tbody>
+</table>
+
+</script>
 </html>

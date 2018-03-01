@@ -1,11 +1,11 @@
 package com.foxtail.service.personnel;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.foxtail.bean.ServiceManager;
 import com.foxtail.common.page.Pagination;
 import com.foxtail.dao.mybatis.personnel.ApplyDao;
+import com.foxtail.dao.mybatis.personnel.ExamineDao;
 import com.foxtail.filter.ApplyFilter;
 import com.foxtail.model.personnel.Apply;
 import com.github.pagehelper.Page;
@@ -17,6 +17,9 @@ public class ApplyService {
 
 	@Autowired
 	ApplyDao applyDao;
+	
+	@Autowired
+	ExamineDao examineDao;
 	
 	
 	@Autowired
@@ -35,7 +38,8 @@ public class ApplyService {
 	public void delete(String[] ids) {
 		
 		ServiceManager.commonService.delete("man_apply", ids);
-
+		
+		examineDao.deleteByApplyids(ids);
 	}
 	
 	
@@ -48,13 +52,12 @@ public class ApplyService {
 	public Pagination findForPage(Pagination page,ApplyFilter filter) {
 		
 		switch (filter.getSysView()) {
-		case "def":
-		case "all":filter.setDeptids(null);
+		case "all":filter.setUdeptids(null);
 			break;
-		case "below":filter.setDeptids(deptService.findBelowIds(filter.getUdeptid()));
+		case "below":filter.setUdeptids(deptService.findBelowIds(filter.getUdeptid()));
 		break;
-		
-		default:filter.setDeptids(new String[]{"-1"});
+		case "def":
+		default:filter.setUdeptids(null);
 			break;
 		} 
 		

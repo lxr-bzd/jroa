@@ -20,5 +20,7 @@ public interface ExamineDao {
 	
 	void setApplyState(@Param("id")String id,@Param("state")Integer state);
 	
+	void deleteByApplyids(@Param("ids")String[] ids);
+	
 }
 

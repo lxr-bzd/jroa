@@ -124,6 +124,9 @@ $app.dialog = function(url,onclose,param){
 	var height = param.height?param.height:'360px';
 	var width = param.width?param.width:'520px';
 	
+	if(new Number(height.replace("px",""))>context.innerHeight)height=context.innerHeight+"px";
+	if(new Number(width.replace("px",""))>context.innerWidth)width=context.innerWidth+"px";
+	
 	context.layer.open({
 		  type: 2,
 		  title: param.title?param.title:'编辑',
