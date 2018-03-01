@@ -1,7 +1,8 @@
-package com.foxtail.controller;
+package com.foxtail.controller.my;
 
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,7 @@ import com.foxtail.service.IndexService;
 import com.foxtail.service.personnel.EmpService;
 
 @Controller
-@RequestMapping("index")
+@RequestMapping("")
 public class IndexControler extends BaseMybatisController{
 	
 	@Autowired
@@ -34,8 +35,16 @@ public class IndexControler extends BaseMybatisController{
 	@Autowired
 	IndexService indexService;
 	
+
+	@RequestMapping("my/main/index") 
+	public String toMain(String sysModule){
+		if(!SecurityUtils.getSubject().isPermitted("my/main/index?$sysView=admin"))
+		return "my/main/user_index";
+		return "my/main/admin_index";
+	}
 	
-	@RequestMapping("statistics")
+	
+	@RequestMapping("index/statistics")
 	@ResponseBody
 	public Object statistics() {
 		
@@ -44,7 +53,7 @@ public class IndexControler extends BaseMybatisController{
 	
 	
 	
-	@RequestMapping("sale")
+	@RequestMapping("index/sale")
 	@ResponseBody
 	public Object getResult(Long starttime,Long endtime) {
 		
@@ -52,7 +61,7 @@ public class IndexControler extends BaseMybatisController{
 		
 	}
 	
-	@RequestMapping("user/toedit")
+	@RequestMapping("index/user/toedit")
 	public String userToedit() {
 		
 		return "user_edit";
@@ -60,14 +69,14 @@ public class IndexControler extends BaseMybatisController{
 	}
 	
 	
-	@RequestMapping("user/update")
+	@RequestMapping("index/user/update")
 	@ResponseBody
 	public Object userUpdate(Emp emp,String newpwd) {
 		
 		if(!ServiceManager.securityService.equestPwd(emp.getPwd()))
 			return JsonResult.getFailResult("密码不正确");
 		
-		if(StringUtils.isEmpty(newpwd))
+		if(StringUtils.isBlank(newpwd))
 			return JsonResult.getFailResult("新密码不能为空");
 		
 		emp.setPwd(newpwd);
@@ -79,6 +88,6 @@ public class IndexControler extends BaseMybatisController{
 	}
 	
 	
-	
+
 
 }

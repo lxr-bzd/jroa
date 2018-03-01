@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="jslib/calendar/simple-calendar.css" />
+<link rel="stylesheet" href="${path}/jslib/calendar/simple-calendar.css" />
 <title>默认显示页</title>
 
 </head>
@@ -99,9 +99,9 @@
 			</div>
 		</div>
 	</div>
-    <script src="jslib/calendar/simple-calendar.js"></script>
-    <script src="jslib/g2.min.js"></script>
-    <script src="jslib/data-set.min.js"></script>
+    <script src="${path}/jslib/calendar/simple-calendar.js"></script>
+    <script src="${path}/jslib/g2.min.js"></script>
+    <script src="${path}/jslib/data-set.min.js"></script>
 	<script>
 		
 		
@@ -150,39 +150,9 @@
 			}
 	</script>
 	<script>
-		function mountNode1(mountNode){
-			const data = [
-			    { month: '1', 销售额: 2, 单数: 1 },
-			    { month: '2', 销售额: 4, 单数: 2 },
-			    { month: '3', 销售额: 3.2, 单数: 2 },
-			    { month: '4', 销售额: 1.6, 单数: 1 },
-			    { month: '5', 销售额: 3.4, 单数: 2 },
-			    { month: '6', 销售额: 2.3, 单数: 1 },
-			    { month: '7', 销售额: 4, 单数: 2 },
-			    { month: '8', 销售额: 6, 单数: 3 },
-			    { month: '9', 销售额: 5.4, 单数: 2 },
-			    { month: '10', 销售额: 3.6, 单数: 4 },
-			    { month: '11', 销售额: 9.1, 单数: 6 },
-			    { month: '12', 销售额: 1.5, 单数: 1 },
-			    { month: '13', 销售额: 4, 单数: 2 },
-			    { month: '14', 销售额: 2.4, 单数: 2 },
-			    { month: '15', 销售额: 6, 单数: 4 },
-			    { month: '16', 销售额: 4, 单数: 3 },
-			    { month: '17', 销售额: 5.3, 单数: 2 },
-			    { month: '18', 销售额: 1.3, 单数: 1 },
-			    { month: '19', 销售额: 9, 单数: 4 },
-			    { month: '20', 销售额: 4, 单数: 1 },
-			    { month: '21', 销售额: 6.1, 单数: 4 },
-			    { month: '22', 销售额: 6, 单数: 3 },
-			    { month: '23', 销售额: 1.8, 单数: 1 },
-			    { month: '24', 销售额: 4.7, 单数: 2 },
-			    { month: '25', 销售额: 8, 单数: 4 },
-			    { month: '26', 销售额: 7.4, 单数: 4 },
-			    { month: '27', 销售额: 1.2, 单数: 3 },
-			    { month: '28', 销售额: 6, 单数: 2 },
-			    { month: '29', 销售额: 3, 单数: 3 },
-			    { month: '30', 销售额: 4, 单数: 2 }
-			];
+		function mountNode1(mountNode,vdata){
+			const data = vdata;
+			
 			const ds = new DataSet();
 			const dv = ds.createView().source(data);
 			dv.transform({
@@ -231,7 +201,7 @@
 		chart.render();
 		};
 		function mountNode2(mountNode,data){
-			console.log(data);
+		
 			/* const data = [
 			    { year: '美工部', 人数: 12 },
 			    { year: '前端部', 人数: 12 },
@@ -266,6 +236,7 @@
 		  	chart.interval().position('year*人数');
 		  	chart.render();
 		};
+		
 		mountNode1('Chart1');
 		
 	</script>
@@ -331,10 +302,43 @@ $(function() {
 				}); 
 		});
 	
+	//销售业绩图表
+	
+		$app.request("${path}/data/finance/sale/view.do",function(data){
+			var cuss = [];
+			if(typeof(data.data.cuss)=="object")cuss = data.data.cuss;
+			
+			var prjs = [];
+			if(typeof(data.data.prjs)=="object")prjs = data.data.prjs;
+			
+			var keys = {};
+			
+			for (var i = 0; i < cuss.length; i++) { var mdate = cuss[i].mdate;
+			keys[mdate+""] = insert_flg(mdate,"-",4);
+					}
+			for (var i = 0; i < prjs.length; i++) { var mdate = prjs[i].mdate;
+			keys[mdate+""] = insert_flg(mdate,"-",4);
+					}
+			
+			var models = [];
+			for ( var i in keys) {
+				
+				var cus = getCus(cuss,i);
+				var prj = getPrj(prjs,i);
+				var mo = createModel(cus,prj);
+				mo.vmdate = keys[i];
+				mo.mdate = i;
+				models.push(mo);
+			}
+			
+			 renderView(models,data.data.cyear);
+		});
+
+	
+	
 	
 	for (var i = 0; i < 5; i++) {
 		var vdate = getMonthFirst(i);
-		
 		$("#sale_select").append('<option value="'+vdate.getTime()+'">'+vdate.format("yyyy-MM")+'</option>');
 		
 	}
@@ -348,20 +352,83 @@ $(function() {
 	
 });
 
+function renderView(models,cyear){
+	var ret = [];
+	
+	for (var i = 1; i < 13; i++) {
+		var key = cyear+(i<9?("0"+i):(i+""));
+		var mo = findModel(key,models);
+		if(!mo){
+			ret.push({ month: i, 销售额: 0, 单数: 0 });
+		}else{
+			ret.push({ month: i, 销售额: mo.collect/10000, 单数: mo.prjNum });
+			
+		}
+	}
+	
+	mountNode1('Chart1',ret);
+	
+}
 
+function findModel(key,models){
+	for (var i = 0; i < models.length; i++) {
+		if(models[i].mdate==key)
+			return models[i];
+	}
+	
+}
+function insert_flg(str,flg,sn){
+	  
+    return str.substring(0, sn)+flg+str.substring(sn, str.length);
+}
+function getCus(cuss,key){
+	
+	for (var i = 0; i < cuss.length; i++) {
+		if(cuss[i].mdate==key)return cuss[i];
+	}
+	
+}
+
+
+function getPrj(cuss,key){
+	
+	
+	for (var i = 0; i < cuss.length; i++) {
+		if(cuss[i].mdate==key)return cuss[i];
+	}
+	
+}
+
+
+function createModel(emp,prj){
+	
+	var mo = {};
+	if(!emp)emp={cusNum:0}
+	
+	mo.cusNum = emp.cusNum;
+	
+	if(!prj)prj = {"receivable":0.00,"collect":0.00};
+	
+	mo.receivable = prj.receivable;
+	mo.collect = prj.collect;
+	mo.prjNum =  prj.prjNum
+	return mo;
+	
+}
 
 
 function onChangeSale(val){
 	var starttime = val;
 	var endtime = getMonthLast(new Date(new Number(starttime))).getTime();
-	
-	
 	//渲染x销售月统计
 	$app.request("${path}/index/sale.do",function(data){
 		if(data.status!=0)return;
 		
 		$("#sale_group").empty();
-		if(!data.data)return;
+		if(!data.data||data.data.length<1){
+			$("#sale_group").append('(暂无数据！)');
+			return;
+			}
 		
 		for (var i = 0; i < data.data.length; i++) {
 			data.data[i].sort = i+1;
@@ -370,8 +437,6 @@ function onChangeSale(val){
 			$("#sale_group").append(html);
 		}
 		refSale();
-		
-		
 		
 	},{param:{starttime:starttime,endtime:endtime}});
 }
@@ -386,8 +451,6 @@ function viewNotice(id){
 
 
 function refSale(){
-	
-	
 	
 	$("#sale_group>.Ranking-wrap .Ranking-strip").each(function(i,e){
 		//以30万为基数
@@ -415,7 +478,7 @@ function getMonthLast(cdate)
     var Nowdate=cdate;     
     var MonthNextFirstDay=new Date(Nowdate.getFullYear(),Nowdate.getMonth()+1,1);     
     var MonthLastDay=new Date(MonthNextFirstDay-86400000);     
-    M=Number(MonthLastDay.getMonth())+1     
+    M=Number(MonthLastDay.getMonth())+1;     
     return MonthLastDay;     
 }
 
