@@ -4,9 +4,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.web.filter.authz.AuthorizationFilter;
-
 import com.alibaba.fastjson.JSONObject;
 import com.foxtail.common.JsonResult;
 import com.foxtail.common.web.WebUtils;
@@ -25,10 +25,11 @@ public class ShiroPermsFilter extends AuthorizationFilter {
 	        String url = getPermsUrl(httpRequest);
 	        
 	        if(url.startsWith("sys"))return true;
-	        
-	        /*if(SecurityUtils.getSubject().isPermitted(url))*/return true;
 	       
-	        //return false;
+	        
+	        if(SecurityUtils.getSubject().isPermitted(url))return true;
+	       
+	        return false;
 	}
 	
 	
@@ -42,8 +43,6 @@ public class ShiroPermsFilter extends AuthorizationFilter {
         }else
         	((ServletRequest)request).getRequestDispatcher(getUnauthorizedUrl()).forward(request, response);
         	
-        	
-        
 		return false;
 	}
 	
@@ -51,9 +50,15 @@ public class ShiroPermsFilter extends AuthorizationFilter {
 		String url = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length(),httpRequest.getRequestURI().length() );
         
 		if(url.startsWith("/"))
-			return url.substring(1,url.length()-3);
+			url = url.substring(1,url.length()-3);
+		
+		String sysModel = httpRequest.getParameter(Myprem.MODULE_KEY);
+		
+		if(!StringUtils.isBlank(sysModel))
+			url = url+"?"+Myprem.MODULE_KEY+"="+sysModel;
 		
 		return url;
+		
 
 	}
 }

@@ -113,18 +113,9 @@ var backurl = "${path}/personnel/apply/apply.do";
 		
    			<!--<div class="formtitle"><span>基本信息</span></div>-->
    			<form id="submit_form" data-isadd="true" method="post" data-action="${path}/personnel/apply/apply/save.do">
-   				<input name="type" value="1" type="hidden">
+   				<input name="type" value="3" type="hidden">
    				<ul class="forminfo">
    				
-					<li class="layui-form">
-					    <label>请假类型：</label>
-					    <div class="layui-input-block">
-					      <input type="radio" name="leave_type" value="1" title="事假" checked >
-					      <input type="radio" name="leave_type" value="2" title="病假" >
-					      <input type="radio" name="leave_type" value="3" title="婚假" >
-					      <input type="radio" name="leave_type" value="4" title="丧假" >
-					    </div>
-					</li>
 					
 					
 					<li><label>开始时间：</label><input data-lxr="{type:'time',format:'yyyy-MM-dd hh:mm:ss'}" value="" placeholder="开始时间" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary w260" onfocus="WdatePicker({isShowClear:false,dateFmt:'yyyy-MM-dd HH:mm:ss'})" >
@@ -136,7 +127,7 @@ var backurl = "${path}/personnel/apply/apply.do";
     				</li>
 					
 					
-					<li><label>请假事由：</label><textarea name="info" class="form-control input-primary w260"></textarea>
+					<li><label>外出事由：</label><textarea name="info" class="form-control input-primary w260"></textarea>
 					</li>
 	    		</ul>
     			<div class="btnWrap">
@@ -154,10 +145,7 @@ var backurl = "${path}/personnel/apply/apply.do";
    				<input name="id" value="${vo.id }" type="hidden" class="form-control input-primary w260" />
    				<ul class="forminfo">
    				
-   				<li><label>请假类型：</label><input data-format="{type:'enum',val:'${vo.leave_type }',enum:{'1':'事假','2':'病假','3':'婚假','4':'丧假'}}"  class="lxr-format form-control input-primary w260"  type="text" readonly="readonly">
-					
-				</li>
-					
+   				
 					
 					<li><label>开始时间：</label><input data-lxr="{type:'time',format:'yyyy-MM-dd hh:mm:ss'}"
 					 data-format="{type:'time',val:'${vo.starttime }',format:'yyyy-MM-dd hh:mm:ss'}"  placeholder="开始时间" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary w260" onfocus="WdatePicker({isShowClear:false,dateFmt:'yyyy-MM-dd HH:mm:ss'})" >
@@ -170,7 +158,7 @@ var backurl = "${path}/personnel/apply/apply.do";
     				</li>
 					
 					
-					<li><label>请假事由：</label><textarea name="info" class="form-control input-primary w260">${vo.info }</textarea>
+					<li><label>外出事由：</label><textarea name="info" class="form-control input-primary w260">${vo.info }</textarea>
 					</li>
 					
 

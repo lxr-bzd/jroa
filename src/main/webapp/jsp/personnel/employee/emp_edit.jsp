@@ -179,7 +179,7 @@ var backurl = "${path}/personnel/employee/emp.do";
 		 				,deptName:{required: true}
 		 				,placeid:{required: true}
 		 				,levelid:{required: true}
-		 				,identifier:{required: true}
+		 				
 		 				,phone:{required: true,isMobile:true}
 		 				,entry_time:{required: true}
 		 				,birthday:{required: true}
@@ -551,10 +551,10 @@ var backurl = "${path}/personnel/employee/emp.do";
 								<td colspan="1">
 									<table width="100%">
 										<tr>
-											<th>是否有效</th>
+											<th>是否在职</th>
 											<td><div class="layui-form mauto">
-											      <input type="radio" name="state" value="0" title="启用" checked="checked">
-											      <input type="radio" name="state" value="1" title="禁用" >
+											      <input type="radio" name="state" value="0" title="是" checked="checked">
+											      <input type="radio" name="state" value="1" title="否" >
 												</div>
 											</td>
 										</tr>
@@ -575,7 +575,7 @@ var backurl = "${path}/personnel/employee/emp.do";
 										</div>
 									</div>
 								</td>
-							</tr>-->
+							</tr>--> 
 						</tbody>
 					</table>
 				</div>
@@ -915,10 +915,10 @@ var backurl = "${path}/personnel/employee/emp.do";
 								<td colspan="1">
 									<table width="100%">
 										<tr>
-											<th>是否有效</th>
+											<th>是否在职</th>
 											<td><div class="layui-form mauto">
-											      <input type="radio" name="state" value="0" title="启用" <c:if test="${vo.state==0}">checked="checked"</c:if>>
-											      <input type="radio" name="state" value="1" title="禁用" <c:if test="${vo.state==1}">checked="checked"</c:if>>
+											      <input type="radio" name="state" value="0" title="是" <c:if test="${vo.state==0}">checked="checked"</c:if>>
+											      <input type="radio" name="state" value="1" title="否" <c:if test="${vo.state==1}">checked="checked"</c:if>>
 												</div>
 											</td>
 										</tr>

@@ -31,10 +31,10 @@ public class EmpController extends BaseMybatisController{
 	EmpService empService;
 	
 	
-	@RequestMapping() 
-	public String toMain(String module){
+	@RequestMapping()
+	public String toMain(String sysModule){
 		
-		return getMainJsp(module);
+		return getMainJsp(sysModule);
 	}
 	
 	

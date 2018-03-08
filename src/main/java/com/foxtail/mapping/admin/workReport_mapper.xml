@@ -13,6 +13,7 @@
   		left join man_emp d on a.examineid=d.id
   		WHERE 1=1
   		<if test="ft.type != null ">AND a.type=#{ft.type}</if>
+  		<if test="ft.kw != null ">AND b.name like CONCAT('%',#{ft.kw},'%')</if>
   		<if test="ft.startTime != null ">AND a.createtime > #{ft.startTime}</if>
   		<if test="ft.endTime != null ">AND a.createtime &lt; #{ft.endTime}</if>
   		<if test="ft.sysView == 'def' ">AND a.empid = #{ft.uid}</if>
@@ -100,7 +101,7 @@
 	
 	
 	<select id="countValid" resultType="int" >
-  		select count(0) from adm_report_detail where report_state != 1 AND id in
+  		select count(0) from adm_work_report where report_state != 1 AND id in
 	      <foreach collection="ids" item="id" index="index"
              open="(" close=")" separator=",">
               #{id}

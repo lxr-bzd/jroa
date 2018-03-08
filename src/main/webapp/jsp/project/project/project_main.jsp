@@ -223,21 +223,35 @@ function getUnSelectRows(){
 		<div>
     		<form id="searchForm" name="searchForm"  method="post">
     			<span>项目经理：</span>
-    			<input name="empKw" value="" placeholder="项目经理"  class="form-control input-sm w200" type="text" style="display: inline;" >
-    			
-    			<span>下单时间：</span>
-    			<input placeholder="开始" data-lxr="{type:'time',format:'yyyy-MM-dd'}" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary" onfocus="WdatePicker({isShowClear:false})">
-    			<input type="hidden" name="startTime">-
-				<input placeholder="结束" data-lxr="{type:'time',format:'yyyy-MM-dd'}" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary" onfocus="WdatePicker({isShowClear:false})">
-				<input type="hidden" name="endTime">
-				
-				<span>项目进度：</span>
-				<select name="progressid" data-model='{url:"${path}/project/setting/progress/view.do?limit=-1&offset=0",val:"id",name:"name",root:"rows"}' class="lxr-select form-control  w200" style="display: inline;" ><option value="">-请选择-</option></select>
-    			
-				<span>关键词：</span>
-    			<input name="kw" value="" placeholder="项目名称"  class="form-control input-sm w200" type="text" style="display: inline;" >
-    			
-    			<input type="button" class="btn btn-info btn-round btn-sm" value="查询" onclick="refTable()">
+    			<input name="managerKw" value="" placeholder="项目经理"  class="form-control input-sm w200" type="text" style="display: inline;" >
+    			&nbsp;&nbsp;
+    			<span>业务员：</span>
+    			<input name="salesmanKw" value="" placeholder="业务员"  class="form-control input-sm w200" type="text" style="display: inline;" >
+    			&nbsp;&nbsp;
+    			<span>客户名称：</span>
+    			<input name="cusKw" value="" placeholder="客户名称"  class="form-control input-sm w200" type="text" style="display: inline;" >
+    			&nbsp;&nbsp;
+				<div class="senior" style="display: none;">
+					<br /><br />
+	    			<span>下单时间：</span>
+	    			<input placeholder="开始" data-lxr="{type:'time',format:'yyyy-MM-dd'}" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary" onfocus="WdatePicker({isShowClear:false})">
+	    			<input type="hidden" name="startTime">-
+					<input placeholder="结束" data-lxr="{type:'time',format:'yyyy-MM-dd'}" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary" onfocus="WdatePicker({isShowClear:false})">
+					<input type="hidden" name="endTime">
+					
+					<span>项目进度：</span>
+					<select name="progressid" data-model='{url:"${path}/project/setting/progress/view.do?limit=-1&offset=0",val:"id",name:"name",root:"rows"}' class="lxr-select form-control  w200" style="display: inline;" ><option value="">-请选择-</option></select>
+	    			
+					<span>关键词：</span>
+	    			<input name="kw" value="" placeholder="项目名称"  class="form-control input-sm w200" type="text" style="display: inline;" >
+	    			<br /><br />
+    			</div>
+    			<!--<input type="button" class="btn btn-info btn-round btn-sm" value="查询" onclick="refTable()">-->
+    			<div class="control-group" style="display: inline-block;">
+				    <label class="checkbox_btn"><input type="checkbox"><span>高级搜索</span></label>
+				    &nbsp;&nbsp;
+				    <input type="button" class="btn btn-info btn-round btn-sm" value="查询" onclick="refTable()">
+				</div>
     		</form>
     	</div>
 	    <div id="toolbar" class="btn-group">
@@ -286,7 +300,21 @@ function getUnSelectRows(){
 	   	<label class="select_all">
 	   		<input type="checkbox" name="checkall" onclick="if($('#mainTable thead input[name=btSelectAll]').prop('checked')!=this.checked)$('#mainTable thead input[name=btSelectAll]').click();"> 全选/取消
 	   	</label>
+	   	 <shiro:hasPermission name="project/project/project/delete">
 	   	<button class="btn btn-danger btn-round btn-xs" onclick="toRemove()"><i class="glyphicon glyphicon-trash"></i> 批量删除</button>
+		</shiro:hasPermission>
 	</div>
+	<script type="text/javascript">
+		$('.checkbox_btn').click(function(){
+			var _this=$(this),
+				$input=_this.children('input'),
+				$span=_this.children('span');
+			if($input.prop('checked')){
+				$('.senior').show();
+			}else{
+				$('.senior').hide();
+			}
+		})
+	</script>
 </body>
 </html>

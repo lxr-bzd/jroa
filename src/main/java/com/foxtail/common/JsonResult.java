@@ -9,7 +9,7 @@ public class JsonResult {
 	public static final int STATUS_CALL_ERROR = 4;
 	//未认证
 	public static final int STATUS_UN_AUTH = 5;
-	//
+	//无权限
 	public static final int STATUS_UN_PERMS = 6;
 	//参数不合法
 	public static final int STATUS_INVALID_PARAMETER= 100;

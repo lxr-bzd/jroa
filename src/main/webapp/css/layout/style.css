@@ -549,10 +549,10 @@ body .table_list tr:hover{ background:#F4F4F4;}
 .autograph input{border-bottom: 1px  dashed #dbdbdb;}
 
 .input-group{display: inherit !important;width: 100%;}
-.input-group .form-control{
+.formTable .input-group .form-control{
 	width: 75% !important;
 }
-.input-group .input-group-addon{
+.formTable .input-group .input-group-addon{
 	padding: 10px 12px !important;
 }
 /*列表全选按钮*/
@@ -715,6 +715,9 @@ body .table_list tr:hover{ background:#F4F4F4;}
 	float: left;
 	padding: 0 20px;
 }
+.ThreeMain>div.w100{
+	width: 100%;
+}
 .results-wrap{
 	margin-top: 20px;
 }
@@ -739,4 +742,7 @@ body .table_list tr:hover{ background:#F4F4F4;}
 }
 #cusName{
 	font-size: 20px;
+}
+.btn-success a{
+	color: #fff;
 }

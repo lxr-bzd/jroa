@@ -41,7 +41,7 @@ public class ExamineController extends BaseMybatisController{
 	
 	@RequestMapping() 
 	public String toMain(String sysModule){
-		String rString = getMainJsp(sysModule);
+		
 		return getMainJsp(sysModule);
 	}
 	
@@ -88,6 +88,10 @@ public class ExamineController extends BaseMybatisController{
 		
 		break;
 		case 4:pString ="personnel/examine/examine?sysModule=quit";
+		
+		break;
+		
+		case 5:pString ="personnel/examine/examine?sysModule=clock";
 		
 		break;
 

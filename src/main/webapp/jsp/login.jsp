@@ -122,7 +122,7 @@
                         			</div>
                         			<div class="loginStore layui-form">
 									  <div class="layui-form-item">
-									      <input type="checkbox" name="" title="记住我" lay-skin="primary">
+									      <input type="checkbox" name="rememberMe" title="记住我" lay-skin="primary">
 									  </div>
                         			</div>
                                     <input id="btnLogin" type="button" class="" value="登  录" onclick="login();" />

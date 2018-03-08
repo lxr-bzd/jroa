@@ -2,12 +2,19 @@ package com.foxtail.core.shiro;
 
 import java.io.Serializable;
 
+import org.apache.shiro.authz.Permission;
+
 import com.lxr.commons.exception.ApplicationException;
 
-public class Myprem implements Serializable{
+public class Myprem implements Serializable,Permission{
 
+	public static String MODULE_KEY = "sysModule";
+	
+	public static String VIEW_KEY = "$sysView";
+	
 	String prem;
 	String sysModule;
+	
 	public String getPrem() {
 		return prem;
 	}
@@ -33,7 +40,7 @@ public class Myprem implements Serializable{
 				
 				String[] params = premStr.substring(i+1,premStr.length()).split("&");
 				for (int j = 0; j < params.length; j++) {
-					int ii = params[j].indexOf("sysModule=");
+					int ii = params[j].indexOf(MODULE_KEY+"=");
 					if(ii==-1)continue;
 					myprem.setSysModule(params[j].substring(10, params[j].length()));
 					
@@ -52,10 +59,23 @@ public class Myprem implements Serializable{
 	}
 	
 	
+	@Override
+	public boolean implies(Permission p) {
+		 if(!(p instanceof Myprem)){
+	            return false;
+	        }
+		 Myprem mp = (Myprem)p;
+		 
+		 
+		 if(prem.equals(mp.getPrem()))return true;
+		 
+		 
+		return false;
+	}
+	
 	
 	@Override
 	public String toString() {
 		return "Myprem [prem=" + prem + ", sysModule=" + sysModule + "]";
 	}
-	
 }

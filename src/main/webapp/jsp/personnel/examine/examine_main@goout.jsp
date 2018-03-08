@@ -7,10 +7,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>查询列表</title>
 <script>
-var toAddUrl = '${path}/personnel/examine/examine/toedit.do?sysModule=leave';
+var toAddUrl = '${path}/personnel/examine/examine/toedit.do?sysModule=goout';
 var deleteUrl = '${path}/personnel/examine/examine/delete.do';
 var toEditUrl = '${path}/personnel/examine/examine/toedit.do';
-var toInfoUrl = '${path}/personnel/examine/examine/view.do';
+var toInfoUrl = '${path}/personnel/apply/apply/toinfo.do?sysModule=goout';
 var updateUrl = '${path}/personnel/examine/examine/update.do';
 
 	//添加
@@ -44,15 +44,9 @@ var updateUrl = '${path}/personnel/examine/examine/update.do';
 	
     //查看
     function toInfo(id){
-    	
-    	
-    	if(selected.length>0&&selected.length<2){
-    		
-    		$lxr.modal({url:toInfoUrl+'?id='+selected});
-    		
-    	}else{
-    		$app.alert('请选择一条数据进行操作');
-    	}
+    	$app.dialog(toInfoUrl+"&id="+id,function(){
+			refleshData('mainTable');
+		},{width:"600px",height:"700px"});
 	}
 	
 	//设置查询参数
@@ -62,12 +56,15 @@ var updateUrl = '${path}/personnel/examine/examine/update.do';
 		queryParams.offset=params.offset;
 		return queryParams;
 	}
-	
+	//查询列表
+    function queryList(){
+    	$('#mainTable').bootstrapTable('refresh');
+    }
     
     function editById(id){
-    	$app.dialog(toEditUrl+'?sysModule=leave&sysAction=edit&id='+id+"",function(){
+    	$app.dialog(toEditUrl+'?sysModule=goout&sysAction=edit&id='+id+"",function(){
 			refleshData('mainTable');
-		});
+		},{width:"800px",height:"800px"});
 	}
 
 	
@@ -116,25 +113,10 @@ function operatorFormatter(value, row, index) {
 }
 //格式化状态
 function stateFormatter(value,row,index){
-	switch (value) {
-	case 1:
-	return '审核中';
-	break;
-	case 2:
-	return '通过';
-	break;
-	case 3:
-	return '已取消';
-	break;
-	case 4:
-	return '未通过';
-	break;
-
-	default:
-		break;
-	}
+	
+	var enu = {'1':'未审核','2':'通过','3':'审核中','4':'未通过'};
+	return enu[value+""];
 }
-
 
 function lengthFormatter(val,row,index){
 	
@@ -148,14 +130,113 @@ function lengthFormatter(val,row,index){
 
 
 </script>
+
+<script type="text/javascript">
+var deptModel;
+var depts;
+
+$(function() {
+	
+	$app.request("${path}/personnel/organize/dept/view.do",function(data){
+		deptModel = $lxr.tree(data.data,{pidname:"parentid"});
+		depts = data.data;
+		$app.form("#searchForm");
+	});
+});
+
+function findByPid(pid){
+	for (var i = 0; i < depts.length; i++) {
+		if(depts[i].id == pid)
+			return depts[i].childs;
+	}
+}
+
+
+var deptSelect = {
+		 name:"name"
+		,val:"id"
+		,getRoot:function(render){
+			render(deptModel);
+		}
+		,onSelect:function(pid,render){
+			render(findByPid(pid));
+			//if(pid)renderPlace($app.form.multipleSelectVal("#searchForm .lxr_multipleSelect"));
+		}
+};
+
+
+function renderPlace(did){
+	$app.request("${path}/personnel/organize/place/view.do?type=bydeptid&deptid="+did,function(data){
+		
+		var html = '<select name = "placeid" class="form-control lxr_select"  style="display: inline;width:110px;" onchange=""><option value="">--请选择--</option>';
+		if(!$lxr.isEmpty(data.data))
+	for (var i = 0; i < data.data.length; i++) {
+			html+='<option value="'+data.data[i].id+'">'+data.data[i].name+'</option>';
+		}
+		html+='</select>';
+		
+		 $("#searchForm select[name=placeid]").replaceWith(html);
+	});
+	
+}
+
+
+function deptUnder(id){
+	var ids = [id];
+	var dept;
+	for (var i = 0; i < depts.length; i++) {
+		if(depts[i].id == id){
+			dept = depts[i];
+			break;
+		}
+	}
+	if(dept.childs.length>0)
+		ids.push(getChilds(dept.childs));
+	
+	return ids;
+}
+
+function getChilds(ds){
+	var ids = [];
+	for (var i = 0; i < ds.length; i++) {
+		ids.push(ds[i].id);
+		if(ds[i].childs.length>0)
+			ids.push(getChilds(ds[i].childs));
+	}
+	return ids;
+	
+}
+
+
+</script>
+
 </head>
 <body class="mlr15">
+ <div class="rightinfo explain_col">
+		<div>
+    		<form id="searchForm" name="searchForm"  method="post">
+			
+    				<span>所属部门：</span>
+    			<div style="display: inline;" class="lxr_multipleSelect" data-name="deptid" data-model="deptSelect"> </div>
+					<input name="deptid" type="hidden">
+					<span>时间：</span>
+					<input placeholder="开始" data-lxr="{type:'time',format:'yyyy-MM-dd'}" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary" onfocus="WdatePicker({isShowClear:false})">
+    			<input type="hidden" name="starttime">-
+				<input placeholder="结束" data-lxr="{type:'time',format:'yyyy-MM-dd'}" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary" onfocus="WdatePicker({isShowClear:false})">
+				<input type="hidden" name="endtime">
+    			
+    			
+    			<span>关键词：</span>
+    			<input name="kw" value="" placeholder="姓名"  class="form-control input-sm w200" type="text" style="display: inline;" >
+    			<input type="button" class="btn btn-info btn-round btn-sm" value="查询" onclick="queryList()">
+    		</form>
+    	</div>
 
 	    <div id="toolbar" class="btn-group">
 	   
 	   
 		</div>
-   
+   </div>
     	<table class="table_list" id="mainTable" data-toggle="table"
 			data-url="${path}/personnel/examine/examine/view.do?applytype=3" data-pagination="ture" 
 			data-side-pagination="server" data-cache="false" data-query-params="postQueryParams"
@@ -169,10 +250,9 @@ function lengthFormatter(val,row,index){
 					<th data-field="" data-checkbox="true"></th>
 					<th data-field="id" >id</th>
 					<th data-field="uname" >姓名</th>
-					<th data-field="identifier" >工号</th>
 					<th data-field="starttime"  data-formatter="$app.tableUi.time">开始时间</th>
 					<th data-field="endtime" data-formatter="$app.tableUi.time">结束时间</th>
-					<th data-field="length" data-formatter="lengthFormatter">请假时长</th>
+					<th data-field="length" data-formatter="lengthFormatter">时长</th>
 					<th data-field="state"  data-formatter="stateFormatter">状态</th>
 					<th data-field="operator" data-formatter="operatorFormatter">操作</th>
 				</tr>

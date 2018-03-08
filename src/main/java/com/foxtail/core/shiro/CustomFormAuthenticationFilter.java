@@ -75,7 +75,7 @@ public class CustomFormAuthenticationFilter extends FormAuthenticationFilter {
 	@Override                                                      
 	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
 		// TODO Auto-generated method stub
-		System.out.println(((HttpServletRequest)request).getRequestURI());
+		
 		boolean b = super.isAccessAllowed(request, response, mappedValue);
 		return b;
 	}
@@ -116,7 +116,7 @@ public class CustomFormAuthenticationFilter extends FormAuthenticationFilter {
     	String username = getUsername(request);
         String password = getPassword(request);
         String captcha = getCaptcha(request);
-        boolean rememberMe = isRememberMe(request)&&false;
+        boolean rememberMe = isRememberMe(request);
         String host = getHost(request);
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		String ipAddr="";
@@ -125,6 +125,7 @@ public class CustomFormAuthenticationFilter extends FormAuthenticationFilter {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
         return new CaptchaUsernamePasswordToken(username, password, rememberMe, host,captcha,ipAddr);
    }
 }

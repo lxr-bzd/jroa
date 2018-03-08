@@ -4,7 +4,12 @@ package com.foxtail.filter;
 public class ProjectFilter {
 
 	String kw;
-	String empKw;
+	String managerKw;
+	String salesmanKw;
+	String cusKw;
+	
+	
+	
 	Long startTime;
 	Long endTime;
 	String progressid;
@@ -28,12 +33,28 @@ public class ProjectFilter {
 
 	
 
-	public String getEmpKw() {
-		return empKw;
+	public String getManagerKw() {
+		return managerKw;
 	}
 
-	public void setEmpKw(String empKw) {
-		this.empKw = empKw;
+	public void setManagerKw(String managerKw) {
+		this.managerKw = managerKw;
+	}
+
+	public String getSalesmanKw() {
+		return salesmanKw;
+	}
+
+	public void setSalesmanKw(String salesmanKw) {
+		this.salesmanKw = salesmanKw;
+	}
+
+	public String getCusKw() {
+		return cusKw;
+	}
+
+	public void setCusKw(String cusKw) {
+		this.cusKw = cusKw;
 	}
 
 	public Long getStartTime() {

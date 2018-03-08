@@ -45,6 +45,7 @@
 	   UPDATE man_emp SET name=#{ model.name }
 	   ,deptid=#{model.deptid}
 	   ,placeid=#{model.placeid} 
+	   ,levelid=#{model.levelid} 
 		,phone=#{ model.phone }
 		,identifier=#{ model.identifier }
 		,idcard=#{ model.idcard }

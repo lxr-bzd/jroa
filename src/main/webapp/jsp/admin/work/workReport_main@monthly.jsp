@@ -80,13 +80,15 @@ var toInfoUrl = '${path}/admin/work/workReport/view.do';
     //操作工具栏
     function operatorFormatter(value, row, index) {
     	var operator='<div class="btn-group">';
+    	<shiro:hasPermission name="admin/work/workReport/examine?sysModule=monthly">
     	if(row.report_state!=2)
     	operator+=$app.btn('auth','审核','toExamine(\''+row.id+'\')');
-	    	<shiro:hasPermission name="personnel/organize/place:edit">
+    	 </shiro:hasPermission>
+	    	<shiro:hasPermission name="admin/work/workReport/update?sysModule=monthly&sysAction=edit">
 	    		operator+=$app.btn('edit','编辑','editById(\''+row.id+'\')');
 		    </shiro:hasPermission>
-		    <shiro:hasPermission name="personnel/organize/place:delete">
-				operator+=$app.btn('delete','编辑','toRemove(\''+row.id+'\')');
+		    <shiro:hasPermission name="admin/work/workReport/delete?sysModule=monthly">
+				operator+=$app.btn('delete','删除','toRemove(\''+row.id+'\')');
 	    	</shiro:hasPermission>
 	    	/* <shiro:hasPermission name="personnel/organize/place:delete">
 				operator+='<button class="btn btn-danger btn-round btn-xs" onclick="deleteById(\''+row.id+'\')"><i class="glyphicon glyphicon-trash"></i>删除</button>';
@@ -136,7 +138,7 @@ function examineNameFormatter(val){
     		<form id="searchForm" name="searchForm"  method="post">
     			
     			<span>关键词：</span>
-    			<input name="kw" value="" placeholder="关键词"  class="form-control input-sm w200" type="text" style="display: inline;" >
+    			<input name="kw" value="" placeholder="姓名"  class="form-control input-sm w200" type="text" style="display: inline;" >
     			<input type="button" class="btn btn-info btn-round btn-sm" value="查询" onclick="refTable()">
     		</form>
     	</div>

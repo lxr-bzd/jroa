@@ -169,8 +169,7 @@ var backurl = "${path}/personnel/examine/examine.do";
 					</li>
 					<li><label>职位：</label><input readonly="readonly" value="${vo.placeName }" type="text" class="form-control input-primary w260" />
 					</li>
-					<li><label>工号：</label><input readonly="readonly" value="${vo.identifier }" type="text" class="form-control input-primary w260" />
-					</li>
+					
 					<li><label>开始时间：</label><input  readonly="readonly" data-lxr="{type:'time',format:'yyyy-MM-dd'}" data-format="{type:'time',val:'${vo.starttime }',format:'yyyy-MM-dd'}" value="" placeholder="时间" style="display: inline" type="text" class="starttime lxr-format form-control input-primary  w260" >
 					</li>
 					<li><label>结束时间：</label><input  readonly="readonly" data-lxr="{type:'time',format:'yyyy-MM-dd'}" data-format="{type:'time',val:'${vo.endtime }',format:'yyyy-MM-dd'}" value="" placeholder="时间" style="display: inline" type="text" class="endtime lxr-format form-control input-primary  w260"  >

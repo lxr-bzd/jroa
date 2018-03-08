@@ -429,11 +429,11 @@ function getUnSelectRows(){
 					<i class="glyphicon glyphicon-plus"></i> 添加
 		</button>
 		<button class="btn btn-success btn-round btn-sm" onclick="onExcell()">
-						<i class="glyphicon glyphicon-folder-open"></i> 导出excell
+						<i class="glyphicon glyphicon-folder-open"></i> 导出
 		</button>
 		
 		<button class="btn btn-success btn-round btn-sm" onclick="$('#inexcell').click();">
-						<i class="glyphicon glyphicon-folder-open"></i>  导入excell
+						<i class="glyphicon glyphicon-folder-open"></i>  导入
 		</button>
 		<input type="file" style="display: none;" id="inexcell" onchange="inExcell(this)" />
 		<button class="btn btn-success btn-round btn-sm" onclick=" ">

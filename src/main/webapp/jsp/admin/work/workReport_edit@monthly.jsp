@@ -97,12 +97,12 @@ var backurl = "${path}/admin/work/workReport.do";
    				<input type="hidden" name="type" value="3">
    				<input type="hidden" name="report_state" value="1">
    				<ul class="forminfo">
-					<li><label>今日工作：</label>
+					<li><label>本月工作：</label>
 					<textarea name="content" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height:100px;"></textarea>
 					
 					</li>
 					
-					<li><label>今日学习：</label>
+					<li><label>本月学习：</label>
 					<textarea name="study" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height: 200px;"></textarea>
 					</li>
 					

@@ -65,6 +65,7 @@ var toInfoUrl = '${path}/personnel/employee/emp/toinfo.do';
 		queryParams.limit=params.limit;
 		queryParams.offset=params.offset;
 		queryParams.deptid = $app.form.multipleSelectVal("#searchForm .lxr_multipleSelect");
+		queryParams.state = 0;
 		return $lxr.trimObject(queryParams);
 	}
 	//查询列表
@@ -101,11 +102,11 @@ var toInfoUrl = '${path}/personnel/employee/emp/toinfo.do';
 	}
     
     //格式化状态
-    function statusFormatter(value,row,index){
-    	if(value=='1'){
-    		return '<span class="label label-success label-lg">启用</span>';
-    	}else if(value=='2'){
-    		return '<span class="label label-danger arrowed">锁定</span>';
+    function stateFormatter(value,row,index){
+    	if(value=='0'){
+    		return '是';
+    	}else if(value=='1'){
+    		return '否';
     	}else{
     		return "";
     	}
@@ -248,7 +249,7 @@ function getChilds(ds){
 					<th data-field="entry_time" data-formatter="$app.tableUi.date">入职日期</th>
 					<th data-field="birthday" data-formatter="$app.tableUi.date" >生日</th>
 					<th data-field="sex" data-formatter="$app.tableUi.sex" >性别</th>
-					<th data-field="state" data-formatter="$app.tableUi.state" >状态</th>
+					<th data-field="state" data-formatter="stateFormatter" >是否在职</th>
 					<th data-field="operator"  data-formatter="operatorFormatter">操作</th>
 				</tr>
 			</thead>

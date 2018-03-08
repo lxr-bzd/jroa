@@ -29,6 +29,8 @@ public class AppContext {
 		
 		return appConfig.get("fileHost");
 
+		
+		
 	}
 	
 	public static String getProperties(String key) {

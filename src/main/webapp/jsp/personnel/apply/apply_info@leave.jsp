@@ -112,13 +112,13 @@ var backurl = "${path}/personnel/apply/apply.do";
 				</li>
 					
 					
-					<li><label>开始时间：</label><input data-lxr="{type:'time',format:'yyyy-MM-dd hh:mm:ss'}"
-					 data-format="{type:'time',val:'${vo.starttime }',format:'yyyy-MM-dd hh:mm:ss'}"  placeholder="开始时间" style="display: inline" type="text" class="lxr-format   input-primary w260" >
+					<li><label>开始时间：</label><input readonly="readonly" data-lxr="{type:'time',format:'yyyy-MM-dd hh:mm:ss'}"
+					 data-format="{type:'time',val:'${vo.starttime }',format:'yyyy-MM-dd hh:mm:ss'}"  placeholder="开始时间" style="display: inline" type="text" class="lxr-format form-control input-primary w260" >
     				<input name="starttime" type="hidden">
     				</li>
     				
-    				<li><label>结束时间：</label><input data-lxr="{type:'time',format:'yyyy-MM-dd hh:mm:ss'}"
-    				data-format="{type:'time',val:'${vo.endtime }',format:'yyyy-MM-dd hh:mm:ss'}" placeholder="结束时间" style="display: inline" type="text" class="lxr-format   input-primary w260" >
+    				<li><label>结束时间：</label><input readonly="readonly" data-lxr="{type:'time',format:'yyyy-MM-dd hh:mm:ss'}"
+    				data-format="{type:'time',val:'${vo.endtime }',format:'yyyy-MM-dd hh:mm:ss'}" placeholder="结束时间" style="display: inline" type="text" class="lxr-format form-control input-primary w260" >
     				<input name="endtime" type="hidden">
     				</li>
 					
@@ -126,7 +126,7 @@ var backurl = "${path}/personnel/apply/apply.do";
 					<li><label>请假事由：</label><textarea readonly="readonly" class="form-control input-primary w260">${vo.info }</textarea>
 					</li>
 					
-					<li><label>审核状态：</label><input type="text" readonly="readonly"  data-format="{type:'enum',val:'${vo.state }',enum:{'1':'审核中','2':'通过','3':'取消','4':'不通过'}}" class="lxr-format form-control input-primary w260" >
+					<li><label>审核状态：</label><input type="text" readonly="readonly"  data-format="{type:'enum',val:'${vo.state }',enum:{'1':'未审核','2':'通过','3':'审核中','4':'未通过'}}" class="lxr-format form-control input-primary w260" >
 					</li>
 					
 	    		</ul>

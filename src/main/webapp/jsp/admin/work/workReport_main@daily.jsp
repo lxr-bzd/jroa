@@ -236,7 +236,7 @@ function getChilds(ds){
 				<input placeholder="结束" data-lxr="{type:'time',format:'yyyy-MM-dd'}" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary" onfocus="WdatePicker({isShowClear:false})">
 				<input type="hidden" name="endTime">
     			<span>关键词：</span>
-    			<input name="kw" value="" placeholder="关键词"  class="form-control input-sm w200" type="text" style="display: inline;" >
+    			<input name="kw" value="" placeholder="姓名"  class="form-control input-sm w200" type="text" style="display: inline;" >
     			<input type="button" class="btn btn-info btn-round btn-sm" value="查询" onclick="refTable()">
     		</form>
     	</div>

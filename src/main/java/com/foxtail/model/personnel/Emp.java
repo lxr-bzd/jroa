@@ -9,6 +9,18 @@ public class Emp {
 	String deptName;
 	String placeid;//int(11)	 '职位id'
 	String placeName;
+	public Integer getHeight() {
+		return height;
+	}
+	public void setHeight(Integer height) {
+		this.height = height;
+	}
+	public Integer getWeight() {
+		return weight;
+	}
+	public void setWeight(Integer weight) {
+		this.weight = weight;
+	}
 	String levelid;//int(11)	 '等级id'
 	String levelName;
 	String account;
@@ -25,10 +37,10 @@ public class Emp {
 	String national;//varchar(50)	 '名族'
 	String political;//varchar(50)	 '政治面貌'
 	String marriage;//varchar(50)	 '婚姻状况 1已婚，2未婚，3离异 '
-	String height;//int(11)	 '升高（cm）'
+	Integer height;//int(11)	 '升高（cm）'
 	String experience;//int(11)	 '从业年限（年）'
 	String health;//int(11)	 '健康状况'
-	String weight;//int(11)	 '体重（kg）'
+	Integer weight;//int(11)	 '体重（kg）'
 	String urgent_man;//varchar(10)	 '紧急联系人'
 	String urgent_phone;//varchar(20)	 '紧急联系人电话'
 	String reg_area;//varchar(50)	 '户口所在地'
@@ -180,12 +192,7 @@ public class Emp {
 	public void setMarriage(String marriage) {
 		this.marriage = marriage;
 	}
-	public String getHeight() {
-		return height;
-	}
-	public void setHeight(String height) {
-		this.height = height;
-	}
+
 	public String getExperience() {
 		return experience;
 	}
@@ -198,12 +205,7 @@ public class Emp {
 	public void setHealth(String health) {
 		this.health = health;
 	}
-	public String getWeight() {
-		return weight;
-	}
-	public void setWeight(String weight) {
-		this.weight = weight;
-	}
+	
 	public String getUrgent_man() {
 		return urgent_man;
 	}

@@ -224,7 +224,7 @@ function getChilds(ds){
     				<span>所属部门：</span>
     			<div style="display: inline;" class="lxr_multipleSelect" data-name="deptid" data-model="deptSelect"> </div>
 					<input name="deptid" type="hidden">
-					<span>入职时间：</span>
+					<span>时间：</span>
 					<input placeholder="开始" data-lxr="{type:'time',format:'yyyy-MM-dd'}" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary" onfocus="WdatePicker({isShowClear:false})">
     			<input type="hidden" name="starttime">-
 				<input placeholder="结束" data-lxr="{type:'time',format:'yyyy-MM-dd'}" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary" onfocus="WdatePicker({isShowClear:false})">

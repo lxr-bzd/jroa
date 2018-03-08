@@ -15,6 +15,17 @@ public class WorkReportFilter {
 	String deptid;
 	
 	String[] deptids;
+	
+	
+	String kw ;
+
+	public String getKw() {
+		return kw;
+	}
+
+	public void setKw(String kw) {
+		this.kw = kw;
+	}
 
 	public Integer getType() {
 		return type;

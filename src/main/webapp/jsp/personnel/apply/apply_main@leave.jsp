@@ -113,23 +113,9 @@ function operatorFormatter(value, row, index) {
 }
 //格式化状态
 function stateFormatter(value,row,index){
-	switch (value) {
-	case 1:
-	return '未审核';
-	break;
-	case 2:
-	return '通过';
-	break;
-	case 3:
-	return '审核中';
-	break;
-	case 4:
-	return '未通过';
-	break;
-
-	default:
-		break;
-	}
+	
+	var enu = {'1':'未审核','2':'通过','3':'审核中','4':'未通过'};
+	return enu[value+""];
 }
 
 

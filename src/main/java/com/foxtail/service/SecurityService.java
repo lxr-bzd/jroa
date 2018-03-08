@@ -14,6 +14,7 @@ import com.foxtail.bean.ServiceManager;
 import com.foxtail.common.util.MD5Util;
 import com.foxtail.core.shiro.ShiroUser;
 import com.foxtail.vo.sys.SysUserActiveVo;
+import com.lxr.commons.exception.ApplicationException;
 
 @Service
 public class SecurityService {
@@ -24,12 +25,12 @@ public class SecurityService {
 	
 	public String getUid() {
 		
-		
-		String id=  ServiceManager.jdbcTemplate.queryForObject("select id from man_emp where account=?", String.class, ShiroUser.getUser().getAccount());
-		
-		
-		return id;
-
+		try {
+			String id=  ServiceManager.jdbcTemplate.queryForObject("select id from man_emp where account=?", String.class, ShiroUser.getUser().getAccount());
+			return id;
+		} catch (Exception e) {
+			throw new ApplicationException("该账号异常");
+		}
 	}
 	
 	public boolean equestPwd(String pwd) {

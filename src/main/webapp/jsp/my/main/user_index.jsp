@@ -154,39 +154,32 @@
 			</li>
 			<li class="listInner">
 				<div class="list2">
-					<p class="listText">本月签单数</p>
-					<div class="listNum"><span class="attr-map listNum" data-map="projectNum">--</span>单</div>
-				</div>
-			</li>
-			<li class="listInner">
-				<div class="list4">
 					<p class="listText">本月请假人数</p>
 					<div class="listNum"><span class="attr-map listNum" data-map="leaveNum">--</span>人</div>
 				</div>
 			</li>
 			<li class="listInner">
+				<div class="list3">
+					<p class="listText">本月生日人数</p>
+					<div class="listNum"><span class="attr-map listNum" data-map="birthdayNum">--</span>人</div>
+				</div>
+			</li>
+			<li class="listInner">
+				<div class="list4">
+					<p class="listText">本月优秀员工</p>
+					<div class="listNum"><span class="attr-map listNum" data-map="Num">--</span>人</div>
+				</div>
+			</li>
+			<li class="listInner">
 				<div class="list5">
 					<p class="listText">本月迟到人数</p>
-					<div class="listNum"><span class="attr-map listNum" data-map="birthdayNum">--</span>人</div>
+					<div class="listNum"><span class="attr-map listNum" data-map="Num">--</span>人</div>
 				</div>
 			</li>
 		</ul>
 	</div>
 	<div class="ThreeMain cd pd20">
-		<div class="results">
-			<div class="header_wrap cd">
-				<h4 class="fl">销售业绩及单数</h4>
-				<div class="layui-form fr">
-			     	<select>
-				      
-			      	</select>
-				</div>
-			</div>
-			<div class="results-wrap">
-				<div id="Chart1"></div>
-			</div>
-		</div>
-		<div class="sector">
+		<div class="sector w100">
 			<div class="header_wrap cd">
 				<h4 class="fl">公司部门（人）</h4>
 			</div>
@@ -246,86 +239,6 @@
 			}
 	</script>
 	<script>
-		function mountNode1(mountNode){
-			const data = [
-				 { month: '1', 销售额: 0, 单数: 0 },
-				    { month: '2', 销售额: 0, 单数: 0 },
-				    { month: '3', 销售额: 0, 单数: 0 },
-				    { month: '4', 销售额: 0, 单数: 0 },
-				    { month: '5', 销售额: 0, 单数: 0 },
-				    { month: '6', 销售额: 0, 单数: 0 },
-				    { month: '7', 销售额: 0, 单数: 0 },
-				    { month: '8', 销售额: 0, 单数: 0 },
-				    { month: '9', 销售额: 0, 单数: 0 },
-				    { month: '10', 销售额: 0, 单数:0 },
-				    { month: '11', 销售额: 0, 单数:0 },
-				    { month: '12', 销售额: 0, 单数:0 },
-				    { month: '13', 销售额: 0, 单数:0 },
-				    { month: '14', 销售额: 0, 单数:0 },
-				    { month: '15', 销售额: 0, 单数:0 },
-				    { month: '16', 销售额: 0, 单数:0 },
-				    { month: '17', 销售额: 0, 单数:0 },
-				    { month: '18', 销售额: 0, 单数:0 },
-				    { month: '19', 销售额: 0, 单数:0 },
-				    { month: '20', 销售额: 0, 单数:0 },
-				    { month: '21', 销售额: 0, 单数:0 },
-				    { month: '22', 销售额: 0, 单数:0 },
-				    { month: '23', 销售额: 0, 单数:0 },
-				    { month: '24', 销售额: 0, 单数:0 },
-				    { month: '25', 销售额: 0, 单数:0 },
-				    { month: '26', 销售额: 0, 单数:0 },
-				    { month: '27', 销售额: 0, 单数:0 },
-				    { month: '28', 销售额: 0, 单数: 0 },
-				    { month: '29', 销售额: 0, 单数: 0 },
-				    { month: '30', 销售额: 0, 单数: 0 }
-			];
-			const ds = new DataSet();
-			const dv = ds.createView().source(data);
-			dv.transform({
-			    type: 'fold',
-			    fields: [ '销售额', '单数' ], // 展开字段集
-			    key: 'city', // key字段
-			    value: 'temperature', // value字段
-			});
-			const chart = new G2.Chart({
-			    container: mountNode,
-			    forceFit: true,
-			    height: 300 ,
-			    padding: [ 20, 20, 40, 40 ]
-			});
-			chart.legend({ 
-			 	position: 'top', // 设置图例的显示位置
-			 	marker: 'circle' ,
-			  	itemGap: 20 // 图例项之间的间距
-			});
-			chart.source(dv, {
-			    month: {
-			      range: [ 0, 1 ]
-			    }
-			});
-			chart.tooltip({
-			    crosshairs: {
-			      type: 'line'
-			    }
-			});
-			chart.axis('temperature', {
-			  	label: {
-				    formatter: val => {
-				      return val + '万';
-				    }
-			  	},
-			  	line: {
-				    lineWidth: 1, // 设置线的宽度
-				    stroke: '#ccc', // 设置线的颜色
-			  	}
-			});
-			chart.line().position('month*temperature').color('city');
-			chart.point().position('month*temperature').color('city').size(4).shape('circle').style({
-			    stroke: '#fff',
-			    lineWidth: 1
-			});
-		chart.render();
-		};
 		function mountNode2(mountNode,data){
 			console.log(data);
 			/* const data = [

@@ -295,8 +295,8 @@ var backurl = "${path}/project/project/project.do";
 					</li>
 					
 					<li><label>客户：</label>
-							<div class="input-group w260">
-		            			<input name="customrName" readonly="readonly"   type="text" class="form-control input-primary " />
+							<div class="input-group">
+		            			<input name="customrName" readonly="readonly"   type="text" class="form-control input-primary w260" />
 		            			
 		           				<span class="input-group-btn">
 									<button class="btn btn-default" type="button" onclick="onSelectCus()">选择</button>
@@ -325,8 +325,8 @@ var backurl = "${path}/project/project/project.do";
 					</li>
 					
 					<li><label>项目经理：</label>
-							<div class="input-group w260">
-		            			<input name="managerName"  type="text" readonly="readonly" class=" form-control input-primary " />
+							<div class="input-group">
+		            			<input name="managerName"  type="text" readonly="readonly" class=" form-control input-primary w260" />
 		            			
 		           				<span class="input-group-btn">
 									<button class="btn btn-default" type="button" onclick="onSelectEmp('managerName','managerid')">选择</button>
@@ -372,8 +372,8 @@ var backurl = "${path}/project/project/project.do";
 					</li>
 					
 					<li><label>业务员：</label>
-					<div class="input-group w260">
-		            			<input name="salesmanName" readonly="readonly" type="text" class="form-control input-primary " />
+					<div class="input-group">
+		            			<input name="salesmanName" readonly="readonly" type="text" class="form-control input-primary w260" />
 		            			
 		           				<span class="input-group-btn">
 									<button class="btn btn-default" onclick="onSelectEmp('salesmanName','salesmanid')" type="button">选择</button>
@@ -428,8 +428,8 @@ var backurl = "${path}/project/project/project.do";
 					</li>
 					
 					<li><label>客户：</label>
-							<div class="input-group w260">
-		            			<input name="customrName" readonly="readonly" value="${vo.customrName }"  type="text" class="form-control input-primary " />
+							<div class="input-group">
+		            			<input name="customrName" readonly="readonly" value="${vo.customrName }"  type="text" class="form-control input-primary w260 " />
 		           				<span class="input-group-btn">
 									<button class="btn btn-default" type="button" onclick="onSelectCus()">选择</button>
 								</span>
@@ -454,8 +454,8 @@ var backurl = "${path}/project/project/project.do";
 					
 					
 					<li><label>项目经理：</label>
-							<div class="input-group w260">
-		            			<input name="managerName" value="${vo.managerName }" type="text" readonly="readonly" class=" form-control input-primary " />
+							<div class="input-group">
+		            			<input name="managerName" value="${vo.managerName }" type="text" readonly="readonly" class=" form-control input-primary w260 " />
 		            			
 		           				<span class="input-group-btn">
 									<button class="btn btn-default" type="button" onclick="onSelectEmp('managerName','managerid')">选择</button>
@@ -503,8 +503,8 @@ var backurl = "${path}/project/project/project.do";
 					</li>
 					
 					<li><label>业务员：</label>
-					<div class="input-group w260">
-		            			<input name="salesmanName" value="${vo.salesmanName }" readonly="readonly" type="text" class="form-control input-primary " />
+					<div class="input-group">
+		            			<input name="salesmanName" value="${vo.salesmanName }" readonly="readonly" type="text" class="form-control input-primary w260" />
 		            			
 		           				<span class="input-group-btn">
 									<button class="btn btn-default"  onclick="onSelectEmp('salesmanName','salesmanid')" type="button">选择</button>
@@ -603,7 +603,7 @@ var backurl = "${path}/project/project/project.do";
     			<span>所属部门：</span>
     			<div style="display: inline;" class="lxr_multipleSelect" data-name="deptid" data-model="deptSelect"> </div>
 				
-    			<span>业务员：</span><input name="kw" value="" placeholder="业务员"  class="form-control input-sm w200" type="text" style="display: inline;" >
+    			<span>关键词：</span><input name="kw" value="" placeholder="业务员/客户"  class="form-control input-sm w200" type="text" style="display: inline;" >
 				
 				
     			<input type="button" class="btn btn-info btn-round btn-sm" value="查询" onclick="refTable('#cusTable')">

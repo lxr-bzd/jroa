@@ -15,10 +15,14 @@
   		left join prj_progress f on a.progressid = f.id
   		WHERE 1=1
   		<if test="ft.kw != null ">AND a.name like CONCAT('%',#{ft.kw},'%')</if>
+  		<if test="ft.managerKw != null ">AND c.name like CONCAT('%',#{ft.managerKw},'%')</if>
+  		<if test="ft.salesmanKw != null ">AND d.name like CONCAT('%',#{ft.salesmanKw},'%')</if>
+  		<if test="ft.cusKw != null ">AND b.name like CONCAT('%',#{ft.cusKw},'%')</if>
+  		
   		<if test="ft.startTime != null ">AND a.ordertime > #{ft.startTime}</if>
   		<if test="ft.endTime != null ">AND a.ordertime &lt; #{ft.endTime}</if>
   		<if test="ft.progressid != null ">AND a.progressid = #{ft.progressid}</if>
-  		<if test="ft.empKw != null ">AND c.name like CONCAT('%',#{ft.empKw},'%')</if>
+  		
   		<if test="ft.uid != null ">AND (a.managerid = #{ft.uid} OR #{ft.uid} in (select empid from prj_project_meb where prjid=a.id))</if>
   		<if test="ft.udeptids != null ">AND (a.managerid = #{ft.uid2} OR 
   		exists (select bb.deptid from prj_project_meb aa left join man_emp bb on aa.empid=bb.id where aa.prjid=a.id AND bb.deptid in

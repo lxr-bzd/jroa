@@ -45,15 +45,15 @@
 				/images/** = anon
 				/js/** = anon
 				/jslib/** = anon
+				/front/**=anon
 				/file/** = anon
 				/WechatAPI/** = anon
 				<!-- 微信要访问图片 -->
 				/uploadPath/** = anon
 				/upload/** = anon
-				/wechatNewsController/readById.do = anon
 				<!-- 验证码，可匿名访问 -->
 				/loadPasskey.do = anon
-				/front/**=anon
+				
 				<!-- 退出地址，登出操作功能无需自己开发，shiro去清除session-->
 				/logout.do = logout
 				<!-- 配置记住我或认证通过可以访问的地址 -->
@@ -78,15 +78,13 @@
 	
 	</bean>
 	
-
-
-	
-
-	
-	
 	<!-- realm -->
 	<bean id="customRealm" class="com.foxtail.core.shiro.CustomRealm">
 		<!-- 将凭证匹配器设置到realm中，realm按照凭证匹配器的要求进行散列 -->
+		<property name="permissionResolver" >
+			<bean class="com.foxtail.core.shiro.MyPermissionResolver"></bean>
+		</property>
+		
 		<property name="credentialsMatcher" ref="credentialsMatcher"/>
 	</bean>
 	

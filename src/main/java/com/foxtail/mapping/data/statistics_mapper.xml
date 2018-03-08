@@ -10,7 +10,7 @@
 	<select id="findYearPrj" resultType="map" >
   		select count(0) prjNum,sum(a.receivable) receivable,ifnull(sum(b.collect),0) collect,FROM_UNIXTIME(createtime/1000,'%Y%m') mdate  from prj_project a left join (select sum(money) collect,prjid from prj_collect group by prjid) b on a.id=b.prjid
   		WHERE createtime > #{starttime} AND  createtime &lt; #{endtime}
-group by FROM_UNIXTIME(createtime/1000,'%Y-%m')
+group by mdate
   	</select> 
 	
 	

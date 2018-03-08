@@ -13,15 +13,14 @@
   	
   	
   	<select id="findSale" resultType="map" >
-select a.empid salesmanid,a.collectNum,b.name empName from  
-	(select empid, ifnull(sum(money),0) collectNum from prj_collect WHERE 1=1
-	<if test="starttime != null ">AND time> #{starttime}</if>
-	<if test="endtime != null ">AND time &lt; #{endtime}</if>
- GROUP BY empid)  a left join man_emp b on a.empid=b.id
+select a.salesmanid,a.collectNum,b.name empName from  
+	(select b.salesmanid, ifnull(sum(a.money),0) collectNum from prj_collect a left join prj_project b on a.prjid=b.id WHERE 1=1
+	<if test="starttime != null ">AND a.time> #{starttime}</if>
+	<if test="endtime != null ">AND a.time &lt; #{endtime}</if>
+  GROUP BY b.salesmanid)  a left join man_emp b on a.salesmanid=b.id
 WHERE b.state=0
 ORDER BY a.collectNum DESC
 limit 10
-
   	</select>
   	
   <!-- 	<select id="findSale" resultType="map" >

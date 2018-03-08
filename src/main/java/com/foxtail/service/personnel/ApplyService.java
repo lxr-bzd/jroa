@@ -52,12 +52,15 @@ public class ApplyService {
 	public Pagination findForPage(Pagination page,ApplyFilter filter) {
 		
 		switch (filter.getSysView()) {
+		case "self":filter.setUdeptids(null);
+		break;
 		case "all":filter.setUdeptids(null);
 			break;
 		case "below":filter.setUdeptids(deptService.findBelowIds(filter.getUdeptid()));
 		break;
+		
 		case "def":
-		default:filter.setUdeptids(null);
+		default:filter.setUdeptids(null);filter.setUid("-1");
 			break;
 		} 
 		
