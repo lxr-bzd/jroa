@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.foxtail.common.base.BaseMybatisController;
 import com.foxtail.common.page.Pagination;
 import com.foxtail.common.web.DataGrid;
@@ -24,24 +22,18 @@ import com.foxtail.vo.sys.SysResourceVo;
 import com.foxtail.vo.tree.TreeNode;
 
 @Controller
-@RequestMapping("/sysResourceController") 
+@RequestMapping("sys/auth/res") 
 public class SysResourceController extends BaseMybatisController {
 	
 	private final static Logger log= Logger.getLogger(SysResourceController.class);
-
-	@Autowired(required=false) 
+	
+	@Autowired()
 	private SysResourceService sysResourceService; 
 	
-	/**
-	 * 列表页面
-	 * @param request
-	 * @return
-	 * @throws Exception 
-	 */
-	@RequestMapping("/toList") 
-	public ModelAndView toList()throws Exception{
-		ModelAndView mv = new ModelAndView("sys/sysresource/sysresource_list");
-		return mv;
+	@RequestMapping() 
+	public String toMain(String sysModule){
+		
+		return getMainJsp(sysModule);
 	}
 
 	/**

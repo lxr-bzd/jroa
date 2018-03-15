@@ -31,8 +31,8 @@ import com.foxtail.vo.sys.SysReleaseUserVo;
 /**
 
  */
-@Controller
-@RequestMapping("/sysReleaseUserController") 
+/*@Controller
+@RequestMapping("/sysReleaseUserController") */
 public class SysReleaseUserController extends BaseMybatisController {
 	
 	private final static Logger log= Logger.getLogger(SysReleaseUserController.class);

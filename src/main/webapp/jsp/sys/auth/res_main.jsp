@@ -338,8 +338,7 @@ border-left: 1px solid #eee;
 				data-show-refresh="false" data-show-toggle="false"
 				data-show-columns="false" data-toolbar="#toolbar"
 				data-click-to-select="false" data-single-select="false"
-				data-striped="false" data-content-type="application/x-www-form-urlencoded"
-				>
+				data-striped="false" data-content-type="application/x-www-form-urlencoded">
 				<thead>
 					<tr>
 						<th data-field="" data-checkbox="true"></th>

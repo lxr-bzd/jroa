@@ -98,51 +98,25 @@ var backurl = "${path}/admin/work/workReport.do";
    				<input type="hidden" name="type" value="2">
    				<input type="hidden" name="report_state" value="1">
    				
-   				<table  class="table table-bordered">
-   				<tr>
-   				<td colspan="4">本周工作目标</td>
-   				<td><input name="" type="button" class="btn btn-primary" value="新增" onclick="addItem()"/></td>
-   				</tr>
-   				<tr>
-   				<td>优先顺序</td>
-   				<td>目标</td>
-   				<td>完成期限</td>
-   				<td>是否完成</td>
-   				<td>操作</td>
-   				</tr>
-   				<tbody  id="item_group">
    				
-   				</tbody>
-   				</table>
-   				
-   				
-   				<div class="panel panel-info">
+				   <div class="panel panel-success">
 					<div class="panel-heading">
 						<h3 class="panel-title">本周工作总结</h3>
 					</div>
 					<div class="panel-body">
-									<table  class="table table-bordered">
-			   				
-						   				<tr>
-							   				<td>未完成目标的原因和障碍</td>
-							   				<td><input name="uncomplete" value="" type="text" class="form-control input-primary" /></td>
-						   				
-						   				</tr>
-						   				<tr>
-							   				<td>克服障碍的对策和方法</td>
-							   				<td><input name="answer" value="" type="text" class="form-control input-primary" /></td>
-						   				
-						   				</tr>
-						   				<tr>
-							   				<td>本周创新与收获</td>
-							   				<td><input name="study" value="" type="text" class="form-control input-primary" /></td>
-						   				
-						   				</tr>
-						   				</table>
+					<textarea name="content" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height:200px;"></textarea>
 					</div>
-				</div>
-				
-   				
+					</div>
+					
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<h3 class="panel-title">下周工作计划</h3>
+					</div>
+					<div class="panel-body">
+						<textarea name="study" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height: 100px;"></textarea>
+					</div>
+					</div>
+					
 					<div class="btnWrap">
 					<input name="" type="button" class="btn btn-primary" value="确认" onclick="toSubmit()">&nbsp;&nbsp;&nbsp;&nbsp;
 					<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();">
@@ -158,56 +132,23 @@ var backurl = "${path}/admin/work/workReport.do";
    				<input type="hidden" name="type" value="2">
    				<input type="hidden" name="id" value="${vo.id }">
    				
-   				<table  class="table table-bordered">
-   				<tr>
-   				<td colspan="4">本周工作目标</td>
-   				<td><input name="" type="button" class="btn btn-primary" value="新增" onclick="addItem()"/></td>
-   				</tr>
-   				<tr>
-   				<td>优先顺序</td>
-   				<td>目标</td>
-   				<td>完成期限</td>
-   				<td>是否完成</td>
-   				<td>操作</td>
-   				</tr>
-   				<tbody  id="item_group">
-   				
-   	<c:forEach var="item" items="${vo.details}" varStatus="i">
-   				<tr>
-				<td>${item.sort }<input name="details[${i.index }].sort" type="hidden" value="${item.sort }" /></td>
-   				<td><input name="details[${i.index }].content" value="${item.content }" type="text" class="form-control input-primary" /></td>
-   				<td><input name="details[${i.index }].finishdate" value="${item.finishdate }" type="text" class="form-control input-primary" /></td>
-   				<td><input <c:if test="${item.isfinish==2}">checked="checked"</c:if>
-   				 onclick="if(this.checked)$(this).next().val('2'); else $(this).next().val('1');" type="checkbox" class="" />
-   				<input name="details[${i.index }].isfinish" type="hidden" value="${item.isfinish}" />
-   				</td>
-   				<td><a onclick="$(this).parent().parent().remove()">删除</a></td>
-   				</tr>
-	</c:forEach>
-	
-	<table  class="table table-bordered">
-   				<tr>
-   				<td colspan="2">本周工作总结</td>
-   				</tr>
-   				<tr>
-	   				<td>未完成目标的原因和障碍</td>
-	   				<td><input name="uncomplete" value="${vo.uncomplete}" type="text" class="form-control input-primary" /></td>
-   				
-   				</tr>
-   				<tr>
-	   				<td>克服障碍的对策和方法</td>
-	   				<td><input name="answer" value="${vo.answer}" type="text" class="form-control input-primary" /></td>
-   				
-   				</tr>
-   				<tr>
-	   				<td>本周创新与收获</td>
-	   				<td><input name="study" value="${vo.study}" type="text" class="form-control input-primary" /></td>
-   				
-   				</tr>
-   				</table>
-   				
-   				</tbody>
-   				</table>
+   				   <div class="panel panel-success">
+					<div class="panel-heading">
+						<h3 class="panel-title">本周工作总结</h3>
+					</div>
+					<div class="panel-body">
+					<textarea name="content" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height:200px;">${vo.content }</textarea>
+					</div>
+					</div>
+					
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<h3 class="panel-title">下周工作计划</h3>
+					</div>
+					<div class="panel-body">
+						<textarea name="study" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height: 100px;">${vo.study }</textarea>
+					</div>
+					</div>
    				
 				<div class="btnWrap">
 					<input name="" type="button" class="btn btn-primary" value="确认" onclick="toSubmit()">&nbsp;&nbsp;&nbsp;&nbsp;

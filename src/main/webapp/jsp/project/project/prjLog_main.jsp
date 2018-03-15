@@ -61,14 +61,10 @@ var toInfoUrl = '${path}/project/project/prjLog/view.do';
     //操作工具栏
     function operatorFormatter(value, row, index) {
     	var operator='<div class="btn-group">';
-		    
-	    	
 	    		operator+=$app.btn('edit','编辑','editById(\''+row.id+'\')');
 		    
 				operator+=$app.btn('delete','删除','toRemove(\''+row.id+'\')');
-	    	/* <shiro:hasPermission name="project/project/prjLog:delete">
-				operator+='<button class="btn btn-danger btn-round btn-xs" onclick="deleteById(\''+row.id+'\')"><i class="glyphicon glyphicon-trash"></i>删除</button>';
-			</shiro:hasPermission> */
+	    	
 		return operator+'</div>';
 	}
     

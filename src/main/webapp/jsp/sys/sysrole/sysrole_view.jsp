@@ -13,7 +13,7 @@
 	//返回列表
 	function goBackList(){
 		var index = parent.layer.getFrameIndex(window.name);
-		if(isNaN(index))window.location="${path}/sysRoleController/toList.do";
+		if(isNaN(index))window.location="${path}/sys/auth/role/toList.do";
 		else
 		parent.layer.close(index);
 	}

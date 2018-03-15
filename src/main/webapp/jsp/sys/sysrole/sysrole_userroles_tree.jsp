@@ -45,7 +45,7 @@
 					enable : true, //是否通过异步方式加载数据
 					dataType : "text",
 					type : "post",
-					url :  "${path}/sysRoleController/loadRoleTree.do?roleId=${roleId}&timestamp="+ new Date().getTime(),
+					url :  "${path}/sys/auth/role/loadRoleTree.do?roleId=${roleId}&timestamp="+ new Date().getTime(),
 					autoParam : [ "id" ] //异步加载时必须传递的父节点的id值
 				},
 				view : {
@@ -96,7 +96,7 @@
 				parms.push(po);	
 			}
 			$.ajax({
-				  url:"${path}/sysUserController/toSetUserRoles.do",
+				  url:"${path}/sys/auth/user/toSetUserRoles.do",
 				  type:"post",
 				  data:$.toJSON(parms),
 				  dataType:"json",

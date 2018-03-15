@@ -85,7 +85,7 @@ public class CustomRealm extends AuthorizingRealm{
 		System.out.println("用户权限");
 		SysUserActiveVo sysUser =  (SysUserActiveVo) principals.getPrimaryPrincipal();
 		List<String> permissions = new ArrayList<String>();
-		List<Myprem> myprems = new ArrayList<>();
+		
  		if(null != sysUser){
 			List<SysResource> resources = sysResourceService.findAllByUserId(sysUser.getId());
 			for(SysResource resource : resources){
@@ -94,11 +94,11 @@ public class CustomRealm extends AuthorizingRealm{
 					continue;
 				if(null != permission && ! "".equals(permission.trim())){
 					permissions.add(permission);
-					myprems.add(Myprem.getMyprem(permission));
+					
 				}
 			}
 			
-			sysUser.setMyprems(myprems);
+			
 		}
  		
 		List<String> roleList = sysRoleService.findRoleTypesByUserId(sysUser.getId());

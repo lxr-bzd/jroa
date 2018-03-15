@@ -2,17 +2,14 @@ package com.foxtail.controller.sys;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.foxtail.common.JsonResult;
 import com.foxtail.common.base.BaseMybatisController;
 import com.foxtail.common.page.Pagination;
@@ -20,7 +17,6 @@ import com.foxtail.common.web.DataGrid;
 import com.foxtail.common.web.JsonData;
 import com.foxtail.core.util.PageUtils;
 import com.foxtail.model.sys.SysRole;
-import com.foxtail.model.sys.SysRoleResource;
 import com.foxtail.model.sys.SysUserRole;
 import com.foxtail.service.sys.SysRoleService;
 import com.foxtail.service.sys.SysUserRoleService;
@@ -29,7 +25,7 @@ import com.foxtail.vo.sys.SysUserRoleVo;
 import com.foxtail.vo.tree.TreeNode;
 
 @Controller
-@RequestMapping("/sysRoleController") 
+@RequestMapping("sys/auth/role") 
 public class SysRoleController extends BaseMybatisController {
 	
 	private final static Logger log= Logger.getLogger(SysRoleController.class);
@@ -40,17 +36,12 @@ public class SysRoleController extends BaseMybatisController {
 	@Autowired
 	private SysUserRoleService sysUserRoleService;
 	
-	/**
-	 * 列表页面
-	 * @param request
-	 * @return
-	 * @throws Exception 
-	 */
-	@RequestMapping("/toList") 
-	public ModelAndView toList()throws Exception{
-		ModelAndView mv = new ModelAndView("sys/sysrole/sysrole_list");
-		return mv;
+	@RequestMapping() 
+	public String toMain(String sysModule){
+		
+		return getMainJsp(sysModule);
 	}
+	
 
 	/**
 	 * 请求列表数据
@@ -80,7 +71,7 @@ public class SysRoleController extends BaseMybatisController {
 	 */
 	@RequestMapping("/toAdd") 
 	public ModelAndView  toAdd() throws Exception{
-		log.debug("打开新增页面");
+		
 		ModelAndView mv = new ModelAndView("sys/sysrole/sysrole_add");
 		return mv;
 	}

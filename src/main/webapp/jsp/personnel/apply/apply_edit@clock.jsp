@@ -80,13 +80,13 @@ var backurl = "${path}/personnel/apply/apply.do";
 		/*   var index = parent.layer.getFrameIndex(window.name);
 		parent.layer.iframeAuto(index);   */
 		
-		if(isedit)$app.form.format($('#submit_form'))
+		if(isedit())$app.form.format($('#submit_form'))
 		
 		 
 		 $("#submit_form").validate({
+			 ignore : [],
 			  rules: {
-					name: {required: true}
-					,starttime:{required: true}
+					starttime:{required: true}
 					 ,endtime:{required: true}
 					 
 					 
@@ -122,17 +122,15 @@ var backurl = "${path}/personnel/apply/apply.do";
     				<input name="starttime" type="hidden">
     				</li>
     				
-    				<li><label>结束时间：</label><input data-lxr="{type:'time',format:'yyyy-MM-dd hh:mm:ss'}" value="" placeholder="结束时间" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary w260" onfocus="WdatePicker({isShowClear:false,dateFmt:'yyyy-MM-dd HH:mm:ss'})" >
-    				<input name="endtime" type="hidden">
-    				</li>
+    				<input name="endtime" type="hidden" value="0">
 					
 					
-					<li><label>外出事由：</label><textarea name="info" class="form-control input-primary w260"></textarea>
+					<li><label>未打卡原由：</label><textarea name="info" class="form-control input-primary w260"></textarea>
 					</li>
 	    		</ul>
     			<div class="btnWrap">
-    				<input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
-    				<input name="" type="button" class="btn btn-warning" value="返回列表" onclick="goBackList();"/>
+    				<input name="" type="button" class="btn btn-primary" value="确认" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
+    				<input name="" type="button" class="btn btn-warning" value="返回" onclick="goBackList();"/>
 				</div>
     		</form>
     		
@@ -152,20 +150,18 @@ var backurl = "${path}/personnel/apply/apply.do";
     				<input name="starttime" type="hidden">
     				</li>
     				
-    				<li><label>结束时间：</label><input data-lxr="{type:'time',format:'yyyy-MM-dd hh:mm:ss'}"
-    				data-format="{type:'time',val:'${vo.endtime }',format:'yyyy-MM-dd hh:mm:ss'}" placeholder="结束时间" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary w260" onfocus="WdatePicker({isShowClear:false,dateFmt:'yyyy-MM-dd HH:mm:ss'})" >
-    				<input name="endtime" type="hidden">
-    				</li>
+    				<input name="endtime" type="hidden" value="0">
+    				
 					
 					
-					<li><label>外出事由：</label><textarea name="info" class="form-control input-primary w260">${vo.info }</textarea>
+					<li><label>未打卡原由：</label><textarea name="info" class="form-control input-primary w260">${vo.info }</textarea>
 					</li>
 					
 
 	    		</ul>
     			<div class="btnWrap">
-    				<input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
-    				<input name="" type="button" class="btn btn-warning" value="返回列表" onclick="goBackList();"/>
+    				<input name="" type="button" class="btn btn-primary" value="确认" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
+    				<input name="" type="button" class="btn btn-warning" value="返回" onclick="goBackList();"/>
 				</div>
     		</form>
 		

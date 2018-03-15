@@ -1,5 +1,6 @@
 package com.foxtail.controller.data;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,19 +31,12 @@ public class EmpFinanceController extends BaseMybatisController{
 		return getMainJsp(sysModule);
 	}
 	
-	
 	@RequestMapping("view")
 	@ResponseBody
-	public Object view(HttpServletRequest request) {
-		
-		Date cDate = new Date();
-		
-		
-			return JsonResult.getSuccessResult(statisticsService.statisticsEmp( new Date().getMonth()));
+	public Object view(HttpServletRequest request) { 
+		Integer month = Calendar.getInstance().get(Calendar.MONTH)+1; 
+		return JsonResult.getSuccessResult(statisticsService.statisticsEmp( month));
 	
 	}
-	
-	
 
-	
 }

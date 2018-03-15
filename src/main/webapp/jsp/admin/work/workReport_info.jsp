@@ -66,7 +66,6 @@ var backurl = "${path}/admin/work/workReport.do";
 	$(function(){
 		
 		initState();
-		
 	});
 	
 	function initState(){
@@ -79,15 +78,13 @@ var backurl = "${path}/admin/work/workReport.do";
 </script>
 </head>
 <body>
-	
-		
 		<div class="formbody">
 
 <div class="panel panel-success">
 	<div class="panel-heading">
 		<h3 class="panel-title">今日工作</h3>
 	</div>
-	<div class="panel-body">
+	<div class="panel-body" >
 		${vo.content }
 	</div>
 	</div>

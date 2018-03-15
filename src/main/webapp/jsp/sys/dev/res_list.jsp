@@ -11,7 +11,7 @@
 <script>
 	//添加
 	function toAdd(){
-		window.location='${path}/sysUserController/toAdd.do';
+		window.location='${path}/sys/auth/user/toAdd.do';
 	}
 	//删除
 	function toRemove(ids){
@@ -20,7 +20,7 @@
 		ids=getSelectedRowsIds('SysUserList');
 		
 		if(ids){
-			$app.confirmDelete('${path}/sysUserController/deleteById.do?ids='+ids,'删除数据不可恢复，确定要删除吗？'
+			$app.confirmDelete('${path}/sys/auth/user/deleteById.do?ids='+ids,'删除数据不可恢复，确定要删除吗？'
 				,function(){
 				refleshData('SysUserList');
 			});
@@ -34,7 +34,7 @@
     function toEdit(){
     	var selected=getSelectedRowsArr('SysUserList');
     	if(selected.length>0&&selected.length<2){
-    		window.location='${path}/sysUserController/editById.do?id='+selected;
+    		window.location='${path}/sys/auth/user/editById.do?id='+selected;
     	}else{
     		//提示信息
     		$app.alert("请选择一条数据进行操作");
@@ -92,7 +92,7 @@
     }
     
     function editById(id){
-		window.location='${path}/sysUserController/editById.do?id='+id;
+		window.location='${path}/sys/auth/user/editById.do?id='+id;
 	}
 
 
@@ -144,7 +144,7 @@
     function setUser(id){
     	var selected=[id];
     	if(selected.length>0&&selected.length<2){
-    		var dialog = art.dialog.open("${path}/sysRoleController/toUserRoleTree.do?userId="+selected,{
+    		var dialog = art.dialog.open("${path}/sys/auth/role/toUserRoleTree.do?userId="+selected,{
     	  		  id:"selectResourceDialog",
     	  		  title:"选择人员",
     	  		  width :'300px',
@@ -256,7 +256,7 @@
 		</div>
     
     	<table id="SysUserList" class="table_list" data-toggle="table"
-			data-url="${path}/sysUserController/list.do" data-pagination="true"
+			data-url="${path}/sys/auth/user/list.do" data-pagination="true"
 			data-side-pagination="server" data-cache="false" data-query-params="postQueryParams"
 			data-page-list="[15, 30, 50, 100]" data-page-size="15" data-method="post"
 			data-show-refresh="false" data-show-toggle="false"

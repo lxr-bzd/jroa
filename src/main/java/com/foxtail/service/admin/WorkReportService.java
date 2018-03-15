@@ -27,11 +27,6 @@ public class WorkReportService {
 	public void save(WorkReport workReport) {
 		
 		workReportDao.save(workReport);
-		if(workReport.getType()==null)return;
-		if(workReport.getType()==2)
-			saveDetails(workReport.getDetails(), workReport.getId());
-		
-
 	}
 	
 	public void delete(String[] ids) {
@@ -44,14 +39,9 @@ public class WorkReportService {
 	
 	
 	public void update(WorkReport workReport) {
-	
+		if(workReportDao.countValid(new String[]{workReport.getId()})>0)throw new ApplicationException("已生效记录不能修改");
 		workReportDao.update(workReport);
-		if(workReport.getType()==null)return;
-		if(workReport.getType()==2) {
-			workReportDao.deleteDetail(new String[]{workReport.getId()});
-			saveDetails(workReport.getDetails(), workReport.getId());
-			
-		}
+		
 
 	}
 	

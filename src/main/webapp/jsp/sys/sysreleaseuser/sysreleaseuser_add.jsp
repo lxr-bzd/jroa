@@ -100,7 +100,7 @@
 		var account=$.trim($('#account').val());
 		if(!account){
 			$.ajax({
-				url:'${path}/sysUserController/getUserAccount.do',
+				url:'${path}/sys/auth/user/getUserAccount.do',
 				cache:false,
 				async:true,
 				data:{name:name},
@@ -118,7 +118,7 @@
 	function checkIsExist(name,type){
 		var flag=false;
 		$.ajax({
-			url:'${path}/sysUserController/getIsExist.do',
+			url:'${path}/sys/auth/user/getIsExist.do',
 			cache:false,
 			async:false,
 			data:{name:name,type:type},

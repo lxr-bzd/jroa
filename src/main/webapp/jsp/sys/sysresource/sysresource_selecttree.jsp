@@ -36,7 +36,7 @@
 					enable : true, //是否通过异步方式加载数据
 					dataType : "text",
 					type : "post",
-					url :  "${path}/sysResourceController/loadSelectTree.do?id=${roleId}&timestamp="+ new Date().getTime()
+					url :  "${path}/sys/auth/res/loadSelectTree.do?id=${roleId}&timestamp="+ new Date().getTime()
 				},
 				view : {
 					dblClickExpand : true,
@@ -77,7 +77,7 @@
 			
 			
 			$.ajax({
-				  url:"${path}/sysRoleController/toAuthorization.do",
+				  url:"${path}/sys/auth/role/toAuthorization.do",
 				  type:"post",
 				  data:{roleid:'${roleId}',resids:resids.join(",")},
 				  dataType:"json",
@@ -98,7 +98,7 @@
 		//返回列表
 		function goBackList(){
 			var index = parent.layer.getFrameIndex(window.name);
-			if(isNaN(index))window.location="${path}/sysRoleController/toList.do";
+			if(isNaN(index))window.location="${path}/sys/auth/role/toList.do";
 			else
 			parent.layer.close(index);
 			

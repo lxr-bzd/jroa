@@ -80,13 +80,13 @@ var backurl = "${path}/personnel/apply/apply.do";
 		/*   var index = parent.layer.getFrameIndex(window.name);
 		parent.layer.iframeAuto(index);   */
 		
-		if(isedit)$app.form.format($('#submit_form'))
+		if(isedit())$app.form.format($('#submit_form'))
 		
 		 
 		 $("#submit_form").validate({
+			 ignore : [],
 			  rules: {
-					name: {required: true}
-					,starttime:{required: true}
+					starttime:{required: true}
 					 ,endtime:{required: true}
 					 
 					  }
@@ -125,8 +125,8 @@ var backurl = "${path}/personnel/apply/apply.do";
 					</li>
 	    		</ul>
     			<div class="btnWrap">
-    				<input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
-    				<input name="" type="button" class="btn btn-warning" value="返回列表" onclick="goBackList();"/>
+    				<input name="" type="button" class="btn btn-primary" value="确认" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
+    				<input name="" type="button" class="btn btn-warning" value="返回" onclick="goBackList();"/>
 				</div>
     		</form>
     		
@@ -134,7 +134,6 @@ var backurl = "${path}/personnel/apply/apply.do";
 
 <c:if test="${param.action=='edit'}">
 
-<!--<div class="formtitle"><span>基本信息</span></div>-->
    			<form id="submit_form"  method="post" data-action="${path}/personnel/apply/apply/update.do">
    				<input name="id" value="${vo.id }" type="hidden" class="form-control input-primary w260" />
    				<input name="endtime" type="hidden" value="0">
@@ -145,18 +144,14 @@ var backurl = "${path}/personnel/apply/apply.do";
     				<input name="starttime" type="hidden">
     				</li>
     				
-    				
-    				
-					
-					
 					<li><label>请假事由：</label><textarea name="info" class="form-control input-primary w260">${vo.info }</textarea>
 					</li>
 					
 
 	    		</ul>
     			<div class="btnWrap">
-    				<input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
-    				<input name="" type="button" class="btn btn-warning" value="返回列表" onclick="goBackList();"/>
+    				<input type="button" class="btn btn-primary" value="确认" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
+    				<input type="button" class="btn btn-warning" value="返回" onclick="goBackList();"/>
 				</div>
     		</form>
 		

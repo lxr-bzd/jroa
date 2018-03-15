@@ -67,15 +67,11 @@ var toInfoUrl = '${path}/project/setting/progress/view.do';
     function operatorFormatter(value, row, index) {
     	var operator='<div class="btn-group">';
 		    
-	    	<shiro:hasPermission name="project/setting/progress:edit">
+	    
 	    		operator+=$app.btn('edit','编辑','editById(\''+row.id+'\')');
-		    </shiro:hasPermission>
-		    <shiro:hasPermission name="project/setting/progress:delete">
+		  
 				operator+=$app.btn('delete','删除','toRemove(\''+row.id+'\')');
-	    	</shiro:hasPermission>
-	    	/* <shiro:hasPermission name="project/setting/progress:delete">
-				operator+='<button class="btn btn-danger btn-round btn-xs" onclick="deleteById(\''+row.id+'\')"><i class="glyphicon glyphicon-trash"></i>删除</button>';
-			</shiro:hasPermission> */
+	    	
 		return operator+'</div>';
 	}
 

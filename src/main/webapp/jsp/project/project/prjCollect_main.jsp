@@ -72,9 +72,6 @@ var toInfoUrl = '${path}/project/project/prjCollect/view.do';
 		    
 				operator+=$app.btn('delete','删除','toRemove(\''+row.id+'\')');
 	    	
-	    	/* <shiro:hasPermission name="project/project/prjCollect:delete">
-				operator+='<button class="btn btn-danger btn-round btn-xs" onclick="deleteById(\''+row.id+'\')"><i class="glyphicon glyphicon-trash"></i>删除</button>';
-			</shiro:hasPermission> */
 		return operator+'</div>';
 	}
 

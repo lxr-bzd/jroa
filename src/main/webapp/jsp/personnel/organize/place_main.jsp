@@ -197,7 +197,7 @@ function getChilds(ds){
 
 
 function toAuth(roleId){
-	$app.dialog("${path}/sysResourceController/toSelectTree.do?roleId="+roleId,function(){
+	$app.dialog("${path}/sys/auth/res/toSelectTree.do?roleId="+roleId,function(){
 		refleshData('mainTable');
 	},{width:"500px",height:"600px"});
 }

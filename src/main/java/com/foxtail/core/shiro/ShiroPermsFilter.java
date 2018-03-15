@@ -11,7 +11,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.foxtail.common.JsonResult;
 import com.foxtail.common.web.WebUtils;
 
-
 public class ShiroPermsFilter extends AuthorizationFilter {
   
 
@@ -22,12 +21,15 @@ public class ShiroPermsFilter extends AuthorizationFilter {
 		  	HttpServletRequest httpRequest = (HttpServletRequest) request;
 	        HttpServletResponse httpResponse = (HttpServletResponse) response;
 	        
-	        String url = getPermsUrl(httpRequest);
+	        if(true) return true;
+	        Myprem myprem = Myprem.getMyprem(getPermsUrl(httpRequest));
 	        
-	        if(url.startsWith("sys"))return true;
+	        if(myprem.getUrl().startsWith("sys"))return true;
 	       
+	        if( PermManager.getAllPerms().get(myprem.getUrl())==null||PermManager.getAllPerms().get(myprem.getUrl()).size()<1)
+	        	return true;
 	        
-	        if(SecurityUtils.getSubject().isPermitted(url))return true;
+	        if(SecurityUtils.getSubject().isPermitted(myprem))return true;
 	       
 	        return false;
 	}

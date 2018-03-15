@@ -76,7 +76,7 @@
 	function checkIsExist(name,type){
 		var flag=false;
 		$.ajax({
-			url:'${path}/sysUserController/getIsExist.do',
+			url:'${path}/sys/auth/user/getIsExist.do',
 			cache:false,
 			async:false,
 			data:{name:name,type:type},

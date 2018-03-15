@@ -90,15 +90,10 @@ var toInfoUrl = '${path}/customer/customer/customer/view.do';
     function operatorFormatter(value, row, index) {
     	var operator='<div class="btn-group">';
 		    
-	    	<shiro:hasPermission name="personnel/organize/place:edit">
+	    	
 	    		operator+='<button class="btn btn-warning btn-round btn-xs" onclick="editById(\''+row.id+'\');"><i class="glyphicon glyphicon-pencil"></i> 编辑</button>&nbsp;&nbsp;';
-		    </shiro:hasPermission>
-		    <shiro:hasPermission name="personnel/organize/place:delete">
+		    
 				operator+='<button class="btn btn-danger btn-round btn-xs" onclick="toRemove(\''+row.id+'\')" ><i class="glyphicon glyphicon-trash"></i> 删除</button>';
-	    	</shiro:hasPermission>
-	    	/* <shiro:hasPermission name="menber:delete">
-				operator+='<button class="btn btn-danger btn-round btn-xs" onclick="deleteById(\''+row.id+'\')"><i class="glyphicon glyphicon-trash"></i>删除</button>';
-			</shiro:hasPermission> */
 		return operator+'</div>';
 	}
     

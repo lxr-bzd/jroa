@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.foxtail.common.page.Pagination;
 import com.foxtail.common.util.PublicUtil;
+import com.foxtail.core.shiro.Myprem;
+import com.foxtail.core.shiro.PermManager;
 import com.foxtail.core.shiro.ShiroUser;
 import com.foxtail.dao.mybatis.sys.SysResourceDao;
 import com.foxtail.dao.mybatis.sys.SysRoleResourceDao;
@@ -84,11 +87,30 @@ public class SysResourceServiceImpl implements SysResourceService{
     	if(sysResources==null||ismodify) {
     	
     		sysResources = sysResourceDao.findAll();
+    		
+    		onUpdate();
+    		
         	ismodify = false;
     	} else 	System.out.println("抓取缓存");
     	
 		return sysResources;
     }
+    
+    
+    public void onUpdate() {
+    	PermManager.getAllPerms().clear();
+    	for (SysResource res : sysResources) {
+    		if(StringUtils.isBlank(res.getPermissionStr()))continue;
+    		
+			Myprem myprem = Myprem.getMyprem(res.getPermissionStr());
+			List<Myprem> myprems = PermManager.getAllPerms().get(myprem.getUrl());
+			if(myprems==null) { myprems = new ArrayList<Myprem>();PermManager.getAllPerms().put(myprem.getUrl(), myprems);}
+			myprems.add(myprem);
+    	
+    	}
+    }
+    
+    
 
     public void deleteAll() {
 		this.sysResourceDao.deleteAll();
@@ -246,7 +268,7 @@ public class SysResourceServiceImpl implements SysResourceService{
 
 	@Override
 	public List<SysResource> findAllByUserId(Integer userId) {
-		
+		findAll();
 		return this.sysResourceDao.findAllByUserId(userId);
 	}
 

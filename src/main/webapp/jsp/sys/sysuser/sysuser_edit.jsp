@@ -16,7 +16,7 @@
 	
 		//表单提交
 		$("#submit_form").ajaxSubmit({
-			url:"${path}/sysUserController/editSubmit.do",
+			url:"${path}/sys/auth/user/editSubmit.do",
 			data : $("#submit_form").serialize(),
 			cache : false,
 			dataType : 'JSON',
@@ -34,7 +34,7 @@
 	//返回列表
 	function goBackList(){
 		var index = parent.layer.getFrameIndex(window.name);
-		if(isNaN(index))window.location="${path}/sysUserController/toList.do";
+		if(isNaN(index))window.location="${path}/sys/auth/user/toList.do";
 		else
 		parent.layer.close(index);
 		

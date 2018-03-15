@@ -22,7 +22,7 @@ import com.foxtail.service.sys.SysUserService;
 import com.foxtail.vo.sys.SysUserVo;
 
 @Controller
-@RequestMapping("/sysUserController") 
+@RequestMapping("sys/auth/user") 
 public class SysUserController extends BaseMybatisController {
 	
 	private final static Logger log= Logger.getLogger(SysUserController.class);
@@ -30,17 +30,13 @@ public class SysUserController extends BaseMybatisController {
 	@Autowired(required=false) 
 	private SysUserService sysUserService; 
 	
-	/**
-	 * 列表页面
-	 * @param request
-	 * @return
-	 * @throws Exception 
-	 */
-	@RequestMapping("/toList") 
-	public ModelAndView toList()throws Exception{
-		ModelAndView mv = new ModelAndView("sys/sysuser/sysuser_list");
-		return mv;
+	@RequestMapping() 
+	public String toMain(String sysModule){
+		
+		return getMainJsp(sysModule);
 	}
+	
+	
 
 	/**
 	 * 请求列表数据

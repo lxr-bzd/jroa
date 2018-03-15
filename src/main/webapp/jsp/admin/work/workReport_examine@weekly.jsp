@@ -95,65 +95,23 @@ var backurl = "${path}/admin/work/workReport.do";
    			<form id="submit_form"  method="post" data-action="${path}/admin/work/workReport/examine.do">
    				<input name="reportid" value="${vo.id }" type="hidden"  />
    				<ul class="forminfo">
-				
-   				<li>
-   				<table  class="table table-bordered">
-					   				<tr>
-					   				<td colspan="4">本月工作目标</td>
-		
-					   				</tr>
-					   				<tr>
-						   				<td>优先顺序</td>
-						   				<td>目标</td>
-						   				<td>完成期限</td>
-						   				<td>是否完成</td>
-					   				</tr>
-					   				<tbody  id="item_group">
-					   				
-					   	<c:forEach var="item" items="${vo.details}" varStatus="i">
-					   				<tr>
-									<td>${item.sort }</td>
-					   				<td>${item.content }</td>
-					   				<td>${item.finishdate }</td>
-					   				<td><input <c:if test="${item.isfinish==2}">checked="checked"</c:if>
-					   				 onclick="if(this.checked)$(this).next().val('2'); else $(this).next().val('1');" type="checkbox" class="" />
-					   				
-					   				</td>
-					   				</tr>
-						</c:forEach>
-						</tbody>
-   				</table>
-   				</li>
-	<li>
-	<table  class="table table-bordered">
-   				<tr>
-   				<td colspan="2">月总结</td>
-   				</tr>
-   				<tr>
-	   				<td>未完成目标的原因和障碍</td>
-	   				<td>${vo.uncomplete}</td>
-   				
-   				</tr>
-   				<tr>
-	   				<td>克服障碍的对策和方法</td>
-	   				<td>${vo.answer}</td>
-   				
-   				</tr>
-   				<tr>
-	   				<td>本周创新与收获</td>
-	   				<td>${vo.study}</td>
-   				
-   				</tr>
-   				
-   	</table>
-			</li>		
+					<li><label>本周工作总结：</label>
+					<textarea readonly="readonly"  rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height:100px;">${vo.content }</textarea>
+					
+					</li>
+					
+					<li><label>下周工作计划：</label>
+					<textarea readonly="readonly"  name="" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height: 200px;">${vo.study }</textarea>
+					</li>
+					
 					
 				<li><label>审批意见：</label>
 					<textarea name="content" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;"></textarea>
-				</li>
+					</li>
 					
 					
 				</ul>
+   				
 	    		<div class="btnWrap">
 					<input type="button" class="btn btn-primary" value="确认" onclick="toSubmit()">&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="button" class="btn btn-warning" value="取消" onclick="goBackList();">

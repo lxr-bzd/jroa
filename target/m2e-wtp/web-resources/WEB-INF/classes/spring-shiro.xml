@@ -81,9 +81,9 @@
 	<!-- realm -->
 	<bean id="customRealm" class="com.foxtail.core.shiro.CustomRealm">
 		<!-- 将凭证匹配器设置到realm中，realm按照凭证匹配器的要求进行散列 -->
-		<property name="permissionResolver" >
+		<!-- <property name="permissionResolver" >
 			<bean class="com.foxtail.core.shiro.MyPermissionResolver"></bean>
-		</property>
+		</property> -->
 		
 		<property name="credentialsMatcher" ref="credentialsMatcher"/>
 	</bean>

@@ -141,8 +141,8 @@ var backurl = "${path}/personnel/apply/apply.do";
 					</li>
 	    		</ul>
     			<div class="btnWrap">
-    				<input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
-    				<input name="" type="button" class="btn btn-warning" value="返回列表" onclick="goBackList();"/>
+    				<input name="" type="button" class="btn btn-primary" value="确认" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
+    				<input name="" type="button" class="btn btn-warning" value="返回" onclick="goBackList();"/>
 				</div>
     		</form>
     		
@@ -177,8 +177,8 @@ var backurl = "${path}/personnel/apply/apply.do";
 
 	    		</ul>
     			<div class="btnWrap">
-    				<input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
-    				<input name="" type="button" class="btn btn-warning" value="返回列表" onclick="goBackList();"/>
+    				<input name="" type="button" class="btn btn-primary" value="确认" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
+    				<input name="" type="button" class="btn btn-warning" value="返回" onclick="goBackList();"/>
 				</div>
     		</form>
 		

@@ -27,7 +27,7 @@
 		}
 		//表单提交
 		$("#submit_form").ajaxSubmit({
-			url:"${path}/sysResourceController/editSubmit.do",
+			url:"${path}/sys/auth/res/editSubmit.do",
 			data : $("#submit_form").serialize(),
 			cache : false,
 			dataType : 'JSON',
@@ -48,7 +48,7 @@
 	//返回列表
 	function goBackList(){
 		var index = parent.layer.getFrameIndex(window.name);
-		if(isNaN(index))window.location="${path}/sysResourceController/toList.do";
+		if(isNaN(index))window.location="${path}/sys/auth/res/toList.do";
 		else
 		parent.layer.close(index);
 	}

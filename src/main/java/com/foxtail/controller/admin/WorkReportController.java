@@ -126,8 +126,6 @@ public class WorkReportController extends BaseMybatisController{
 			filter.setSysView("below");
 			return;
 		}
-		
-
 	}
 	
 	

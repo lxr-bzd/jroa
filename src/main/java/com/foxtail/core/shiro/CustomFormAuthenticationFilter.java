@@ -72,9 +72,8 @@ public class CustomFormAuthenticationFilter extends FormAuthenticationFilter {
 	}
  
 	
-	@Override                                                      
+	@Override                                                  
 	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-		// TODO Auto-generated method stub
 		
 		boolean b = super.isAccessAllowed(request, response, mappedValue);
 		return b;

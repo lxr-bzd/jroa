@@ -31,6 +31,22 @@ var toInfoUrl = '${path}/data/finance/emp/view.do';
     		if(data.status!=0)return;
     		
 		$("#tab_group").html(template("tabTmp",{data:data.data}));
+		var he = {manNum:0,leaveNum:0,birthdayNum:0};
+		
+		for (var i = 0; i < data.data.length; i++) {
+			he.manNum +=data.data[i].manNum;
+			he.leaveNum +=data.data[i].leaveNum;
+			he.birthdayNum+=data.data[i].birthdayNum;
+		}
+		$("#tab_group").append("<tr>           "
+				+"<td>合计</td>        "
+				+"<td>"+he.manNum+"</td>      "
+				+"<td>"+he.leaveNum+"</td>    "
+				+"<td>"+he.birthdayNum+"</td> "
+				+"<td>0</td>                   "
+				+"<td>0</td>                   "
+				+"</tr>");
+		
 		},{param:getParam()});
     }
     

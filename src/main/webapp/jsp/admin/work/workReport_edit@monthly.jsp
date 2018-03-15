@@ -96,19 +96,26 @@ var backurl = "${path}/admin/work/workReport.do";
    			<form id="submit_form" data-isadd="true" method="post" data-action="${path}/admin/work/workReport/save.do">
    				<input type="hidden" name="type" value="3">
    				<input type="hidden" name="report_state" value="1">
-   				<ul class="forminfo">
-					<li><label>本月工作：</label>
-					<textarea name="content" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height:100px;"></textarea>
+   				
+   				<div class="panel panel-success">
+					<div class="panel-heading">
+						<h3 class="panel-title">本月工作：</h3>
+					</div>
+					<div class="panel-body">
+					<textarea name="content" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height:200px;"></textarea>
+					</div>
+					</div>
 					
-					</li>
-					
-					<li><label>本月学习：</label>
-					<textarea name="study" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height: 200px;"></textarea>
-					</li>
-					
-				
-				
-	    		</ul>
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<h3 class="panel-title">本月学习：</h3>
+					</div>
+					<div class="panel-body">
+						<textarea name="study" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height: 100px;"></textarea>
+					</div>
+					</div>
+   				
+   				
 	    		<div class="btnWrap">
 					<input name="" type="button" class="btn btn-primary" value="确认" onclick="toSubmit()">&nbsp;&nbsp;&nbsp;&nbsp;
 					<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();">
@@ -122,21 +129,26 @@ var backurl = "${path}/admin/work/workReport.do";
 
    			<form id="submit_form"  method="post" data-action="${path}/admin/work/workReport/update.do">
    				<input name="id" value="${vo.id }" type="hidden"  />
-   				<ul class="forminfo">
-					<li><label>今日工作：</label>
-					<textarea name="content" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height:100px;">
-					${vo.content }
-					</textarea>
+   				
+   				<div class="panel panel-success">
+					<div class="panel-heading">
+						<h3 class="panel-title">本月工作：</h3>
+					</div>
+					<div class="panel-body">
+					<textarea name="content" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height:200px;">${vo.content }</textarea>
+					</div>
+					</div>
 					
-					</li>
-					
-					<li><label>今日学习：</label>
-					<textarea name="study" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height: 200px;">
-					${vo.study }
-					</textarea>
-					</li>
-					
-	    		</ul>
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<h3 class="panel-title">本月学习：</h3>
+					</div>
+					<div class="panel-body">
+						<textarea name="study" rows="" cols="" class="form-control input-primary" style="display:inline-block;width:800px;height: 100px;">${vo.study }</textarea>
+					</div>
+					</div>
+   				
+   			
 	    		<div class="btnWrap">
 					<input name="" type="button" class="btn btn-primary" value="确认" onclick="toSubmit()">&nbsp;&nbsp;&nbsp;&nbsp;
 					<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();">

@@ -1,19 +1,16 @@
 package com.foxtail.service;
 
 import java.net.URLDecoder;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-
 import com.foxtail.common.util.DateUtils;
 import com.foxtail.dao.mybatis.IndexDao;
-import com.foxtail.model.BaseModel;
-import com.lxr.commons.exception.ApplicationException;
+
 
 @Service
 public class IndexService {
@@ -29,7 +26,9 @@ public class IndexService {
 	public Map<String, Object> getStatistics() {
 		Long cmonthTime = DateUtils.getSpecficMonthStart(new Date(), 0).getTime();
 		Long cmonthEndTime = DateUtils.getSpecficMonthEnd(new Date(), 0).getTime();
-		return indexDao.getStatistics(cmonthTime,cmonthEndTime, new Date().getMonth());
+		
+		Integer month = Calendar.getInstance().get(Calendar.MONTH)+1;    //获取东八区时间
+		return indexDao.getStatistics(cmonthTime,cmonthEndTime,month);
 
 	}
 	
