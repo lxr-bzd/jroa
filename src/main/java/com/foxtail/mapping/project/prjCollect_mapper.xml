@@ -8,8 +8,16 @@
 
 	  
 	<select id="findForPage2" resultType="com.foxtail.model.project.PrjCollect" >
-  		select  <include refid="base_column" />,b.name empName from prj_collect a left join man_emp b on a.empid=b.id
-  		WHERE a.prjid=#{prjid}
+  		select  <include refid="base_column" />,d.name empName,b.name prjName,c.name cusName from prj_collect a left join prj_project b on a.prjid = b.id
+  		left join cus_customer c on b.customrid = c.id
+  		left join man_emp d on b.salesmanid=d.id
+  		
+  		WHERE 1=1
+  		 <if test="ft.prjid != null ">AND a.prjid = #{ft.prjid}</if>
+  		 <if test="ft.kw != null ">AND c.name like CONCAT('%',#{ft.kw},'%')</if>
+  		 <if test="ft.empName != null ">AND d.name like CONCAT('%',#{ft.empName},'%')</if>
+  		 <if test="ft.startTime != null ">AND a.time > #{ft.startTime}</if>
+  		 <if test="ft.endTime != null ">AND a.time &lt; #{ft.endTime}</if>
   		ORDER BY time DESC
   		
   	</select>
@@ -33,6 +41,15 @@ time=#{model.time }
   	<insert id="save"  >
     INSERT INTO prj_collect(empid, prjid, money, time, remark) VALUES(#{ model.empid },#{ model.prjid },#{ model.money },#{ model.time },#{ model.remark })
      </insert>
+	
+	<select id="findBySalesman" resultType="com.foxtail.model.project.PrjCollect" >
+  			select <include refid="base_column" />,b.name empName,c.name prjName,d.name cusName from prj_collect a left join man_emp b on a.empid=b.id
+	left join prj_project c on a.prjid=c.id
+	left join cus_customer d on c.customrid = d.id
+  	WHERE a.empid=#{empid} AND a.time>#{startTime} AND a.time &lt;#{endTime} 
+  		ORDER BY time DESC
+  	</select> 
+	
 	
   	
   

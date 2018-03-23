@@ -8,11 +8,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.foxtail.bean.ServiceManager;
 import com.foxtail.common.JsonResult;
 import com.foxtail.common.base.BaseMybatisController;
-import com.foxtail.common.util.MD5Util;
+import com.foxtail.filter.PrjCollectFilter;
 import com.foxtail.model.personnel.Emp;
 import com.foxtail.service.IndexService;
 /**
@@ -51,6 +50,13 @@ public class IndexControler extends BaseMybatisController{
 		return JsonResult.getSuccessResult(indexService.getStatistics());
 	}
 	
+	
+	@RequestMapping("index/prjMoney")
+	@ResponseBody
+	public Object prjMoney(PrjCollectFilter filter) {
+		
+		return JsonResult.getSuccessResult(indexService.prjMoney(filter));
+	}
 	
 	
 	@RequestMapping("index/sale")

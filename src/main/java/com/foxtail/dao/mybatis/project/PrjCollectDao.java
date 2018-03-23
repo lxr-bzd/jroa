@@ -3,6 +3,7 @@ package com.foxtail.dao.mybatis.project;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import com.foxtail.common.page.Pagination;
+import com.foxtail.filter.PrjCollectFilter;
 import com.foxtail.model.project.PrjCollect;
 
 public interface PrjCollectDao {
@@ -13,6 +14,8 @@ public interface PrjCollectDao {
 	
 	PrjCollect getById(@Param("id")String id);
 	
-	List<PrjCollect> findForPage2(@Param("prjid")String prjid);
+	List<PrjCollect> findForPage2(@Param("ft")PrjCollectFilter filter);
+	
+	List<PrjCollect> findBySalesman(@Param("empid")String empid,@Param("startTime")Long startTime,@Param("endTime") Long endTime);
 }
 

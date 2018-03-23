@@ -13,11 +13,7 @@ var depts = [];
 var backurl = "${path}/personnel/examine/examine.do";
 
 
-	$(function() {
-		
-		
 	
-	});
 	function toSubmit(){
 		//表单验证
 		
@@ -94,16 +90,10 @@ var backurl = "${path}/personnel/examine/examine.do";
 	
 	
 	function goExamine(t){
-		if(t)$("#submit_form input[name=state]").val(1);
-		else $("#submit_form input[name=state]").val(2);
+		if(t)$("#submit_form input[name=result]").val(1);
+		else $("#submit_form input[name=result]").val(2);
 		
 		
-		/* if(!isend())
-		$app.alert("请假3天以上需要提交复审核",function(){
-			$("#submit_form input[name=isend]").val("false");
-			toSubmit();
-		});
-		else */
 		toSubmit();
 		
 		

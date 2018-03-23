@@ -13,8 +13,10 @@ import com.foxtail.common.AppModelMap;
 import com.foxtail.common.DataGridResult;
 import com.foxtail.common.JsonResult;
 import com.foxtail.common.base.BaseMybatisController;
+import com.foxtail.filter.PrjCollectFilter;
 import com.foxtail.model.project.PrjCollect;
 import com.foxtail.service.project.PrjCollectService;
+import com.lxr.commons.exception.ApplicationException;
 
 
 @Controller
@@ -45,12 +47,18 @@ public class PrjCollectController extends BaseMybatisController{
 	
 	@RequestMapping("view")
 	@ResponseBody
-	public Object view(String sysType,String prjid,HttpServletRequest request) {
+	public Object view(String sysType,PrjCollectFilter filter,HttpServletRequest request) {
 		
 		if("info".equals(sysType))
 			return JsonResult.getSuccessResult(prjCollectService.getById(request.getParameter("id")));
-		else 
-		return DataGridResult.getResult(prjCollectService.findForPage(getPagination(request),prjid));
+		else if("bysalesman".equals(sysType)) {
+			String empid = request.getParameter("empid");
+			if(empid==null)throw new ApplicationException("参数错误");
+			return JsonResult.getSuccessResult(prjCollectService.findBySalesman(empid));
+			
+		}
+		else
+		return DataGridResult.getResult(prjCollectService.findForPage(getPagination(request),filter));
 	}
 	
 	

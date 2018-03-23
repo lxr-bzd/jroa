@@ -1,11 +1,15 @@
 package com.foxtail.service.project;
 
+import java.util.Date;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.foxtail.bean.ServiceManager;
 import com.foxtail.common.page.Pagination;
+import com.foxtail.common.util.DateUtils;
 import com.foxtail.dao.mybatis.project.PrjCollectDao;
+import com.foxtail.filter.PrjCollectFilter;
 import com.foxtail.model.project.PrjCollect;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -40,12 +44,19 @@ public class PrjCollectService {
 
 	}
 	
-	public Pagination findForPage(Pagination page,String prjid) {
+	public Pagination findForPage(Pagination page,PrjCollectFilter filter) {
 		PageHelper.startPage(page.getPageNo(), page.getPageSize());
-		Page listCountry  = (Page)prjCollectDao.findForPage2(prjid);
+		Page listCountry  = (Page)prjCollectDao.findForPage2(filter);
 		page.setTotalCount((int)listCountry.getTotal());
 		page.setList(listCountry.getResult());
 		return page;
+	}
+	
+	public List<PrjCollect> findBySalesman(String empid) {
+		Long cmonthTime = DateUtils.getSpecficMonthStart(new Date(), 0).getTime();
+		Long cmonthEndTime = DateUtils.getSpecficMonthEnd(new Date(), 0).getTime();
+		return prjCollectDao.findBySalesman(empid, cmonthTime, cmonthEndTime);
+
 	}
 	
 	

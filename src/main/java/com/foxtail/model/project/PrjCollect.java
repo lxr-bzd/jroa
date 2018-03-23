@@ -10,6 +10,9 @@ public class PrjCollect {
 	Double money;//decimal(10,2)	 '收款'
 	Long time;//bigint(20)	 '收款时间' 
 	String remark;//varchar(200)
+	
+	String cusName;
+	
 	public String getId() {
 		return id;
 	}
@@ -57,6 +60,12 @@ public class PrjCollect {
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	public String getCusName() {
+		return cusName;
+	}
+	public void setCusName(String cusName) {
+		this.cusName = cusName;
 	}
 	
 	

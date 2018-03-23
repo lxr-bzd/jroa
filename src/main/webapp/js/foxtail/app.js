@@ -406,17 +406,30 @@ $app.form.preSubmit = function(form){
 		switch (config.type) {
 		case 'time':
 			if(!input.val()){input.next().val('');	return;}
-			input.next().val(new Date(input.val()).getTime());
+			var t = $app.toDate(input.val()).getTime();
+			if(isNaN(t))throw "时间转化错误";
+			input.next().val(t);
+			
 			break;
 
 		default:
 			break;
 		}
-		
-		
 	}
+
 }
+
+
+
 //$app.form.preSubmit end
+
+$app.toDate = function(str){
+	var arr = str.split(/[- : \/]/);
+	
+	return new Date(arr[0],arr[1]-1,arr[2],arr[3]==undefined?0:arr[3],arr[4]==undefined?0:arr[4],arr[5]==undefined?0:arr[5]);
+
+
+}
 
 $app.form.format = function(form){
 	form.find('input.lxr-format').each(function(i,e){

@@ -17,7 +17,8 @@
 
 //文件保存目录路径
 String savePath = new File(pageContext.getServletContext().getRealPath("/")).getParentFile().getParent()+ "/webapps/upload/";
-System.out.println(savePath);
+
+
 //文件保存目录URL
 String saveUrl  = /* request.getContextPath() + */ "/upload/";
 

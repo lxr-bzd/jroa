@@ -335,8 +335,8 @@ var backurl = "${path}/project/project/project.do";
 								<input name="managerid"  type="hidden" />
 					
 					</li>
-				<li><label>项目成员：</label><textarea name="member" rows="" cols="" class="form-control input-primary  w260"></textarea>
-					</li>
+				<!-- <li><label>项目成员：</label><textarea name="member" rows="" cols="" class="form-control input-primary  w260"></textarea>
+					</li> -->
 				<li><label>项目成员：</label>
 				<div class="table-responsive">
 						  <table id="member_group" class="table table-bordered" >
@@ -464,8 +464,9 @@ var backurl = "${path}/project/project/project.do";
 								<input name="managerid" value="${vo.managerid }" type="hidden" />
 					
 					</li>
+					<%-- 
 					<li><label>项目成员：</label><textarea name="member" rows="" cols="" class="form-control input-primary  w260">${vo.member }</textarea>
-					</li>
+					</li> --%>
 					
 					<li><label>项目成员：</label>
 				<div class="table-responsive">

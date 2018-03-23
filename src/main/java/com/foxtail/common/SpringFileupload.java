@@ -26,9 +26,9 @@ public class SpringFileupload {
 	            
 	            File file2  = new File(rpath);
 	            
-	            String webroot = "upload/news";
+	            String webroot = "upload/img";
 	            
-	                    String realPath= new File(file2.getParent(),webroot).getPath();
+	                    String realPath= new File(file2.getParentFile().getParent(),"webapps/"+webroot).getPath();
 	                    
 	                    String trueFileName=String.valueOf(System.currentTimeMillis())+fileName;
 	                   
@@ -52,10 +52,10 @@ public class SpringFileupload {
 	public static String upload(MultipartHttpServletRequest  request,String name) throws IllegalStateException, IOException {
 		MultipartHttpServletRequest multipartRequest =  request;         
 		// 获得文件：
-		MultipartFile knowledge_icon_url = (MultipartFile) multipartRequest.getFile(name); 
-	       
+		MultipartFile mfile = (MultipartFile) multipartRequest.getFile(name); 
+	    
 		String rpath = request.getSession().getServletContext().getRealPath("/");
-		return upload(knowledge_icon_url, rpath);
+		return upload(mfile, rpath);
 
 	}
 	

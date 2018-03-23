@@ -67,7 +67,7 @@ var backurl = "${path}/admin/information/article.do";
 		
 		 editor = KindEditor.create('#submit_form textarea[name="content"]', {  
 		        allowFileManager : true,  
-		        uploadJson : '${path}/jslib/kindeditor-4.1.10/jsp/upload_json.jsp',
+		        uploadJson : '${path}/upload.do',
 				fileManagerJson : '${path}/jslib/kindeditor-4.1.10/jsp/file_manager_json.jsp',  
 		        resizeType : 0,  
 		        width :  '680px',  

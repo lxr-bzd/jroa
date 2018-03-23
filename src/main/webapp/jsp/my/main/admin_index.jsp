@@ -463,6 +463,12 @@ function refSale(){
 }
 
 
+function toPrjCollect(empName){
+	
+	window.location.href = "/jroa/project/project/prjCollect.do?sysModule=main&empName="+encodeURIComponent(empName);
+}
+
+
 </script>
 <script type="text/javascript">
 
@@ -500,9 +506,8 @@ function getMonthLast(cdate)
 </script>
 
 <script type="text/html" id="tem_sale">
-
 <div class="Ranking-wrap">
-	    			<div class="Ranking-name">{{sort}}.{{empName}}
+	    			<div class="Ranking-name"><a href="javascript:toPrjCollect('{{empName}}')">{{sort}}.{{empName}}</a>
 	    				<!--<span class="Ranking-icon"><img src="images/layout/rank_02.png" alt="" /></span>-->
 	    			</div>
 	    			<div class="Ranking-rank">

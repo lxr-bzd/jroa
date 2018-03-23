@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.foxtail.bean.ServiceManager;
@@ -20,7 +19,6 @@ import com.foxtail.common.DataGridResult;
 import com.foxtail.common.JsonResult;
 import com.foxtail.common.base.BaseMybatisController;
 import com.foxtail.filter.CustomerFilter;
-import com.foxtail.filter.WorkReportFilter;
 import com.foxtail.model.customer.Customer;
 import com.foxtail.service.customer.CustomerService;
 import com.foxtail.service.personnel.EmpService;
