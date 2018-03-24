@@ -55,6 +55,7 @@ name=#{ model.name }
 ,industry = #{ model.industry }
 ,scale = #{ model.scale }
 ,source=#{ model.source}
+,empid=#{model.empid}
 ,state=#{ model.state }
  WHERE id=#{model.id}
 	</update>

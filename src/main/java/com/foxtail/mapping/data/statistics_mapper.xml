@@ -12,8 +12,6 @@
   		WHERE createtime > #{starttime} AND  createtime &lt; #{endtime}
 group by mdate
   	</select> 
-	
-	
 		
 	<select id="statisticsDept" resultType="map" >
   	

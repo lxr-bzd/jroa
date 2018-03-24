@@ -564,8 +564,8 @@ var backurl = "${path}/project/project/project.do";
 			<span>所属部门：</span>
     			<div style="display: inline;" class="lxr_multipleSelect" data-name="deptid" data-model="deptSelect"> </div>
 				
-    			<span>职位：</span>
-    			<input name="kw" value="" placeholder="职位"  class="form-control input-sm w200" type="text" style="display: inline;" >
+    			<span>名称：</span>
+    			<input name="kw" value="" placeholder="名称"  class="form-control input-sm w200" type="text" style="display: inline;" >
     			<input type="button" class="btn btn-info btn-round btn-sm" value="查询" onclick="refTable('#manTable')">
     		</form>
     	</div>

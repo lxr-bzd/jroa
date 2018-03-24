@@ -74,6 +74,11 @@ var toInfoUrl = '${path}/project/project/prjCollect/view.do';
 	    	
 		return operator+'</div>';
 	}
+    
+    function typeFormatter(value, row, index) {
+	    	var m = {'1':"项目收款",'2':"续费",'3':"其他"}
+		return m[value+""];
+	}
 
 </script>
 <script type="text/javascript">
@@ -129,6 +134,8 @@ function GetQueryString(name){
 					<th data-field="empName" >操作人</th>
 					<th data-field="money" >收款金额</th>
 					<th data-field="time" data-formatter="$app.tableUi.time" >收款时间</th>
+					<th data-field="type" data-formatter="typeFormatter" >收款类型</th>
+					
 					<th data-field="remark"  >备注</th>
 					<th data-field="operator" data-formatter="operatorFormatter">操作</th>
 				</tr>

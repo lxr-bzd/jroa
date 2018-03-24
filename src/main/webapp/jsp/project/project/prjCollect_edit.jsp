@@ -42,7 +42,6 @@ var backurl = "${path}/project/project/prjCollect.do";
 					});
 				
 				else $app.alert(data.msg?data.msg:'编辑失败');
-				
 			}
 		});
 		
@@ -108,6 +107,12 @@ var backurl = "${path}/project/project/prjCollect.do";
 					<li><label>收款时间：</label><input data-lxr="{type:'time',format:'yyyy-MM-dd'}" value="" placeholder="时间" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary  w260" onfocus="WdatePicker({isShowClear:false,dateFmt:'yyyy-MM-dd'})" >
     				<input name="time" value="" type="hidden" >
     				</li>
+					<li><label>收款类型：</label>
+					<input type="radio" name="type" checked value="1">项目收款 
+					<input type="radio" name="type" value="2">续费
+					<input type="radio" name="type" value="3" >其他
+					
+					</li>
 					
 					<li><label>备注：</label><textarea name="remark" rows="" cols="" class="form-control input-primary w260"></textarea>
 					</li>
@@ -132,6 +137,13 @@ var backurl = "${path}/project/project/prjCollect.do";
     				</li>
 					
 					<li><label>备注：</label><textarea name="remark" rows="" cols="" class="form-control input-primary w260">${vo.remark }</textarea>
+					</li>
+					
+					<li><label>收款类型：</label>
+					<input type="radio" name="type" value="1" <c:if test="${vo.type==1}">checked = "checked"</c:if>>项目收款 
+					<input type="radio" name="type" value="2" <c:if test="${vo.type==2}">checked = "checked"</c:if>>续费
+					<input type="radio" name="type" value="3" <c:if test="${vo.type==3}">checked = "checked"</c:if>>其他
+					
 					</li>
 					
 	    			<li><label>&nbsp;</label><input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;<input name="" type="button" class="btn btn-warning" value="取消" onclick="goBackList();"/></li>

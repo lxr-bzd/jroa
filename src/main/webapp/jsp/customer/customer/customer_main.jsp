@@ -20,7 +20,7 @@ var toInfoUrl = '${path}/customer/customer/customer/view.do';
 	function toAdd(){
 		$app.dialog(toAddUrl,function(){
 			refTable();
-		},{width:"500px",height:"700px"});
+		},{width:"700px",height:"700px"});
 	}
 	//删除
 	function toRemove(id){
@@ -82,7 +82,7 @@ var toInfoUrl = '${path}/customer/customer/customer/view.do';
     function editById(id){
 		$app.dialog(toEditUrl+'?id='+id+"&sysAction=edit",function(){
 			refTable();
-		},{width:"500px",height:"700px"});
+		},{width:"700px",height:"700px"});
 	}
 
 	

@@ -3,6 +3,7 @@ package com.foxtail.model.project;
 public class PrjCollect {
 
 	String id;//int(11)	 'id'
+	Integer type;
 	String empid;//int(11)	 '操作人id'
 	String empName;//int(11)	 '操作人id'
 	String prjid;//int(11)	 '项目id'
@@ -18,6 +19,14 @@ public class PrjCollect {
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	
+	
+	public Integer getType() {
+		return type;
+	}
+	public void setType(Integer type) {
+		this.type = type;
 	}
 	public String getEmpid() {
 		return empid;

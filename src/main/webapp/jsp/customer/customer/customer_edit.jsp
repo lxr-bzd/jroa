@@ -151,6 +151,121 @@ var backurl = "${path}/customer/customer/customer.do";
 	}
 	
 </script>
+<script type="text/javascript">
+var deptModel;
+var depts;
+
+$(function() {
+	
+	$app.request("${path}/personnel/organize/dept/view.do",function(data){
+		deptModel = $lxr.tree(data.data,{pidname:"parentid"});
+		depts = data.data;
+		$app.form("#searchForm");
+	});
+});
+
+function findByPid(pid){
+	for (var i = 0; i < depts.length; i++) {
+		if(depts[i].id == pid)
+			return depts[i].childs;
+	}
+}
+
+
+var deptSelect = {
+		 name:"name"
+		,val:"id"
+		,getRoot:function(render){
+			render(deptModel);
+		}
+		,onSelect:function(pid,render){
+			render(findByPid(pid));
+			//if(pid)renderPlace($app.form.multipleSelectVal("#searchForm .lxr_multipleSelect"));
+		}
+};
+
+
+</script>
+
+
+<script type="text/javascript">
+
+function onSelectEmp(name,vname){
+	onSelectMan(function(data){
+		
+	$("#submit_form input[name="+name+"]").val(data.name);
+	$("#submit_form input[name="+vname+"]").val(data.id);
+		
+	});
+	
+}
+
+
+function onSelectMan(fun){
+	var content = $("#manHtml").html();
+	$lxr.dialog(function(body){
+		  body.find('#manTable').bootstrapTable();
+		  $app.form("#manSearchForm");
+	}
+	,function(body){
+		var rows = getSelectedRows("manTable");
+		if(!rows){
+			$app.alert("未选择一条数据");
+			return false;
+		}
+		
+		var data = rows[0];
+		
+		
+		fun(data);
+	},{content:content,title:"选择"});
+	
+}
+
+function refTable(tb){
+	
+	$(tb).bootstrapTable('refresh');
+}
+
+function postQueryParams(params) {
+	
+	
+	// $app.form.preSubmit("#searchForm");
+	var queryParams = $("#manSearchForm").serializeObject();
+	
+	var id =  $app.form.multipleSelectVal("#manSearchForm .lxr_multipleSelect");
+	if(id||id==0)queryParams.deptStr=deptUnder(id).join(",");
+	queryParams.limit=params.limit;
+	queryParams.offset=params.offset;
+	//	queryParams.deptid = $app.form.multipleSelectVal("#searchForm .lxr_multipleSelect");
+	return $lxr.trimObject(queryParams); 
+}
+function deptUnder(id){
+	var ids = [id];
+	var dept;
+	for (var i = 0; i < depts.length; i++) {
+		if(depts[i].id == id){
+			dept = depts[i];
+			break;
+		}
+	}
+	if(dept.childs.length>0)
+		ids.push(getChilds(dept.childs));
+	
+	return ids;
+}
+
+function getChilds(ds){
+	var ids = [];
+	for (var i = 0; i < ds.length; i++) {
+		ids.push(ds[i].id);
+		if(ds[i].childs.length>0)
+			ids.push(getChilds(ds[i].childs));
+	}
+	return ids;
+	
+}
+</script>
 </head>
 <body>
 	<div>
@@ -204,6 +319,17 @@ var backurl = "${path}/customer/customer/customer.do";
 					<input type="radio"  name="state" value="0" title="启用" checked="checked">
 					<input type="radio"  name="state" value="1" title="禁用"  >
 				</li>
+				<li><label>业务员：</label>
+					<div class="input-group">
+		            			<input name="empName" readonly="readonly" type="text" class="form-control input-primary w260" />
+		            			
+		           				<span class="input-group-btn">
+									<button class="btn btn-default" onclick="onSelectEmp('empName','empid')" type="button">选择</button>
+								</span>
+		        			</div><input name="empid"  type="hidden" />
+					
+					</li>
+				
 	    		</ul>
 	    		<div class="btnWrap">
 					<input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -261,6 +387,18 @@ var backurl = "${path}/customer/customer/customer.do";
 					<input type="radio"  name="state" value="0" title="启用" <c:if test="${vo.state==0}">checked="checked"</c:if>>
 					<input type="radio"  name="state" value="1" title="禁用" <c:if test="${vo.state==1}">checked="checked"</c:if>>
 				</li>
+				
+				<li><label>业务员：</label>
+					<div class="input-group">
+		            			<input name="empName" readonly="readonly" type="text" value="${vo.empName }" class="form-control input-primary w260" />
+		            			
+		           				<span class="input-group-btn">
+									<button class="btn btn-default" onclick="onSelectEmp('empName','empid')" type="button">选择</button>
+								</span>
+		        			</div><input name="empid"  type="hidden" value="${vo.empid }"/>
+					
+					</li>
+				
 	    		</ul>
 	    		<div class="btnWrap">
 					<input name="" type="button" class="btn btn-primary" value="确认保存" onclick="toSubmit()"/>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -295,9 +433,42 @@ var backurl = "${path}/customer/customer/customer.do";
 
 </script>
 
-<script type="text/html" id="empHtml">
+<script type="text/html" id="manHtml">
+<div class="rightinfo explain_col" style="text-align: left;">
+    		<form id="manSearchForm"   method="post">
+			<span>所属部门：</span>
+    			<div style="display: inline;" class="lxr_multipleSelect" data-name="deptid" data-model="deptSelect"> </div>
+				
+    			<span>名称：</span>
+    			<input name="kw" value="" placeholder="名称"  class="form-control input-sm w200" type="text" style="display: inline;" >
+    			<input type="button" class="btn btn-info btn-round btn-sm" value="查询" onclick="refTable('#manTable')">
+    		</form>
+    	</div>
 
-
+<table class="table_list" id="manTable" data-toggle="table"
+			data-url="${path}/personnel/employee/emp/view.do" data-pagination="ture" 
+			data-side-pagination="server" data-cache="false" data-query-params="postQueryParams"
+			data-page-list="[10, 20, 35, 50]" data-page-size= "10" data-method="post"
+			data-show-refresh="false" data-show-toggle="false"
+			data-show-columns="false" data-toolbar="#toolbar"
+			data-click-to-select="false" data-single-select="true"
+			data-striped="false" data-content-type="application/x-www-form-urlencoded"
+			>
+			<thead>
+				<tr>
+				<th data-field="" data-checkbox="true"></th>
+					<th data-field="id" >id</th>
+					<th data-field="name" >姓名</th>
+					<th data-field="deptName" >部门</th>
+					<th data-field="placeName" >职位</th>
+					
+					<th data-field="phone" >手机号</th>
+					
+					
+					<th data-field="state" data-formatter="$app.tableUi.state" >状态</th>
+				</tr>
+			</thead>
+		</table>
 
 </script>
 

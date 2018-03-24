@@ -2,7 +2,6 @@ package com.foxtail.controller.customer;
 
 
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -22,7 +21,6 @@ import com.foxtail.filter.CustomerFilter;
 import com.foxtail.model.customer.Customer;
 import com.foxtail.service.customer.CustomerService;
 import com.foxtail.service.personnel.EmpService;
-
 
 @Controller
 @RequestMapping("customer/customer/customer")
@@ -87,9 +85,6 @@ public class CustomerController extends BaseMybatisController{
 				filter.setSysView("below");
 			 
 		 }
-		 
-		
-
 	}
 	
 	
@@ -104,6 +99,7 @@ public class CustomerController extends BaseMybatisController{
 			customers.toArray(cuss);
 			customerService.save(cuss,ServiceManager.securityService.getUid());
 		}else {
+			if(StringUtils.isBlank(customer.getEmpid()))
 			customer.setEmpid(ServiceManager.securityService.getUid());
 			customerService.save(customer);
 		}
@@ -115,7 +111,6 @@ public class CustomerController extends BaseMybatisController{
 	public Object delete(String ids) {
 		
 		customerService.delete(ids.split(","));
-
 		return JsonResult.getSuccessResult();
 	}
 	
@@ -124,6 +119,9 @@ public class CustomerController extends BaseMybatisController{
 	@ResponseBody
 	public Object update(String sysType,Customer customer) {
 		
+		
+		if(StringUtils.isBlank(customer.getEmpid()))
+			customer.setEmpid(ServiceManager.securityService.getUid());
 		
 		customerService.update(customer,sysType);
 
