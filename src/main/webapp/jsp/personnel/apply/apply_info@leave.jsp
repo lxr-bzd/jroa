@@ -95,6 +95,8 @@ var backurl = "${path}/personnel/apply/apply.do";
 	}
 	
 </script>
+
+    <script src="/jroa/jslib/uploadImg.js"></script>
 	
 </head>
 <body>
@@ -125,6 +127,11 @@ var backurl = "${path}/personnel/apply/apply.do";
 					
 					<li><label>请假事由：</label><textarea readonly="readonly" class="form-control input-primary w260">${vo.info }</textarea>
 					</li>
+					<li><label>请假凭证：</label> <c:forEach  items="${vo.vouchers }"   var="file">
+					<div class="imgContainer"><img class="img_div"  alt="${file }" src="${file }"  onclick="imgDisplay(this)"></div>
+					</c:forEach>
+					</li>
+					
 					
 					<li><label>审核状态：</label><input type="text" readonly="readonly"  data-format="{type:'enum',val:'${vo.state }',enum:{'1':'未审核','2':'通过','3':'审核中','4':'未通过'}}" class="lxr-format form-control input-primary w260" >
 					</li>

@@ -149,6 +149,8 @@ var backurl = "${path}/personnel/examine/examine.do";
 	
 	
 </script>
+
+    <script src="/jroa/jslib/uploadImg.js"></script>
 </head>
 <body>
 	<div>
@@ -178,6 +180,10 @@ var backurl = "${path}/personnel/examine/examine.do";
 					
 					<li><label>请假原因：</label>
 					<textarea readonly="readonly" class="form-control input-primary w260" >${vo.info }</textarea>
+					</li>
+					<li><label>请假凭证：</label> <c:forEach  items="${vo.vouchers }"   var="file">
+					<div class="imgContainer"><img class="img_div"  alt="${file }" src="${file }"  onclick="imgDisplay(this)"></div>
+					</c:forEach>
 					</li>
 					
 					<li><label>审批意见：</label>

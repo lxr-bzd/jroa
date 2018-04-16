@@ -85,8 +85,6 @@ function initCount(par){
 			$("#monthCollect").html(monthCollect+"万");
 			
 		}
-			
-		
 	},{param:par});
 	
 }
@@ -113,14 +111,10 @@ function initCount(par){
     		<span>业务员：</span>
     			<input name="empName" value="" placeholder="业务员"  class="form-control input-sm w200" type="text" style="display: inline;" >
     			&nbsp;&nbsp;
-    		
     			<span>收款时间：</span>
-	    			<input placeholder="开始" data-lxr="{type:'time',format:'yyyy-MM-dd'}" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary" onfocus="WdatePicker({isShowClear:false})">
-	    			<input type="hidden" name="startTime">-
-					<input placeholder="结束" data-lxr="{type:'time',format:'yyyy-MM-dd'}" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary" onfocus="WdatePicker({isShowClear:false})">
-					<input type="hidden" name="endTime">
+	    			<input placeholder="月份" data-lxr="{type:'time',format:'yyyy-MM'}" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary" onfocus="WdatePicker({dateFmt:'yyyy-MM',isShowClear:false})">
+	    			<input type="hidden" name="startTime">
 					
-					 &nbsp;&nbsp;
 				    <input type="button" class="btn btn-info btn-round btn-sm" value="查询" onclick="refTable()">
     			</form>
     	</div>

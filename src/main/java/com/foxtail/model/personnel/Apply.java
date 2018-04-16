@@ -11,8 +11,11 @@ public class Apply {
 	String leave_type;//请假类型 1：事假，2：病假，3：婚假，4丧假
 	String starttime;//bigint(20)	 '开始时间'
 	String endtime;//bigint(20)	 '结束时间'
-	String info;//varchar(200)	 '密码'
+	Double duration;
+	String[] vouchers;
+	String info;//varchar(200)	
 	Integer state;
+	
 	
 	
 	public String getId() {
@@ -79,6 +82,22 @@ public class Apply {
 	public void setEndtime(String endtime) {
 		this.endtime = endtime;
 	}
+	
+	
+	public String[] getVouchers() {
+		return vouchers;
+	}
+	public void setVouchers(String[] vouchers) {
+		this.vouchers = vouchers;
+	}
+	public Double getDuration() {
+		return duration;
+	}
+	public void setDuration(Double duration) {
+		this.duration = duration;
+	}
+	
+	
 	public String getInfo() {
 		return info;
 	}

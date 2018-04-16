@@ -18,8 +18,8 @@ import com.foxtail.service.data.StatisticsService;
 
 @Controller
 @RequestMapping("data/finance/emp")
-@AppModelMap("部门")
-public class EmpFinanceController extends BaseMybatisController{
+@AppModelMap()
+public class DeptFinanceController extends BaseMybatisController{
 
 
 	@Autowired

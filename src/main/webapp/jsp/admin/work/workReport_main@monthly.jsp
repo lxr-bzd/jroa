@@ -12,7 +12,7 @@
 var toAddUrl = '${path}/admin/work/workReport/toedit.do';
 var deleteUrl = '${path}/admin/work/workReport/delete.do';
 var toEditUrl = '${path}/admin/work/workReport/toedit.do';
-var toInfoUrl = '${path}/admin/work/workReport/view.do';
+var toInfoUrl = '${path}/admin/work/workReport/toinfo.do';
 
 	//添加
 	function toAdd(){
@@ -40,18 +40,6 @@ var toInfoUrl = '${path}/admin/work/workReport/view.do';
 		}
 	}
 	
-	
-	
-    //查看
-    function toInfo(){
-    	var selected=getSelectedRowsArr('mainTable');
-    	if(selected.length>0&&selected.length<2)	
-    		$lxr.modal({url:toInfoUrl+'?id='+selected});
-    	else
-    		$app.alert('请选择一条数据进行操作');
-    	
-	}
-	
 	//设置查询参数
 	function postQueryParams(params) {
 		$app.form.preSubmit("#searchForm");
@@ -77,7 +65,9 @@ var toInfoUrl = '${path}/admin/work/workReport/view.do';
 
 	//根据id查看
 	function viewById(id){
-		$lxr.modal({url:toInfoUrl+'?id='+id+"&sysType=info"});
+		$app.dialog(toInfoUrl+'?sysModule=monthly&id='+id,function(){
+			refTable();
+		},{width:"900px",height:"600px"});
 	}
 	
     //操作工具栏
@@ -87,15 +77,15 @@ var toInfoUrl = '${path}/admin/work/workReport/view.do';
     	if(row.report_state!=2)
     	operator+=$app.btn({type:"btn-warning",img:"glyphicon-ok"},'审核','toExamine(\''+row.id+'\')');
     	 </shiro:hasPermission>
-	    	<shiro:hasPermission name="admin/work/workReport/update?sysModule=monthly&sysAction=edit">
+	  <shiro:hasPermission name="admin/work/workReport/update?sysModule=monthly&sysAction=edit">
 	    	if(row.report_state!=2)
 	    		operator+=$app.btn('edit','编辑','editById(\''+row.id+'\')');
-		    </shiro:hasPermission>
+	</shiro:hasPermission>
 		    <shiro:hasPermission name="admin/work/workReport/delete?sysModule=monthly">
 		    if(row.report_state!=2)
 				operator+=$app.btn('delete','删除','toRemove(\''+row.id+'\')');
 	    	</shiro:hasPermission>
-	    	operator+=$app.btn('info','详情','tomove(\''+row.id+'\')');
+	    	operator+=$app.btn('info','详情','viewById(\''+row.id+'\')');
 	    	
 		return operator+'</div>';
 	}

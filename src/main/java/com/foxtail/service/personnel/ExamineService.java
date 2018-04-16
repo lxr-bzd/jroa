@@ -9,7 +9,9 @@ import com.foxtail.common.page.Pagination;
 import com.foxtail.dao.mybatis.personnel.ApplyDao;
 import com.foxtail.dao.mybatis.personnel.ExamineDao;
 import com.foxtail.filter.ApplyFilter;
+import com.foxtail.model.personnel.Apply;
 import com.foxtail.model.personnel.Examine;
+import com.lxr.commons.exception.ApplicationException;
 
 
 @Service
@@ -23,6 +25,11 @@ public class ExamineService {
 	
 	
 	public void save(Examine examine,boolean isend) {
+		
+		Apply apply = applyDao.getById(examine.getApplyid());
+		if(apply==null)throw new ApplicationException("审核对象不存在");
+		if(apply.getUid().equals(examine.getExaid()))
+			throw new ApplicationException("不能审核自己");
 		
 		int state = 4;//不通过
 		

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="/jroa/jslib/calendar/simple-calendar.css" />
+<link rel="stylesheet" href="${path}/css/layout/calendar.css" />
 <title>默认显示页</title>
 
 </head>
@@ -16,94 +16,6 @@
     			<h4 class="fl">通知公告</h4>
     		</div>
 			<ul id="notice_guoup" class="Notice-wrap">
-			
-			  <li>
-			<a href="javascript:viewNotice('18')" class="cd">
-				<div class="Notice-text">
-					<span class="Notice-date">[02.27]</span>
-					元宵放假安排通知
-				
-					<i class="Notice-icon fr">new</i>
-				</div>
-			</a>
-			</li>
-			
-			  <li>
-			<a href="javascript:viewNotice('17')" class="cd">
-				<div class="Notice-text">
-					<span class="Notice-date">[01.30]</span>
-					白云驾校功能开发需求表
-				
-					
-				</div>
-			</a>
-			</li>
-			
-			  <li>
-			<a href="javascript:viewNotice('16')" class="cd">
-				<div class="Notice-text">
-					<span class="Notice-date">[01.27]</span>
-					项目合作流程
-				
-					
-				</div>
-			</a>
-			</li>
-			
-			  <li>
-			<a href="javascript:viewNotice('15')" class="cd">
-				<div class="Notice-text">
-					<span class="Notice-date">[01.27]</span>
-					仓储供应链系统功能需求表
-				
-					
-				</div>
-			</a>
-			</li>
-			
-			  <li>
-			<a href="javascript:viewNotice('14')" class="cd">
-				<div class="Notice-text">
-					<span class="Notice-date">[01.24]</span>
-					2018年作息时间调整通知公告
-				
-					
-				</div>
-			</a>
-			</li>
-			
-			  <li>
-			<a href="javascript:viewNotice('13')" class="cd">
-				<div class="Notice-text">
-					<span class="Notice-date">[01.24]</span>
-					关于公司搬家通知
-				
-					
-				</div>
-			</a>
-			</li>
-			
-			  <li>
-			<a href="javascript:viewNotice('9')" class="cd">
-				<div class="Notice-text">
-					<span class="Notice-date">[01.17]</span>
-					单商城功能需求表（基础版1.0）
-				
-					
-				</div>
-			</a>
-			</li>
-			
-			  <li>
-			<a href="javascript:viewNotice('6')" class="cd">
-				<div class="Notice-text">
-					<span class="Notice-date">[01.16]</span>
-					2018年春节放假安排通知
-				
-					
-				</div>
-			</a>
-			</li>
 			
 			</ul>
     	</div>
@@ -117,30 +29,15 @@
     			</div>
     		</div>
 			<div class="Ranking-box" id="sale_group">
-		<!-- 	<div class="Ranking-wrap">
-    			<div class="Ranking-name">前端部
-    				<span class="Ranking-icon"><img src="images/layout/rank_02.png" alt="" /></span>
-    			</div>
-    			<div class="Ranking-rank">
-    				<div class="Ranking-inner">张三</div>
-    			</div>
-    		</div>
-			<div class="Ranking-wrap">
-    			<div class="Ranking-name">设计部
-    				<span class="Ranking-icon"><img src="images/layout/rank_02.png" alt="" /></span>
-    			</div>
-    			<div class="Ranking-rank">
-    				<div class="Ranking-inner">李四</div>
-    			</div>
-			</div> -->
+		
 			</div>
     	</div>
-    	<div class="calendar">
+       	<div class="calendar-box">
     		<div class="header_wrap cd">
     			<h4 class="fl">日历</h4>
     		</div>
     		<div class="calendar-wrap cd">
-    			<div id='container'></div>
+    			<div id="calendar"></div>
     		</div>
     	</div>
     </div>
@@ -188,11 +85,21 @@
 			</div>
 		</div>
 	</div>
-    <script src="/jroa/jslib/calendar/simple-calendar.js"></script>
-    <script src="/jroa/jslib/g2.min.js"></script>
-    <script src="/jroa/jslib/data-set.min.js"></script>
+        <script src="${path}/jslib/calendar.js"></script>
+    <script src="${path}/jslib/g2.min.js"></script>
+    <script src="${path}/jslib/data-set.min.js"></script>
 	<script>
 		
+	// 关于月份： 在设置时要-1，使用时要+1
+	$(function () {
+
+	  $('#calendar').calendar({
+	    ifSwitch: true, // 是否切换月份
+	    hoverDate: true, // hover是否显示当天信息
+	    backToday: true // 是否返回当天
+	  });
+
+	});
 		
 		$('.strip').each(function(){
 			var _this=$(this),number=_this.attr('data-number'),
@@ -203,7 +110,7 @@
 		layui.use('form', function(){
   			var form = layui.form;
 		})
-		var myCalendar = new SimpleCalendar('#container');  //calendar日历插件
+		/* var myCalendar = new SimpleCalendar('#container');  //calendar日历插件
 		var options = {
 			 	width: '100%',
 			  	height: 'auto',
@@ -236,7 +143,7 @@
 					todaycolor: 'orange',
 					activeSelectColor: 'orange',
 			  	}
-			}
+			} */
 	</script>
 	<script>
 		function mountNode2(mountNode,data){

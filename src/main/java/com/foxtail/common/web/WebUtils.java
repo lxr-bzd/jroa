@@ -15,4 +15,11 @@ public class WebUtils {
 	}
 	
 	
+
+	public String getTomcatHost() {
+		return System.getProperty("catalina.home");
+
+	}
+	
+	
 }

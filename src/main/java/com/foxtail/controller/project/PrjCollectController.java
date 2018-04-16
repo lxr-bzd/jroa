@@ -1,5 +1,7 @@
 package com.foxtail.controller.project;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import com.foxtail.common.AppModelMap;
 import com.foxtail.common.DataGridResult;
 import com.foxtail.common.JsonResult;
 import com.foxtail.common.base.BaseMybatisController;
+import com.foxtail.common.util.DateUtils;
 import com.foxtail.filter.PrjCollectFilter;
 import com.foxtail.model.project.PrjCollect;
 import com.foxtail.service.project.PrjCollectService;
@@ -57,8 +60,11 @@ public class PrjCollectController extends BaseMybatisController{
 			return JsonResult.getSuccessResult(prjCollectService.findBySalesman(empid));
 			
 		}
-		else
-		return DataGridResult.getResult(prjCollectService.findForPage(getPagination(request),filter));
+		else {
+			if(filter.getStartTime()!=null)filter.setEndTime(DateUtils.getSpecficMonthEnd(new Date(filter.getStartTime()), 0).getTime());
+			return DataGridResult.getResult(prjCollectService.findForPage(getPagination(request),filter));
+		}
+	
 	}
 	
 	
@@ -69,14 +75,12 @@ public class PrjCollectController extends BaseMybatisController{
 		if(prjCollect.getTime()==null)
 		prjCollect.setTime(System.currentTimeMillis());
 		prjCollectService.save(prjCollect);
-
 		return JsonResult.getSuccessResult();
 	}
 	
 	@RequestMapping("delete")
 	@ResponseBody
 	public Object delete(String ids) {
-		
 		prjCollectService.delete(ids.split(","));
 
 		return JsonResult.getSuccessResult();

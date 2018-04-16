@@ -95,13 +95,11 @@ var toInfoUrl = '${path}/customer/customer/customer/view.do';
     //操作工具栏
     function operatorFormatter(value, row, index) {
     	var operator='<div class="btn-group">';
-		    
+    	<shiro:hasPermission name="customer/customer/customer/update">
     	operator+=$app.btn('auth','回访','tovisit(\''+row.id+'\',\''+row.name+'\')');
-	    	
 	    	operator+= $app.btn('edit','编辑','editById(\''+row.id+'\')');
-		  
-		   
-		    operator+= $app.btn('delete','删除','toRemove(\''+row.id+'\')');
+		   operator+= $app.btn('delete','删除','toRemove(\''+row.id+'\')');
+		  </shiro:hasPermission>
 	    	
 		return operator+'</div>';
 	}

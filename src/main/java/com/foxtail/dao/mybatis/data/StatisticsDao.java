@@ -12,5 +12,7 @@ public interface StatisticsDao {
 	List<Map> statisticsDept(@Param("ctime")long ctime,@Param("cmonth")Integer cmonth);
 	
 	List<Map> statisticsPrj();
+	List<Map>  statisticsOvtime(@Param("starttime")long starttime,@Param("endtime")long endtime);
+	
 }
 

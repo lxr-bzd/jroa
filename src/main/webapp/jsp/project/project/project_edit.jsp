@@ -28,11 +28,13 @@ var backurl = "${path}/project/project/project.do";
 		//表单提交
 		$("#submit_form").ajaxSubmit({
 			url:$("#submit_form").attr("data-action"),
-			data : $("#submit_form").serialize(),
+			
 			cache : false,
 			dataType : 'JSON',
 			type:'post',
 			success:function(data){
+				if(typeof(data)=="string")
+				data = $.parseJSON(data.replace(/<.*?>/ig,""));
 				if(data.status==0)
 					$app.alert('编辑成功',function(){  //关闭事件
 						goBackList();
@@ -287,9 +289,7 @@ var backurl = "${path}/project/project/project.do";
 		<div class="formbody">
 
 <c:if test="${empty param.sysAction}">
-		
-   			
-   			<form id="submit_form" data-isadd="true" method="post" data-action="${path}/project/project/project/save.do">
+		<form id="submit_form" data-isadd="true" method="post" data-action="${path}/project/project/project/save.do" enctype="multipart/form-data">
    				<ul class="forminfo">
 					<li><label>项目名称：</label><input name="name" type="text" class="form-control input-primary w260" />
 					</li>
@@ -387,9 +387,13 @@ var backurl = "${path}/project/project/project.do";
     				</li>
 					
 					
-				<li><label>项目状态：</label>
+				<!-- <li><label>项目状态：</label>
 					<input type="radio"  name="pro_state" value="1" checked="checked">正常
 					<input type="radio"  name="pro_state" value="2"  >紧急
+				</li> -->
+				<input type="hidden"  name="pro_state" value="1" >
+				<li><label>项目功能表：</label>
+					<input type="file"  name="doc_file" class="form-control input-primary w260" accept=".xls,.doc,.txt,.pdf">
 				</li>
 					
 				<li><label>项目进度：</label>
@@ -421,7 +425,7 @@ var backurl = "${path}/project/project/project.do";
 <c:if test="${param.sysAction=='edit'}">
 
 
-   			<form id="submit_form"  method="post" data-action="${path}/project/project/project/update.do">
+   			<form id="submit_form"  method="post" data-action="${path}/project/project/project/update.do" enctype="multipart/form-data">
    				<input name="id" value="${vo.id }" type="hidden"  />
    				<ul class="forminfo">
 					<li><label>项目名称：</label><input name="name" value="${vo.name }" type="text" class="form-control input-primary w260" />
@@ -519,9 +523,14 @@ var backurl = "${path}/project/project/project.do";
     				</li>
 					
 					
-				<li><label>项目状态：</label>
+				<%-- <li><label>项目状态：</label>
 					<input type="radio"  name="pro_state" value="1" <c:if test="${vo.pro_state==1}">checked="checked"</c:if>>正常
 					<input type="radio"  name="pro_state" value="2" <c:if test="${vo.pro_state==2}">checked="checked"</c:if> >紧急
+				</li> --%>
+				<input type="hidden"  name="pro_state" value="1" >
+				
+				<li><label>项目功能表：</label>
+					<input type="file"  name="doc_file" class="form-control input-primary w260" accept=".xls,.doc,.txt,.pdf">
 				</li>
 					
 				<li><label>项目进度：</label>

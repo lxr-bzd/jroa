@@ -10,17 +10,11 @@
 <title>编辑页面</title>
 <script type="text/javascript">
 
-var depts = [];
-
 
 var backurl = "${path}/admin/work/workReport.do";
 
 
-	$(function() {
-		
-		
 	
-	});
 	function toSubmit(){
 		//表单验证
 		if(!$("#submit_form").valid())
@@ -54,7 +48,6 @@ var backurl = "${path}/admin/work/workReport.do";
 			var index = parent.layer.getFrameIndex(window.name);
 			parent.layer.close(index);
 		} catch (e) {
-
 			if(isNaN(index))window.location=backurl;
 		}
 		

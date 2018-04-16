@@ -40,18 +40,6 @@ var toInfoUrl = '${path}/admin/work/workReport/toinfo.do';
 		}
 	}
 	
-	
-	
-    //查看
-    function toInfo(){
-    	var selected=getSelectedRowsArr('mainTable');
-    	if(selected.length>0&&selected.length<2)	
-    		$lxr.modal({url:toInfoUrl+'?id='+selected});
-    	else
-    		$app.alert('请选择一条数据进行操作');
-    	
-	}
-	
 	//设置查询参数
 	function postQueryParams(params) {
 		$app.form.preSubmit("#searchForm");
@@ -77,7 +65,7 @@ var toInfoUrl = '${path}/admin/work/workReport/toinfo.do';
 
 	//根据id查看
 	function viewById(id){
-		$app.dialog(toInfoUrl+'?id='+id,function(){
+		$app.dialog(toInfoUrl+'?sysModule=daily&id='+id,function(){
 			refTable();
 		},{width:"900px",height:"600px"});
 		

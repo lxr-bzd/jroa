@@ -152,24 +152,20 @@ case 5:return "待续费";
 	
 }
 
-function pro_stateFormatter(val){
-	
-	switch (val) {
-	case 1:
-		return "正常";
-		break;
-case 2:return "紧急";break;
-
-	default:
-		break;
+function docFormatter(val){
+	if(val){
+		var fname = val;
+		var i = val.lastIndexOf("/");
+		if(i>=0)fname = val.substring(i,val.length);
+		return '<button class="btn btn-round btn-sm">'+
+				'<a href="'+val+'"  download="'+fname+'"><span class="glyphicon glyphicon-download-alt"></span></a></button>';
 	}
-	
 }
+
+
 
 $(function(){
 	$app.form("#searchForm");
-	
-	
 });
 
 
@@ -285,12 +281,12 @@ function getUnSelectRows(){
 					
 					<th data-field="customrName" >客户</th>
 					<th data-field="managerName" >项目经理</th>
-					<th data-field="progressName" >项目进度</th>
+					<th data-field="progressName" >项目状态</th>
 					<th data-field="signtime" data-formatter="$app.tableUi.date" >签单时间</th>
 					<th data-field="salesmanName" >业务员</th>
 					<th data-field="ordertime" data-formatter="$app.tableUi.date"  >下单时间</th>
 					<th data-field="orderempName">下单人</th>
-					<th data-field="pro_state" data-formatter="pro_stateFormatter" >项目状态</th>
+					<th data-field="doc" data-formatter="docFormatter" >项目功能表</th>
 					<th data-field="operator" data-formatter="operatorFormatter">操作</th>
 				</tr>
 			</thead>

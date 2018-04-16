@@ -163,8 +163,5 @@
 	
 	<mvc:interceptors>
 		<bean class="com.foxtail.core.interceptor.HttpLogInterceptor" />
-		
-		
-		
 	</mvc:interceptors>
 </beans>

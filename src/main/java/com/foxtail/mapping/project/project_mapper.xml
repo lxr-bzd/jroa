@@ -40,7 +40,7 @@
   		left join man_emp c on a.managerid = c.id
   		left join man_emp d on a.salesmanid = d.id
   		left join cus_product f on a.productid = f.id
-  		left join (select prjid, sum(money) received from prj_collect  where prjid=#{id} GROUP BY prjid) e on a.id=e.prjid
+  		left join (select prjid, sum(money) received from prj_collect  where type=1 AND prjid=#{id} GROUP BY prjid) e on a.id=e.prjid
   		 where a.id=#{id}
   	</select> 
   	
@@ -75,14 +75,17 @@
 ,remark=#{ model.remark }
 ,renew=#{ model.renew }
 ,renewtime=#{ model.renewtime }
+<if test="model.doc!=null">
+,doc=#{model.doc}
+</if>
 ,renew_content=#{ model.renew_content }
  WHERE id=#{model.id}
 	</update>
 	
 	 <!-- 根据对象主键更新 -->
   	<insert id="save" useGeneratedKeys="true" keyProperty="model.id" >
-     INSERT INTO prj_project(name, customrid,productid, starttime, endtime, managerid, pro_state, receivable,  uncollected, salesmanid, ordertime,orderempid,signtime,progressid,member,remark,renew,renewtime,renew_content, createtime) 
-     VALUES(#{ model.name },#{ model.customrid },#{ model.productid},#{ model.starttime },#{ model.endtime },#{ model.managerid },#{ model.pro_state },#{ model.receivable },#{ model.uncollected },#{ model.salesmanid },#{ model.ordertime },#{ model.orderempid },#{ model.signtime },#{ model.progressid },#{ model.member },#{ model.remark },#{ model.renew },#{ model.renewtime },#{ model.renew_content },unix_timestamp(now())*1000)
+     INSERT INTO prj_project(name, customrid,productid, starttime, endtime, managerid, pro_state, receivable,  uncollected, salesmanid, ordertime,orderempid,signtime,progressid,member,remark,renew,renewtime,renew_content,doc, createtime) 
+     VALUES(#{ model.name },#{ model.customrid },#{ model.productid},#{ model.starttime },#{ model.endtime },#{ model.managerid },#{ model.pro_state },#{ model.receivable },#{ model.uncollected },#{ model.salesmanid },#{ model.ordertime },#{ model.orderempid },#{ model.signtime },#{ model.progressid },#{ model.member },#{ model.remark },#{ model.renew },#{ model.renewtime },#{ model.renew_content },#{model.doc},unix_timestamp(now())*1000)
     </insert>
     
     <insert id="saveProduct"  >

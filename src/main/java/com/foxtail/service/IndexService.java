@@ -34,9 +34,13 @@ public class IndexService {
 	}
 	
 	public Map<String, Object> prjMoney(PrjCollectFilter filter) {
+		
+			
 		Date date = new Date();
-		Long cmonthTime = DateUtils.getSpecficMonthStart(new Date(), 0).getTime();
-		Long cmonthEndTime = DateUtils.getSpecficMonthEnd(new Date(), 0).getTime();
+		if(filter.getStartTime()!=null)date = new Date(filter.getStartTime());
+		
+		Long cmonthTime = DateUtils.getSpecficMonthStart(date, 0).getTime();
+		Long cmonthEndTime = DateUtils.getSpecficMonthEnd(date, 0).getTime();
 		filter.setStartTime(cmonthTime);
 		filter.setEndTime(cmonthEndTime);
 		long yearstart = DateUtils.getSpecficYearStart(date , 0).getTime();

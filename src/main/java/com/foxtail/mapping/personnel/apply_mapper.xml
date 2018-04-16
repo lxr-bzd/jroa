@@ -50,6 +50,7 @@
 		<set>
 		<if test="model.starttime != null ">starttime=#{ model.starttime },</if>
 		<if test="model.endtime != null ">endtime=#{ model.endtime },</if>
+		<if test="model.duration != null ">duration=#{ model.duration },</if>
 		<if test="model.info != null ">info=#{ model.info },</if>
 		<if test="model.leave_type != null ">leave_type = #{ model.leave_type },</if>
 		<if test="model.state != null ">state = #{ model.state },</if>
@@ -58,10 +59,29 @@
 	</update>
 
 	 <!-- 根据对象主键更新 -->
-  	<insert id="save"  >
-     INSERT INTO man_apply(uid, type,leave_type, starttime, endtime, info,createtime) VALUES(#{ model.uid },#{ model.type },#{ model.leave_type },#{ model.starttime },#{ model.endtime },#{ model.info },unix_timestamp(now())*1000)
+  	<insert id="save"  useGeneratedKeys="true" keyProperty="model.id">
+     INSERT INTO man_apply(uid, type,leave_type, starttime, endtime,duration, info,createtime) VALUES(#{ model.uid },#{ model.type },#{ model.leave_type },#{ model.starttime },#{ model.endtime },#{ model.duration },#{ model.info },unix_timestamp(now())*1000)
      </insert>
 	
+	<insert id="saveVouchers"  >
+INSERT INTO man_apply_file (applyid, file) VALUES 
+ <foreach collection="files" item="file" index="index" separator=",">
+              (#{applyid}, #{file})
+          </foreach>
+     </insert>
+	
+	<delete id="deleteVouchers" >
+	   delete from man_apply_file
+	   where applyid in
+	      <foreach collection="ids" item="id" index="index"
+             open="(" close=")" separator=",">
+              #{id}
+          </foreach>
+	</delete>
+	
+	<select id="findVouchers" resultType ="string" >
+  		select file from man_apply_file where applyid=#{applyid}
+  	</select> 
   	
   
 </mapper>   

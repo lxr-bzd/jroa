@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="${path}/jslib/calendar/simple-calendar.css" />
+<link rel="stylesheet" href="${path}/css/layout/calendar.css" />
 <title>默认显示页</title>
 
 </head>
@@ -33,12 +33,12 @@
     		
     		</div>
     	</div>
-    	<div class="calendar">
+    	<div class="calendar-box">
     		<div class="header_wrap cd">
     			<h4 class="fl">日历</h4>
     		</div>
     		<div class="calendar-wrap cd">
-    			<div id='container'></div>
+    			<div id="calendar"></div>
     		</div>
     	</div>
     </div>
@@ -99,10 +99,21 @@
 			</div>
 		</div>
 	</div>
-    <script src="${path}/jslib/calendar/simple-calendar.js"></script>
+    <script src="${path}/jslib/calendar.js"></script>
     <script src="${path}/jslib/g2.min.js"></script>
     <script src="${path}/jslib/data-set.min.js"></script>
 	<script>
+
+		// 关于月份： 在设置时要-1，使用时要+1
+		$(function () {
+
+		  $('#calendar').calendar({
+		    ifSwitch: true, // 是否切换月份
+		    hoverDate: true, // hover是否显示当天信息
+		    backToday: true // 是否返回当天
+		  });
+
+		});
 		
 		
 		$('.strip').each(function(){
@@ -114,40 +125,6 @@
 		layui.use('form', function(){
   			var form = layui.form;
 		})
-		var myCalendar = new SimpleCalendar('#container');  //calendar日历插件
-		var options = {
-			 	width: '100%',
-			  	height: 'auto',
-			  	language: 'CH', //语言
-			  	showLunarCalendar: true, //阴历
-			  	showHoliday: true, //休假
-			  	showFestival: true, //节日
-			  	showLunarFestival: true, //农历节日
-			 	showSolarTerm: true, //节气
-			 	showMark: true, //标记
-			  	timeRange: {
-					startYear: 1900, //从那年开始
-					endYear: 2049  //到那年结束
-			  	},
-			 	mark: {
-//					'2016-5-5': '上学'
-			  	},
-			  	theme: {
-					changeAble: false,
-				weeks: {
-				  	backgroundColor: '#FBEC9C',
-				 	fontColor: '#4A4A4A',
-				  	fontSize: '20px',
-				},
-				days: {
-				  	backgroundColor: '#ffffff',
-				  	fontColor: '#565555',
-				 	 fontSize: '24px'
-				},
-					todaycolor: 'orange',
-					activeSelectColor: 'orange',
-			  	}
-			}
 	</script>
 	<script>
 		function mountNode1(mountNode,vdata){
@@ -240,7 +217,6 @@
 		mountNode1('Chart1');
 		
 	</script>
-	
 <script type="text/javascript">
 
 

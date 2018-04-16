@@ -1,7 +1,5 @@
 package com.foxtail.controller.admin;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.foxtail.bean.ServiceManager;
 import com.foxtail.common.AppModelMap;
 import com.foxtail.common.DataGridResult;
@@ -100,21 +97,15 @@ public class WorkReportController extends BaseMybatisController{
 		 String pString = null;
 		switch (filter.getType()) {
 		case 1:pString ="admin/work/workReport?sysModule=daily";
-			
-			break;
+		break;
 		case 2:pString ="admin/work/workReport?sysModule=weekly";
-		
 		break;
 		case 3:pString ="admin/work/workReport?sysModule=monthly";
-		
 		break;
-
 		default:
-			break;
+		break;
 		}
-		
 		if (pString==null)return;
-		
 		filter.setSysView("def");
 		
 		if(SecurityUtils.getSubject().isPermitted(pString+"&$sysView=all")) {
@@ -141,7 +132,6 @@ public class WorkReportController extends BaseMybatisController{
 	@RequestMapping("delete")
 	@ResponseBody
 	public Object delete(String ids) {
-		
 		workReportService.delete(ids.split(","));
 		return JsonResult.getSuccessResult();
 	}

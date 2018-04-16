@@ -9,6 +9,8 @@ public class PrjCollectFilter {
 	
 	Long startTime;
 	Long endTime;
+	
+	
 	public String getPrjid() {
 		return prjid;
 	}
@@ -39,6 +41,7 @@ public class PrjCollectFilter {
 	public void setEndTime(Long endTime) {
 		this.endTime = endTime;
 	}
+	
 	
 	
 	

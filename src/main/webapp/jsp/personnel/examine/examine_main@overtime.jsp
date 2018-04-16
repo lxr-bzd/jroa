@@ -51,10 +51,13 @@ var updateUrl = '${path}/personnel/examine/examine/update.do';
 	
 	//设置查询参数
 	function postQueryParams(params) {
+		$app.form.preSubmit("#searchForm");
 		var queryParams = $("#searchForm").serializeObject();
+		var id =  $app.form.multipleSelectVal("#searchForm .lxr_multipleSelect");
+		if(id||id==0)queryParams.deptStr=deptUnder(id).join(",");
 		queryParams.limit=params.limit;
 		queryParams.offset=params.offset;
-		return queryParams;
+		return $lxr.trimObject(queryParams);
 	}
 	
 	//查询列表

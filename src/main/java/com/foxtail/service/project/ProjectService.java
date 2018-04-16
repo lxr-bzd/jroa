@@ -38,6 +38,7 @@ public class ProjectService {
 		if(project.getReceived()==null||project.getReceived()<=0)return;
 
 		PrjCollect prjCollect = new PrjCollect();
+		prjCollect.setType(1);
 		prjCollect.setEmpid(project.getOrderempid());
 		prjCollect.setMoney(project.getReceived());
 		prjCollect.setPrjid(project.getId());

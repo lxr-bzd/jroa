@@ -122,6 +122,8 @@ public class ExamineController extends BaseMybatisController{
 	@RequestMapping("save")
 	@ResponseBody
 	public Object save(Examine examine,String isend) {
+		
+		
 		examine.setExatime(System.currentTimeMillis()+"");
 		examine.setExaid(ServiceManager.securityService.getUid());
 		

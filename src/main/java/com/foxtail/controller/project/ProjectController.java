@@ -8,11 +8,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartException;
+
 import com.alibaba.fastjson.JSONArray;
 import com.foxtail.bean.ServiceManager;
 import com.foxtail.common.AppModelMap;
 import com.foxtail.common.DataGridResult;
 import com.foxtail.common.JsonResult;
+import com.foxtail.common.SpringFileupload;
 import com.foxtail.common.base.BaseMybatisController;
 import com.foxtail.filter.ApplyFilter;
 import com.foxtail.filter.ProjectFilter;
@@ -87,9 +90,21 @@ public class ProjectController extends BaseMybatisController{
 	
 	@RequestMapping("save")
 	@ResponseBody
-	public Object save(Project project) {
+	public Object save(Project project,HttpServletRequest request) {
+		String path = null;
+		
+		try {
+				path = SpringFileupload.upload(request, "doc_file");
+				project.setDoc(path);
+			} catch (MultipartException e) {
+				project.setDoc(null);
+			} 
+		
+		
 		project.setOrdertime(System.currentTimeMillis());
 		project.setOrderempid(ServiceManager.securityService.getUid());
+		
+		
 		projectService.save(project);
 
 		return JsonResult.getSuccessResult();
@@ -107,7 +122,16 @@ public class ProjectController extends BaseMybatisController{
 	
 	@RequestMapping("update")
 	@ResponseBody
-	public Object update(Project project) {
+	public Object update(Project project,HttpServletRequest request) {
+		
+String path = null;
+		
+		try {
+				path = SpringFileupload.upload(request, "doc_file");
+				project.setDoc(path);
+			} catch (MultipartException e) {
+				project.setDoc(null);
+			} 
 		
 		projectService.update(project);
 		return JsonResult.getSuccessResult();

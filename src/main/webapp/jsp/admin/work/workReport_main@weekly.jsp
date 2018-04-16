@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-
 <head>
 <meta name="renderer" content="webkit" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -12,7 +11,7 @@
 var toAddUrl = '${path}/admin/work/workReport/toedit.do';
 var deleteUrl = '${path}/admin/work/workReport/delete.do';
 var toEditUrl = '${path}/admin/work/workReport/toedit.do';
-var toInfoUrl = '${path}/admin/work/workReport/view.do';
+var toInfoUrl = '${path}/admin/work/workReport/toinfo.do';
 
 	//添加
 	function toAdd(){
@@ -41,17 +40,6 @@ var toInfoUrl = '${path}/admin/work/workReport/view.do';
 	}
 	
 	
-	
-    //查看
-    function toInfo(){
-    	var selected=getSelectedRowsArr('mainTable');
-    	if(selected.length>0&&selected.length<2)	
-    		$lxr.modal({url:toInfoUrl+'?id='+selected});
-    	else
-    		$app.alert('请选择一条数据进行操作');
-    	
-	}
-	
 	//设置查询参数
 	function postQueryParams(params) {
 		$app.form.preSubmit("#searchForm");
@@ -78,7 +66,9 @@ var toInfoUrl = '${path}/admin/work/workReport/view.do';
 
 	//根据id查看
 	function viewById(id){
-		$lxr.modal({url:toInfoUrl+'?id='+id+"&sysType=info"});
+		$app.dialog(toInfoUrl+'?sysModule=weekly&id='+id,function(){
+			refTable();
+		},{width:"900px",height:"600px"});
 	}
 	
     //操作工具栏
@@ -98,7 +88,7 @@ var toInfoUrl = '${path}/admin/work/workReport/view.do';
 				operator+=$app.btn('delete','删除','toRemove(\''+row.id+'\')');
 	    	</shiro:hasPermission>
 	    	
-	    	operator+=$app.btn('info','详情','tomove(\''+row.id+'\')');
+	    	operator+=$app.btn('info','详情','viewById(\''+row.id+'\')');
 	    	
 	    	
 		return operator+'</div>';

@@ -10,6 +10,12 @@ public interface ApplyDao {
 
 	void save(@Param("model")Apply apply);
 	
+	void saveVouchers(@Param("applyid")String applyid,@Param("files")String[] files);
+	
+	void deleteVouchers(@Param("ids")String[] ids);
+	
+	String[] findVouchers(@Param("applyid")String applyid);
+	
 	void update(@Param("model")Apply apply);
 	
 	Apply getById(@Param("id")String id);

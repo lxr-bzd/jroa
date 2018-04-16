@@ -29,6 +29,7 @@ public class Project {
 	Integer progressid;
 	String progressName;
 	String member;
+	String doc;
 	
 	String remark;
 	String orderempid;//下单人id
@@ -239,6 +240,12 @@ public class Project {
 	}
 	public void setMebs(List<Map<String, Object>> mebs) {
 		this.mebs = mebs;
+	}
+	public String getDoc() {
+		return doc;
+	}
+	public void setDoc(String doc) {
+		this.doc = doc;
 	}
 	
 	

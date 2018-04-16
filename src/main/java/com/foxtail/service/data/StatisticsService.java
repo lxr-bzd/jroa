@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.foxtail.bean.ServiceManager;
 import com.foxtail.common.page.Pagination;
+import com.foxtail.common.util.DateUtils;
 import com.foxtail.dao.mybatis.data.StatisticsDao;
 import com.foxtail.model.data.Sale;
 import com.github.pagehelper.Page;
@@ -49,6 +50,13 @@ public class StatisticsService {
 	}
 	
 	
+	public List<Map> statisticsOvtime(Long mtime) {
+		if(mtime==null)mtime = System.currentTimeMillis();
+		Long stime = DateUtils.getSpecficMonthStart(new Date(mtime), 0).getTime();
+		Long etime = DateUtils.getSpecficMonthEnd(new Date(mtime), 0).getTime();
+		return statisticsDao.statisticsOvtime(stime, etime);
+
+	}
 }
 
 
