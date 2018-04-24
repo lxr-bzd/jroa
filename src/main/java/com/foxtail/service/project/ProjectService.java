@@ -1,6 +1,10 @@
 package com.foxtail.service.project;
 
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.foxtail.bean.ServiceManager;
@@ -12,6 +16,7 @@ import com.foxtail.model.project.PrjCollect;
 import com.foxtail.model.project.Project;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.lxr.commons.exception.ApplicationException;
 
 
 @Service
@@ -110,6 +115,86 @@ public class ProjectService {
 		return project;
 	}
 
+	
+	public List<Map<String, Object>> findMebs(String prjid) {
+		return projectDao.findMebs(prjid);
+
+	}
+	
+	
+	/**
+	 * 
+	 * @param prjid
+	 * @param uid
+	 * @return 1:不存在该项目中，2：未开始，3：已开始
+	 */
+	public int getUserState(String prjid,String uid) {
+		Map<String, Object> meb = projectDao.getPrjMeb(prjid, uid);
+		if(meb==null)return 1;
+		if(meb.get("intime")==null)return 2;
+		return 3;
+
+	}
+	
+	public void doStart(String prjid,String uid) {
+		Map<String, Object> meb = projectDao.getPrjMeb(prjid, uid);
+		if(meb==null)throw new ApplicationException("该成员未在项目中");
+		
+		long ctime = System.currentTimeMillis();
+		
+		Map<String, Object> umMap = new HashMap<>();
+		umMap.put("id", meb.get("id"));
+		
+		if(meb.get("starttime")==null) {
+			umMap.put("starttime", ctime);
+			umMap.put("intime", ctime);
+			projectDao.updateMeb(umMap);
+			return;
+		}
+		
+		if(meb.get("intime")!=null)throw new ApplicationException("该项目已经开始");
+		
+		umMap.put("intime", ctime);
+		projectDao.updateMeb(umMap);
+		
+	}
+	
+	public void doEnd(String prjid,String uid) {
+		Map<String, Object> meb = projectDao.getPrjMeb(prjid, uid);
+		if(meb==null)throw new ApplicationException("该成员未在项目中");
+		
+		if(meb.get("starttime")==null||meb.get("intime")==null) 
+			throw new ApplicationException("该项目未开始");
+		
+		long ctime = System.currentTimeMillis();
+		
+		double usetime = Double.valueOf(meb.get("usetime").toString())
+				+genTime(Long.valueOf(meb.get("intime").toString()), ctime);
+		
+		
+		Map<String, Object> umMap = new HashMap<>();
+		umMap.put("id", meb.get("id"));
+		umMap.put("usetime", usetime);
+		projectDao.updateMeb(umMap);
+
+	}
+	
+	
+	
+	public void setAlltime(String prjid,String uid,double alltime) {
+		projectDao.setAlltime(uid, prjid, alltime);
+
+	}
+	
+	private double genTime(long stime,long endtime) {
+		int h = (int) (endtime-stime)/(1000*60*60);
+		return ((double)(h/4))/2;
+
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(((double)(12/4))/2);
+	}
 	
 }
 

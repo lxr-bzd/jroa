@@ -6,10 +6,6 @@
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 
 	<c:set var="path" value="${pageContext.request.contextPath}"/>
-	<script type="text/javascript">
-		var path = '<%=request.getContextPath() %>';
-		var _pageSize=10;
-	</script>
 	<script src="${path }/jslib/jquery.min-1.11.js"></script>
 	<script src="${path }/jslib/browser.js"></script>
 	

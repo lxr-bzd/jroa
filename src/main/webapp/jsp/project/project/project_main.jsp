@@ -106,8 +106,10 @@ var toInfoUrl = '${path}/project/project/project/view.do';
 	    	</shiro:hasPermission>
 	    	<shiro:hasPermission name="project/project/prjCollect">
 			operator+=$app.btn({type:'btn-info',img:'glyphicon-usd'},'收款','toPrjCollect(\''+row.id+'\',\''+row.name+'\')');
-			
     		</shiro:hasPermission>
+    		
+			operator+=$app.btn('auth','测评','todevelop(\''+row.id+'\',\''+row.name+'\')');;
+	
 		return operator+'</div>';
 	}
     
@@ -117,6 +119,11 @@ var toInfoUrl = '${path}/project/project/project/view.do';
     
 </script>
 <script type="text/javascript">
+function todevelop(id,name){
+	
+	window.location.href = "${path}/project/project/prjMeb.do?prjid="+id+"&prjName="+encodeURIComponent(name);;
+}
+
 function todetail(id,name){
 	
 	window.location.href = "${path}/project/project/prjLog.do?prjid="+id+"&prjName="+encodeURIComponent(name);

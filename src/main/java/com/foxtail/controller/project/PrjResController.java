@@ -1,6 +1,7 @@
 package com.foxtail.controller.project;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -10,33 +11,32 @@ import com.foxtail.common.AppModelMap;
 import com.foxtail.common.DataGridResult;
 import com.foxtail.common.JsonResult;
 import com.foxtail.common.base.BaseMybatisController;
-import com.foxtail.model.project.Progress;
-import com.foxtail.service.project.ProgressService;
+import com.foxtail.model.project.PrjRes;
+import com.foxtail.service.project.PrjResService;
 
 
 @Controller
-@RequestMapping("project/setting/progress")
+@RequestMapping("project/project/prjRes")
 @AppModelMap("部门")
-public class ProgressController extends BaseMybatisController{
+public class PrjResController extends BaseMybatisController{
 	
 	@Autowired
-	ProgressService progressService;
+	PrjResService prjResService;
 	
-	@RequestMapping()
+	
+	@RequestMapping() 
 	public String toMain(String sysModule){
 		return getMainJsp(sysModule);
 	}
 	
 	
-	@RequestMapping("toedit")
+	@RequestMapping("toedit") 
 	public String toEdit(String sysAction,String id,ModelMap modelMap){
 		String jsp= getEditJsp();
-		
 		if("edit".equals(sysAction))
-		modelMap.put("vo", progressService.getById(id));
+		modelMap.put("vo", prjResService.getById(id));
 		return jsp;
 	}
-	
 	
 	
 	@RequestMapping("view")
@@ -44,17 +44,17 @@ public class ProgressController extends BaseMybatisController{
 	public Object view(String sysType,HttpServletRequest request) {
 		
 		if("info".equals(sysType))
-		return JsonResult.getSuccessResult(progressService.getById(request.getParameter("id")));
+			return JsonResult.getSuccessResult(prjResService.getById(request.getParameter("id")));
 		else 
-		return DataGridResult.getResult(progressService.findForPage(getPagination(request)));
+		return DataGridResult.getResult(prjResService.findForPage(getPagination(request),request.getParameter("kw")));
 	}
 	
 	
 	@RequestMapping("save")
 	@ResponseBody
-	public Object save(Progress progress) {
+	public Object save(PrjRes prjRes) {
 		
-		progressService.save(progress);
+		prjResService.save(prjRes);
 
 		return JsonResult.getSuccessResult();
 	}
@@ -63,15 +63,17 @@ public class ProgressController extends BaseMybatisController{
 	@ResponseBody
 	public Object delete(String ids) {
 		
-		progressService.delete(ids.split(","));
+		prjResService.delete(ids.split(","));
+
 		return JsonResult.getSuccessResult();
 	}
 	
 	
 	@RequestMapping("update")
 	@ResponseBody
-	public Object update(Progress progress) {
-		progressService.update(progress);
+	public Object update(PrjRes prjRes) {
+		
+		prjResService.update(prjRes);
 
 		return JsonResult.getSuccessResult();
 	}

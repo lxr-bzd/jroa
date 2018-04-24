@@ -1,7 +1,6 @@
 package com.foxtail.controller.project;
 
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,7 +8,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartException;
-
 import com.alibaba.fastjson.JSONArray;
 import com.foxtail.bean.ServiceManager;
 import com.foxtail.common.AppModelMap;
@@ -17,7 +15,6 @@ import com.foxtail.common.DataGridResult;
 import com.foxtail.common.JsonResult;
 import com.foxtail.common.SpringFileupload;
 import com.foxtail.common.base.BaseMybatisController;
-import com.foxtail.filter.ApplyFilter;
 import com.foxtail.filter.ProjectFilter;
 import com.foxtail.model.project.Project;
 import com.foxtail.service.personnel.EmpService;
@@ -26,7 +23,7 @@ import com.foxtail.service.project.ProjectService;
 
 @Controller
 @RequestMapping("project/project/project")
-@AppModelMap("部门")
+@AppModelMap()
 public class ProjectController extends BaseMybatisController{
 
 	@Autowired
@@ -35,7 +32,7 @@ public class ProjectController extends BaseMybatisController{
 	@Autowired
 	EmpService empService;
 	
-	@RequestMapping() 
+	@RequestMapping()
 	public String toMain(String sysModule){
 		return getMainJsp(sysModule);
 	}
@@ -55,7 +52,12 @@ public class ProjectController extends BaseMybatisController{
 		return jsp;
 	}
 	
-	
+	@RequestMapping("viewDevelop")
+	@ResponseBody
+	public Object viewDev(String prjid,HttpServletRequest request) {
+		
+		return null;
+	}
 	
 	@RequestMapping("view")
 	@ResponseBody
@@ -123,9 +125,7 @@ public class ProjectController extends BaseMybatisController{
 	@RequestMapping("update")
 	@ResponseBody
 	public Object update(Project project,HttpServletRequest request) {
-		
-String path = null;
-		
+		String path = null;
 		try {
 				path = SpringFileupload.upload(request, "doc_file");
 				project.setDoc(path);

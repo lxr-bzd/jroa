@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.foxtail.dao.mybatis.project.PrjResDao">
+	
+	<sql id="base_column">
+		a.*
+	</sql>
+
+	  
+	<select id="findForPage2" resultType="com.foxtail.model.project.PrjRes" >
+  		select  <include refid="base_column" />,b.name prjName,c.name cusName from prj_res a left join prj_project b on a.prjid=b.id
+  		left join cus_customer c on b.customrid=c.id
+  		WHERE 1=1
+  		<if test="kw != null ">AND c.name like CONCAT('%',#{kw},'%') OR b.name like CONCAT('%',#{kw},'%') </if>
+  
+  	</select>
+  
+		
+	<select id="getById" resultType="com.foxtail.model.project.PrjRes" >
+  		select  <include refid="base_column" />,b.name prjName,c.name cusName from prj_res a left join prj_project b on a.prjid=b.id
+  		left join cus_customer c on b.customrid=c.id where a.id=#{id}
+  	</select> 
+
+	
+	
+	<update id="update" >
+	   UPDATE prj_res SET prjid=#{ mo.prjid }
+			,domain=#{ mo.domain }
+			,ftp=#{ mo.ftp }
+			,wx=#{ mo.wx }
+			,alipay=#{ mo.alipay }
+			,msg=#{ mo.msg }
+			,android=#{ mo.android }
+			,ios=#{ mo.ios }
+			 WHERE id=#{mo.id}
+	</update>
+
+	 <!-- 根据对象主键更新 -->
+  	<insert id="save"  >
+     INSERT INTO prj_res( prjid, domain, ftp, wx, alipay, msg, android, ios) VALUES(#{ mo.prjid },#{ mo.domain },#{ mo.ftp },#{ mo.wx },#{ mo.alipay },#{ mo.msg },#{ mo.android },#{ mo.ios })
+     </insert>
+	
+  	
+  
+</mapper>   

@@ -103,14 +103,14 @@ $app.warning = function(msg,call){
 	});
 }
 
+
 $app.prompt = function(title,call,formType){
 	
-	if(!formType)formType = 2;
+	if(!formType)formType = 0;
 	 
 	layer.prompt({title: title, formType: formType}, function(pass, index){
+		if(call&&call(pass))return;
 		  layer.close(index);
-		  if(call)call(pass);
-		 
 		});
 }
 
@@ -450,7 +450,7 @@ $app.form.format = function(form){
 			input.val(new Date(new Number(val)).format(config.format));
 			break;
 		case 'enum':
-			var f = config.enum;
+			var f = config['enum'];
 			if(isNaN(val))return;
 			input.val(f[val]);
 			break;

@@ -10,43 +10,7 @@
 <title>编辑页面</title>
 <script type="text/javascript">
 
-var depts = [];
-
-
 var backurl = "${path}/admin/work/workReport.do";
-
-
-	$(function() {
-		
-		
-	
-	});
-	function toSubmit(){
-		//表单验证
-		if(!$("#submit_form").valid())
-				return;
-				
-		$app.loading(function(onfinsh){
-		//表单提交
-		$("#submit_form").ajaxSubmit({
-			url:$("#submit_form").attr("data-action"),
-			data : $("#submit_form").serialize(),
-			cache : false,
-			dataType : 'JSON',
-			type:'post',
-			success:function(data){
-				if(data.status==0)
-					$app.alert('编辑成功',function(){  //关闭事件
-						goBackList();
-					});
-				
-				else $app.alert(data.msg?data.msg:'编辑失败');
-				
-			}
-		});
-		
-		});
-	}
 	
 	//返回列表
 	function goBackList(){
@@ -82,14 +46,14 @@ var backurl = "${path}/admin/work/workReport.do";
 
 <div class="panel panel-success">
 	<div class="panel-heading">
-		<h3 class="panel-title">今日工作</h3>
+		<h3 class="panel-title">本周工作总结</h3>
 	</div>
 	<div class="panel-body" style="white-space:pre-line;font-size: 14px;">${vo.content }</div>
 	</div>
 	
 <div class="panel panel-info">
 	<div class="panel-heading">
-		<h3 class="panel-title">今日学习</h3>
+		<h3 class="panel-title">下周工作计划</h3>
 	</div>
 	<div class="panel-body" style="white-space:pre-line;font-size: 14px;">${vo.study }</div>
 	</div>

@@ -31,7 +31,7 @@ public class PrjCollectController extends BaseMybatisController{
 	PrjCollectService prjCollectService;
 	
 	
-	@RequestMapping() 
+	@RequestMapping()
 	public String toMain(String sysModule){
 		return getMainJsp(sysModule);
 	}

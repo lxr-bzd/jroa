@@ -64,7 +64,6 @@ var backurl = "${path}/admin/work/workReport.do";
 	<script type="text/javascript">
 	
 	$(function(){
-		
 		initState();
 	});
 	
@@ -82,14 +81,14 @@ var backurl = "${path}/admin/work/workReport.do";
 
 <div class="panel panel-success">
 	<div class="panel-heading">
-		<h3 class="panel-title">今日工作</h3>
+		<h3 class="panel-title">本月工作</h3>
 	</div>
 	<div class="panel-body" style="white-space:pre-line;font-size: 14px;">${vo.content }</div>
 	</div>
 	
 <div class="panel panel-info">
 	<div class="panel-heading">
-		<h3 class="panel-title">今日学习</h3>
+		<h3 class="panel-title" >本月学习</h3>
 	</div>
 	<div class="panel-body" style="white-space:pre-line;font-size: 14px;">${vo.study }</div>
 	</div>

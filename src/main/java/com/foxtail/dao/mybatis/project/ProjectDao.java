@@ -31,5 +31,13 @@ public interface ProjectDao {
 	void deleteAllCollect(@Param("ids")String[] prjectids);
 	
 	void deleteAllMebs(@Param("ids")String[] prjectids);
+	
+	
+	Map<String, Object> getPrjMeb(@Param("prjid")String prjid,@Param("uid")String uid);
+	
+	void updateMeb(Map<String, Object> map);
+	
+	
+	void setAlltime(@Param("uid")String uid,@Param("prjid")String prjid,@Param("alltime")Double alltime);
 }
 

@@ -8,8 +8,6 @@
 <script type="text/javascript">
 
 var depts = [];
-
-
 var backurl = "${path}/personnel/organize/dept.do";
 
 	

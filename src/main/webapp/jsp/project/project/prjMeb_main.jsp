@@ -173,95 +173,224 @@
 	   
 		</div>
     </div>
+    <div class="project-box">
+    	<div class="project-left">
+    		<table class="project-list" width="100%">
+				<thead>
+					<tr>
+						<th>职位</th>
+						<th>姓名</th>
+						<th>开始时间</th>
+						<th>上次开始时间</th>
+						<th>预算用时(天)</th>
+						<th>实际用时(天)</th>
+						<th>人力成本(元)</th>
+					</tr>
+				</thead>
+				<tbody id="main_table">
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					
+					<tr>
+						<td>参与人数</td>
+						<td colspan="6" style="text-align:left;">张三</td>
+					</tr>
+					<tr>
+						<td>成本合计</td>
+						<td colspan="6" >张三</td>
+					</tr>
+					
+				</tbody>
+			</table>
+			<div id="mountNode" style="width: 100%;height:400px;margin-top:20px;"></div>
+    	</div>
+    	<div class="project-right">
+    		<div id="mountNode2" style="width: 100%;height:400px;"></div>
+    	</div>
+    </div>
     	
-    	<table class="project-list" width="100%">
-			<thead>
-				<tr>
-					<th>职位</th>
-					<th>姓名</th>
-					<th>开始时间</th>
-					<th>上次开始时间</th>
-					<th>预算用时(天)</th>
-					<th>实际用时(天)</th>
-					<th>人力成本(元)</th>
-				</tr>
-			</thead>
-			<tbody id="main_table">
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				
-				<tr>
-					<td>参与人数</td>
-					<td colspan="6" style="text-align:left;">张三</td>
-				</tr>
-				<tr>
-					<td>成本合计</td>
-					<td colspan="6" >张三</td>
-				</tr>
-				
-			</tbody>
-		</table>
-		
-			<div id="mountNode"></div>
+
 	
 		
     
 </body>
-<script src="${path}/jslib/g2.min.js"></script>
-	<script src="${path}/jslib/data-set.min.js"></script>
-	<script>
-			function initChart(mo){
-				var time1 =    { name:'计划用时'};
-				var time2 =    { name:'实际用时'};
-			
-			var fields = [];
-				
-			for (var i = 0; i < mo.arr.length; i++) {
-				fields.push(mo.arr[i].role);
-				time1[mo.arr[i].role] = 0;
-				time2[mo.arr[i].role] = mo.arr[i].usetime;
-			}
-				 
-				 
-					  const ds = new DataSet();
-					  const dv = ds.createView().source([time1,]);
-					  dv.transform({
-					    type: 'fold',
-					    fields:fields,
-					   // fields: [ 'Jan.','Feb.','Mar.','Apr.','May','Jun.','Jul.','Aug.' ], // 展开字段集
-					    key: '月份', // key字段
-					    value: '月均降雨量', // value字段
-					  });
-					  chart.axis('x', {
-						  line: {
-						    lineWidth: 2, // 设置线的宽度
-						    stroke: 'red', // 设置线的颜色
-						    lineDash: [ 3, 3 ] // 设置虚线样式
-						  }
-						});
-					  chart.source(dv);
-					  chart.interval().position('月份*月均降雨量').color('name').adjust([{
-					    type: 'dodge',
-					    marginRatio: 1 / 32
-					  }]);
-					  chart.render();
-				
-				
-			}
-		
+<%--<script src="${path}/jslib/g2.min.js"></script>--%>
+	<%--<script src="${path}/jslib/data-set.min.js"></script>--%>
+	<script src="${path}/jslib/echarts.min.js"></script>
+	
 
-			  const chart = new G2.Chart({
-			    container: 'mountNode',
-			    forceFit: true,
-			    height: 260
-			  });
-			 
+	<script>
+	var myChart = echarts.init(document.getElementById('mountNode'));
+	var app = {};
+	option = null;
+	var posList = [
+		'left', 'right', 'top', 'bottom',
+		'inside',
+		'insideTop', 'insideLeft', 'insideRight', 'insideBottom',
+		'insideTopLeft', 'insideTopRight', 'insideBottomLeft', 'insideBottomRight'
+	];
+
+	app.configParameters = {
+		rotate: {
+			min: -90,
+			max: 90
+		},
+		align: {
+			options: {
+				left: 'left',
+				center: 'center',
+				right: 'right'
+			}
+		},
+		verticalAlign: {
+			options: {
+				top: 'top',
+				middle: 'middle',
+				bottom: 'bottom'
+			}
+		},
+		position: {
+			options: echarts.util.reduce(posList, function (map, pos) {
+				map[pos] = pos;
+				return map;
+			}, {})
+		},
+		distance: {
+			min: 0,
+			max: 100
+		}
+	};
+
+	app.config = {
+		rotate: 90,
+		align: 'left',
+		verticalAlign: 'middle',
+		position: 'insideBottom',
+		distance: 15
+	};
+	
+function initChart(mo){
+	//name:'计划用时'
+	var time1 = [];
+	//name:'计划用时'
+	var time2 = [];
+    var fields = [];
+for (var i = 0; i < mo.arr.length; i++) {
+	fields.push(mo.arr[i].role);
+	time1.push(mo.arr[i].alltime);
+	time2.push(mo.arr[i].usetime);
+}
+
+
+option = {
+		color: ['#003366', '#006699'],  //柱形颜色
+		tooltip: {
+			trigger: 'axis',
+			axisPointer: {
+				type: 'shadow'
+			}
+		},
+		legend: {
+			data: ['预计用时', '实际用时']  //参数
+		},
+		toolbox: {
+			show: true,
+			orient: 'vertical',
+			left: 'right',
+			top: 'center',
+			feature: {
+				mark: {show: true},
+				dataView: {show: true, readOnly: false},
+				restore: {show: true},
+				saveAsImage: {show: true}
+			}
+		},
+		calculable: true,
+		xAxis: [
+			{
+				name: '部门',
+				type: 'category',
+				axisTick: {show: false},
+				data: fields  //部门
+			}
+		],
+		yAxis: [
+			{
+				name: '天数',
+				type: 'value'
+			}
+		],
+		series: [
+			{
+				name: '预计用时',
+				type: 'bar',
+				barGap: 0,
+				data: time1
+			},
+			{
+				name: '实际用时',
+				type: 'bar',
+				data: time2
+			}
+		]
+	};
+	// 使用刚指定的配置项和数据显示图表。
+	myChart.setOption(option);
+
+
+	}
+
+	
+	</script>
+	<script type="text/javascript">
+	var myChart2 = echarts.init(document.getElementById('mountNode2'));
+	option2 = null;
+	
+	option2 = {
+		    title : {
+		        text: '某站点用户访问来源',
+		        subtext: '纯属虚构',
+		        x:'center'
+		    },
+		    tooltip : {
+		        trigger: 'item',
+		        formatter: "{a} <br/>{b} : {c} ({d}%)"
+		    },
+		    legend: {
+		        orient: 'vertical',
+		        left: 'left',
+		        data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+		    },
+		    series : [
+		        {
+		            name: '访问来源',
+		            type: 'pie',
+		            radius : '55%',
+		            center: ['50%', '60%'],
+		            data:[
+		                {value:335, name:'直接访问'},
+		                {value:310, name:'邮件营销'},
+		                {value:234, name:'联盟广告'},
+		                {value:135, name:'视频广告'},
+		                {value:1548, name:'搜索引擎'}
+		            ],
+		            itemStyle: {
+		                emphasis: {
+		                    shadowBlur: 10,
+		                    shadowOffsetX: 0,
+		                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+		                }
+		            }
+		        }
+		    ]
+		};
+	myChart2.setOption(option2);
 	</script>
 
 	<script type="text/html" id="tabTmp">

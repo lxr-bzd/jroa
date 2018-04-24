@@ -50,7 +50,8 @@
   	</select> 
   	
   	<select id="findMebs" resultType="map" >
-	select a.*,b.name empName from prj_project_meb a left join man_emp b on a.empid=b.id
+	select a.*,b.name empName,c.name level,c.sal_base/26 empMoney from prj_project_meb a left join man_emp b on a.empid=b.id
+	LEFT JOIN man_level c on b.levelid=c.id
   		 where a.prjid=#{projectid}
   	</select> 
   	
@@ -128,6 +129,32 @@
 	</delete>
 	
 	
+	
+	<select id="getPrjMeb" resultType="map" >
+	select * from prj_project_meb where prjid=#{prjid} AND empid=#{uid}
+  	</select>
+	
+	<update id="updateMeb" >
+	UPDATE prj_project_meb
+		<set >
+			<if test="starttime != null ">
+		  	starttime = #{starttime},
+			</if>
+			<if test="usetime != null ">
+		  	usetime = #{usetime},
+			</if>
+		  	intime = #{intime},
+	    </set>
+	    WHERE id=#{id}
+	</update>
+    
+    
+    <update id="setAlltime" >
+	UPDATE prj_project_meb
+		SET alltime=#{alltime}
+	    WHERE empid=#{uid} AND prjid=#{prjid} limit 1
+	    
+	</update>
     
 	
 </mapper>   

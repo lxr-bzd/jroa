@@ -670,7 +670,6 @@ body .table_list tr:hover{ background:#F4F4F4;}
 	cursor: pointer;
 }
 .calendar-wrap{
-	max-width: 350px;
 	margin-top: 30px;
 }
 
@@ -846,4 +845,46 @@ body .table_list tr:hover{ background:#F4F4F4;}
 }
 .imgContainer:hover p{
 	display: block;
+}
+.project-name{
+	line-height: 32px;
+}
+.project-manage{
+	width: 100%;
+}
+.project-manage #mountNode{
+	width: 50%;
+	height: 300px;
+	float: left;
+}
+.project-manage .project-list{
+	width: 50%;
+	float: left;
+}
+.project-list thead tr th {
+	padding: 10px;
+	background-color: #F4F4F4;
+	text-align: center;
+	color: #337ab7;
+	border-bottom: none;
+}
+.project-list{
+	border: 1px solid #dedede;
+}
+.project-list tbody tr td{
+	padding: 8px;
+	text-align: center;
+	border: 1px solid #dedede;
+}
+.project-box{
+	width: 100%;
+	overflow: hidden;
+}
+.project-left{
+	width: 50%;
+	float: left;
+}
+.project-right{
+	width: 50%;
+	float: left;
 }
