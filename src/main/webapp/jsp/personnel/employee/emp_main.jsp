@@ -240,8 +240,8 @@ function getChilds(ds){
 					<th data-field="name" >姓名</th>
 					<th data-field="deptName" >部门</th>
 					<th data-field="placeName" >职位</th>
-					<th data-field="levelName" >等级</th>
-					<th data-field="identifier" >工号</th>
+					<th data-field="levelName" >等级</th><!-- 
+					<th data-field="identifier" >工号</th> -->
 					<th data-field="phone" >手机号</th>
 					<th data-field="entry_time" data-formatter="$app.tableUi.date">入职日期</th>
 					<th data-field="birthday" data-formatter="$app.tableUi.date" >生日</th>

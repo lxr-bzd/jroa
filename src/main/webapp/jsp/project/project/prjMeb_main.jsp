@@ -14,6 +14,8 @@
 		refTable();
 		initBtn();
 		$("#mName").html(decodeURIComponent(GetQueryString("prjName")));
+		$("#mManagerName").html(decodeURIComponent(GetQueryString("managerName")));
+		
 	});
 	
   
@@ -37,13 +39,13 @@
     
 	
 	function cModel(data){
-		var mo = {arr:data.mebs,uid:data.uid,allMoney:0};
+		var mo = {arr:data.prj.mebs,uid:data.uid,allMoney:0,receivable:data.prj.receivable};
 		
 		for (var i = 0; i < mo.arr.length; i++) {
 			
 			if(mo.arr[i].starttime)mo.arr[i].starttime = $app.tableUi.date(mo.arr[i].starttime);
 			if(mo.arr[i].intime)mo.arr[i].intime = $app.tableUi.time(mo.arr[i].intime);
-			mo.arr[i].uMoney = mo.arr[i].empMoney*mo.arr[i].usetime;
+			mo.arr[i].uMoney = new Number((mo.arr[i].sal_base*mo.arr[i].usetime).toFixed(2));
 			
 			if(isNaN(mo.arr[i].uMoney))mo.arr[i].uMoney = 0;
 			
@@ -83,7 +85,7 @@
 				
 				break;
 			case 3:
-				$("#btn_group").html('<input type="button" class="btn btn-info btn-round btn-sm" onclick="doDev(this,false)" value="结束" >');
+				$("#btn_group").html('<input type="button" class="btn btn-warning btn-round btn-sm" onclick="doDev(this,false)" value="结束" >');
 				break;
 			
 
@@ -163,8 +165,8 @@
 		<div class="project-name">
     		<form id="searchForm" name="searchForm"  method="post">
     		<input type="hidden" name="prjid" value="${param.prjid }">
-				<span>项目名称：</span><span id="mName"></span>
-				&nbsp;&nbsp;&nbsp;
+				<span>项目名称：</span><span id="mName" style="font-size: 14px;"></span>
+				&nbsp;&nbsp;&nbsp;<span id="mManagerName" style="font-size: 14px;"></span>
 				
     			
     		</form>
@@ -180,7 +182,7 @@
 					<tr>
 						<th>职位</th>
 						<th>姓名</th>
-						<th>开始时间</th>
+						<th>起始时间</th>
 						<th>上次开始时间</th>
 						<th>预算用时(天)</th>
 						<th>实际用时(天)</th>
@@ -208,10 +210,54 @@
 					
 				</tbody>
 			</table>
+			<h3 class="mt20">工作时间表</h3>
 			<div id="mountNode" style="width: 100%;height:400px;margin-top:20px;"></div>
     	</div>
     	<div class="project-right">
-    		<div id="mountNode2" style="width: 100%;height:400px;"></div>
+    	<h3 class="ml20">项目完成表</h3>
+    		<div class="Ranking-box pd20" id="sale_group">
+				<div class="Ranking-wrap">
+					    			<div class="Ranking-name"><a href="javascript:toPrjCollect('傅黎明')">后台</a>
+					    				<!--<span class="Ranking-icon"><img src="images/layout/rank_02.png" alt="" /></span>-->
+					    			</div>
+					    			<div class="Ranking-rank">
+					    				<div class="Ranking-inner">
+					    					<div class="Ranking-strip">
+					    						<span class="strip" data-number="130000" style="width: 191.1px;"></span>
+					    					</div>
+					    					<span class="Ranking-number">45%</span>
+					    				</div>
+					    			</div>
+				    			</div>
+
+				<div class="Ranking-wrap">
+					    			<div class="Ranking-name"><a href="javascript:toPrjCollect('宋科')">后台</a>
+					    				<!--<span class="Ranking-icon"><img src="images/layout/rank_02.png" alt="" /></span>-->
+					    			</div>
+					    			<div class="Ranking-rank">
+					    				<div class="Ranking-inner">
+					    					<div class="Ranking-strip">
+					    						<span class="strip" data-number="120500" style="width: 177.135px;"></span>
+					    					</div>
+					    					<span class="Ranking-number">40%</span>
+					    				</div>
+					    			</div>
+				    			</div>
+
+						<div class="Ranking-wrap">
+							    			<div class="Ranking-name"><a href="javascript:toPrjCollect('李培')">前端</a>
+							    				<!--<span class="Ranking-icon"><img src="images/layout/rank_02.png" alt="" /></span>-->
+							    			</div>
+							    			<div class="Ranking-rank">
+							    				<div class="Ranking-inner">
+							    					<div class="Ranking-strip">
+							    						<span class="strip" data-number="78396" style="width: 115.242px;"></span>
+							    					</div>
+							    					<span class="Ranking-number">30%</span>
+							    				</div>
+							    			</div>
+						    			</div>
+</div>
     	</div>
     </div>
     	
@@ -220,8 +266,6 @@
 		
     
 </body>
-<%--<script src="${path}/jslib/g2.min.js"></script>--%>
-	<%--<script src="${path}/jslib/data-set.min.js"></script>--%>
 	<script src="${path}/jslib/echarts.min.js"></script>
 	
 
@@ -289,7 +333,7 @@ for (var i = 0; i < mo.arr.length; i++) {
 
 
 option = {
-		color: ['#003366', '#006699'],  //柱形颜色
+		color: ['#003366', 'green'],  //柱形颜色
 		tooltip: {
 			trigger: 'axis',
 			axisPointer: {
@@ -352,41 +396,60 @@ option = {
 	var myChart2 = echarts.init(document.getElementById('mountNode2'));
 	option2 = null;
 	
+	app.title = '嵌套环形图';
+
 	option2 = {
-		    title : {
-		        text: '某站点用户访问来源',
-		        subtext: '纯属虚构',
-		        x:'center'
-		    },
-		    tooltip : {
+		    tooltip: {
 		        trigger: 'item',
-		        formatter: "{a} <br/>{b} : {c} ({d}%)"
+		        formatter: "{a} <br/>{b}: {c} ({d}%)"
 		    },
 		    legend: {
-		        orient: 'vertical',
-		        left: 'left',
-		        data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+		        bottom: 10,
+		        left: 'center',
+		        data:['设计','安卓','苹果1','苹果2','后台']
 		    },
-		    series : [
+		    series: [
 		        {
-		            name: '访问来源',
-		            type: 'pie',
-		            radius : '55%',
-		            center: ['50%', '60%'],
-		            data:[
-		                {value:335, name:'直接访问'},
-		                {value:310, name:'邮件营销'},
-		                {value:234, name:'联盟广告'},
-		                {value:135, name:'视频广告'},
-		                {value:1548, name:'搜索引擎'}
-		            ],
-		            itemStyle: {
-		                emphasis: {
-		                    shadowBlur: 10,
-		                    shadowOffsetX: 0,
-		                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+		            name:'访问来源',
+		            type:'pie',
+		            selectedMode: 'single',
+		            radius: [0, '30%'],
+
+		            label: {
+		                normal: {
+		                    position: 'inner'
 		                }
-		            }
+		            },
+		            labelLine: {
+		                normal: {
+		                    show: false
+		                }
+		            },
+		            data:[
+		                {value:2, name:'设计'},
+		                {value:3, name:'安卓'},
+		                {value:2, name:'苹果1'},
+		                {value:2, name:'苹果2'},
+		                {value:1, name:'后台'},
+		            ]
+		        },
+		        {
+		            name:'访问来源',
+		            type:'pie',
+		            radius: ['40%', '55%'],
+
+		            data:[
+		                {value:1, name:'已完成'},
+		                {value:2, name:'设计1'},
+		                {value:1, name:'已完成'},
+		                {value:2, name:'未完成'},
+		                {value:1, name:'已完成'},
+		                {value:2, name:'未完成'},
+		                {value:1, name:'已完成'},
+		                {value:2, name:'未完成'},
+		                {value:1, name:'已完成'},
+		                {value:2, name:'未完成'},
+		            ]
 		        }
 		    ]
 		};
@@ -415,8 +478,24 @@ option = {
 					<td colspan="6"  style="text-align:left;">{{arr.length}}</td>
 				</tr>
 				<tr>
-					<td>成本合计</td>
+					<td>人力成本合计</td>
 					<td colspan="6"  style="text-align:left;">{{allMoney}}</td>
+				</tr>
+				<tr>
+					<td>业务提成</td>
+					<td colspan="6"  style="text-align:left;">{{receivable*0.08}}</td>
+				</tr>
+				<tr>
+					<td>项目提成</td>
+					<td colspan="6"  style="text-align:left;">{{receivable*0.05}}</td>
+				</tr>
+				<tr>
+					<td>其他消费</td>
+					<td colspan="6"  style="text-align:left;">{{receivable*0.02}}</td>
+				</tr>
+				<tr>
+					<td>总计</td>
+					<td colspan="6"  style="text-align:left;">{{receivable*0.15+allMoney}}</td>
 				</tr>
 				
 	</script>

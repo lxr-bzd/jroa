@@ -13,6 +13,7 @@ public class Project {
 	String productName;
 	String customrid;//int(11)	 '客户id'
 	String customrName;
+	String cusPhone;
 	String starttime;//bigint(20)	 '开始时间'
 	String endtime;//bigint(20)	 '结束时间'
 	String managerid;//int(11)	 '项目经理id'
@@ -83,6 +84,13 @@ public class Project {
 	}
 	public void setCustomrName(String customrName) {
 		this.customrName = customrName;
+	}
+	
+	public String getCusPhone() {
+		return cusPhone;
+	}
+	public void setCusPhone(String cusPhone) {
+		this.cusPhone = cusPhone;
 	}
 	public String getStarttime() {
 		return starttime;

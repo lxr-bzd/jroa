@@ -8,7 +8,7 @@
 
 	  
 	<select id="findForPage2" resultType="com.foxtail.model.project.Project" >
-  		select  <include refid="base_column" />,b.name customrName,c.name managerName,d.name salesmanName,e.name orderempName,f.name progressName from prj_project a left join cus_customer b on a.customrid=b.id
+  		select  <include refid="base_column" />,b.name customrName,b.phone cusPhone,c.name managerName,d.name salesmanName,e.name orderempName,f.name progressName from prj_project a left join cus_customer b on a.customrid=b.id
   		left join man_emp c on a.managerid = c.id
   		left join man_emp d on a.salesmanid = d.id
   		left join man_emp e on a.orderempid = e.id
@@ -36,7 +36,7 @@
   
 		
 <select id="getById" resultType="com.foxtail.model.project.Project" >
-	select  <include refid="base_column" />,b.name customrName,c.name managerName,d.name salesmanName,f.name productName,ifnull(e.received,0) received from prj_project a left join cus_customer b on a.customrid=b.id
+	select  <include refid="base_column" />,b.name customrName,b.phone cusPhone,c.name managerName,d.name salesmanName,f.name productName,ifnull(e.received,0) received from prj_project a left join cus_customer b on a.customrid=b.id
   		left join man_emp c on a.managerid = c.id
   		left join man_emp d on a.salesmanid = d.id
   		left join cus_product f on a.productid = f.id
@@ -50,7 +50,7 @@
   	</select> 
   	
   	<select id="findMebs" resultType="map" >
-	select a.*,b.name empName,c.name level,c.sal_base/26 empMoney from prj_project_meb a left join man_emp b on a.empid=b.id
+	 select a.*,b.name empName,c.name level,c.sal_base/26 sal_base from prj_project_meb a left join man_emp b on a.empid=b.id
 	LEFT JOIN man_level c on b.levelid=c.id
   		 where a.prjid=#{projectid}
   	</select> 
@@ -130,31 +130,10 @@
 	
 	
 	
-	<select id="getPrjMeb" resultType="map" >
-	select * from prj_project_meb where prjid=#{prjid} AND empid=#{uid}
-  	</select>
 	
-	<update id="updateMeb" >
-	UPDATE prj_project_meb
-		<set >
-			<if test="starttime != null ">
-		  	starttime = #{starttime},
-			</if>
-			<if test="usetime != null ">
-		  	usetime = #{usetime},
-			</if>
-		  	intime = #{intime},
-	    </set>
-	    WHERE id=#{id}
-	</update>
+	
     
     
-    <update id="setAlltime" >
-	UPDATE prj_project_meb
-		SET alltime=#{alltime}
-	    WHERE empid=#{uid} AND prjid=#{prjid} limit 1
-	    
-	</update>
     
 	
 </mapper>   

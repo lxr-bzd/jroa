@@ -30,7 +30,8 @@
     	$app.request("${path}/data/finance/project/view.do",function(data){
     		if(data.status!=0)return;
     		var model = parseResult(data.data);
-    		
+    	
+    	$("#th_group").html(template("thTmp",{data:getState()}));
 		$("#tab_group").html(template("tabTmp",{data:model}));
 		},{param:getParam()});
     }
@@ -42,11 +43,12 @@
 		state.push( {name:'开发中',val:2});
 		state.push( {name:'测试中',val:3});
 		state.push( {name:'已完成',val:4});
-		state.push( {name:'维护中',val:5});
-		state.push( {name:'待续费',val:6});
-		state.push( {name:'已过期',val:7});
+		state.push( {name:'待续费',val:5});
+		state.push( {name:'暂停中',val:6});
+		state.push( {name:'维护中',val:7});
 		state.push( {name:'已失效',val:8});
-		state.push( {name:'暂停中',val:9});
+		state.push( {name:'已过期',val:9});
+		
 		return state;
 	}
 	
@@ -91,20 +93,9 @@
 	   
 		</div>
     </div>
-    	<table class="table_list" data-toggle="table">
-			<thead>
-				<tr>
-					<th>项目经理</th>
-					<th>策划中</th>
-					<th>开发中</th>
-					<th>测试中</th>
-					<th>已完成</th>
-					<th>维护中</th>
-					<th>待续费</th>
-					<th>已过期</th>
-					<th>已失效</th>
-					<th>暂停中</th>
-				</tr>
+    	<table class="project-list" width="100%">
+			<thead id="th_group" class="active">
+				
 			</thead>
 			<tbody id="tab_group">
 				
@@ -113,6 +104,19 @@
 		
     
 </body>
+
+	<script type="text/html" id="thTmp">
+
+
+ <tr>
+		<th>项目经理</th>
+	{{each data as val i}}
+    <th>{{val.name}}</th>
+	{{/each}}
+</tr>
+	
+	</script>
+
 
 	<script type="text/html" id="tabTmp">
  {{each data as val i}}

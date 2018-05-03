@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.foxtail.dao.mybatis.project.PrjMebDao">
+	
+	<sql id="base_column">
+		a.*
+	</sql>
+	
+	<delete id="deleteDevElse">
+	delete from prj_project_dev where prjid=#{prjid} uid not in 
+		 <foreach collection="uids" item="id" index="index"
+	             open="(" close=")" separator=","> #{id} </foreach>
+	</delete>
+
+	<select id="findMebs" resultType="com.foxtail.model.project.PrjMeb" >
+	select a.*,b.name empName
+	 from prj_project_meb a left join man_emp b on a.empid=b.id
+  		 where a.prjid=#{prjid}
+  	</select>
+	  
+	<select id="findAll" resultType="com.foxtail.model.project.PrjMeb" >
+	 select a.*,b.name empName,c.name level,c.sal_base/26 sal_base from prj_project_meb a left join man_emp b on a.empid=b.id
+	LEFT JOIN man_level c on b.levelid=c.id
+  		 where a.prjid=#{prjid}
+  	</select>
+  
+  
+  <select id="getPrjMeb" resultType="map" >
+  select a.*,b.name empName,c.name level,c.sal_base/26 empMoney from prj_project_meb a left join man_emp b on a.empid=b.id
+	LEFT JOIN man_level c on b.levelid=c.id
+  		 where a.prjid=#{prjid} AND a.empid=#{uid}
+  	</select>
+		
+	<update id="setAlltime" >
+	UPDATE prj_project_meb
+		SET alltime=#{alltime}
+	    WHERE empid=#{uid} AND prjid=#{prjid} limit 1
+	    
+	</update>
+	
+	
+	
+	<update id="updateMeb" >
+	UPDATE prj_project_meb
+		<set >
+			<if test="starttime != null ">
+		  	starttime = #{starttime},
+			</if>
+			<if test="usetime != null ">
+		  	usetime = #{usetime},
+			</if>
+		  	intime = #{intime},
+	    </set>
+	    WHERE id=#{id}
+	</update>
+    
+    
+    <insert id="saveMebs"  >
+     INSERT INTO prj_project_meb(role, empid, prjid, starttime, endtime, intime, usetime, alltime, sort)
+       VALUES<foreach collection="mebs" item="meb" index="index" open="" close="" separator=",">
+       (#{ meb.role },#{ meb.empid },#{ meb.prjid },#{ meb.starttime },#{ meb.endtime },#{ meb.intime },#{ meb.usetime },#{ meb.alltime },#{ meb.sort }) 
+          </foreach>
+     
+    </insert>
+  	
+  
+</mapper>   

@@ -7,6 +7,9 @@
 <link rel="stylesheet" href="${path}/jslib/zTree_v3/css/zTreeStyle/zTreeStyle.css" type="text/css"/>
 <script type="text/javascript" src="${path}/jslib/zTree_v3/js/jquery.ztree.core-3.5.js"></script>
 <style type="text/css">
+
+
+
 #resource-left{
  width: 15%;
  float: left;
@@ -26,6 +29,25 @@ border-left: 1px solid #eee;
 </style>
 
 <title>查询列表</title>
+<script type="text/javascript">
+
+$(function(){
+	
+	$app.prompt("输入口令",function(pass){
+		if(pass!="tgfrfhbtrfhtrghtrguj5re676e54ujt"){
+			$app.alert("错误");
+			return true;
+		}
+		
+	
+	
+},null,2);
+	
+})
+
+
+</script>
+
 <script>
 	var zTree;
 	var selectNode;
@@ -314,21 +336,7 @@ border-left: 1px solid #eee;
 						<i class="glyphicon glyphicon-trash"></i> 批量删除
 					</button>
 				</shiro:hasPermission>
-		  <%--   	<shiro:hasPermission name="SysResource:edit">
-		    		<button class="btn btn-warning btn-round" onclick="toEdit();">
-						<i class="glyphicon glyphicon-pencil"></i> 修改
-					</button>
-		    	</shiro:hasPermission>
-				<shiro:hasPermission name="SysResource:info">
-					<button class="btn btn-success btn-round" onclick="toInfo()">
-						<i class="glyphicon glyphicon-list-alt"></i>详情
-					</button>
-				</shiro:hasPermission>
-				<shiro:hasPermission name="SysResource:remove">
-					<button class="btn btn-danger btn-round" onclick="toRemove()">
-						<i class="glyphicon glyphicon-trash"></i>删除
-					</button>
-				</shiro:hasPermission> --%>
+		  
 			</div>
 	    
 	    	<table id="SysResourceList" class="table_list" data-toggle="table"

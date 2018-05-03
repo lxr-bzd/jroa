@@ -108,7 +108,7 @@ var toInfoUrl = '${path}/project/project/project/view.do';
 			operator+=$app.btn({type:'btn-info',img:'glyphicon-usd'},'收款','toPrjCollect(\''+row.id+'\',\''+row.name+'\')');
     		</shiro:hasPermission>
     		
-			operator+=$app.btn('auth','测评','todevelop(\''+row.id+'\',\''+row.name+'\')');;
+			operator+=$app.btn('auth','测评','todevelop(\''+row.id+'\',\''+row.name+'\',\''+row.managerName+'\')');
 	
 		return operator+'</div>';
 	}
@@ -119,9 +119,9 @@ var toInfoUrl = '${path}/project/project/project/view.do';
     
 </script>
 <script type="text/javascript">
-function todevelop(id,name){
+function todevelop(id,name,managerName){
 	
-	window.location.href = "${path}/project/project/prjMeb.do?prjid="+id+"&prjName="+encodeURIComponent(name);;
+	window.location.href = "${path}/project/project/prjMeb.do?prjid="+id+"&prjName="+encodeURIComponent(name)+"&managerName="+encodeURIComponent(managerName);
 }
 
 function todetail(id,name){
@@ -282,11 +282,11 @@ function getUnSelectRows(){
 				<tr>
 				
 					<th data-field="" data-checkbox="true"></th>
-					<!-- <th data-field="sort" data-formatter="Formatter.sort">序号</th> -->
 					<th data-field="id" >id</th>
 					<th data-field="name" >项目名称</th>
 					
 					<th data-field="customrName" >客户</th>
+					<th data-field="cusPhone" >客户电话</th>
 					<th data-field="managerName" >项目经理</th>
 					<th data-field="progressName" >项目状态</th>
 					<th data-field="signtime" data-formatter="$app.tableUi.date" >签单时间</th>

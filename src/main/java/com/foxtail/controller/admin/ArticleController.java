@@ -27,7 +27,7 @@ public class ArticleController extends BaseMybatisController{
 	ArticleService articleService;
 	
 	
-	@RequestMapping() 
+	@RequestMapping()
 	public String toMain(String sysModule){
 		return getMainJsp(sysModule);
 	}

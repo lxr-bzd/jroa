@@ -33,7 +33,6 @@ var backurl = "${path}/personnel/organize/dept.do";
 				type:'post',
 				success:function(data){
 					close();
-					
 					if(data.status==0){
 						$app.alert("编辑成功",function(){
 							goBackList();	
@@ -73,7 +72,6 @@ function isedit(){
 	
 </script>
 	<script type="text/javascript">
-	
 	
 	var deptModel;
 	var depts;

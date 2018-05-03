@@ -31,7 +31,11 @@ public class TransferService {
 	PlaceService placeService;
 	
 	
-	
+	/**
+	 * 
+	 * @param emp 修改emp
+	 * @param pEmp 原来未修改的emp
+	 */
 	public void updateAccountByEmp(Emp emp,Emp pEmp) {	
 		
 		

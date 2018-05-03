@@ -106,7 +106,6 @@ public class ProjectController extends BaseMybatisController{
 		project.setOrdertime(System.currentTimeMillis());
 		project.setOrderempid(ServiceManager.securityService.getUid());
 		
-		
 		projectService.save(project);
 
 		return JsonResult.getSuccessResult();

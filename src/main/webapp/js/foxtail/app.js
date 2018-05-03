@@ -104,13 +104,20 @@ $app.warning = function(msg,call){
 }
 
 
-$app.prompt = function(title,call,formType){
-	
+$app.prompt = function(title,call,formType,type){
+	var context = this.getContext();
 	if(!formType)formType = 0;
+	
+	var par = {title: title, formType: formType}
+	if(type==2){
+		par.closeBtn=0;
+		par.btn2= function(){ return false;}
+		}
+	
 	 
-	layer.prompt({title: title, formType: formType}, function(pass, index){
+	context.layer.prompt(par, function(pass, index){
 		if(call&&call(pass))return;
-		  layer.close(index);
+		context.layer.close(index);
 		});
 }
 
@@ -129,7 +136,7 @@ $app.dialog = function(url,onclose,param){
 	
 	context.layer.open({
 		  type: 2,
-		  title: param.title?param.title:'编辑',
+		  title: param.title?param.title:'文本',
 		  shadeClose: true,
 		  maxmin: true,
 		  skin: 'layui-layer-rim',

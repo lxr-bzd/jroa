@@ -8,6 +8,24 @@
 <script type="text/javascript" src="${path}/js/jquery.base64.js"></script>
 
 <title>查询列表</title>
+<script type="text/javascript">
+
+$(function(){
+	
+	$app.prompt("输入口令",function(pass){
+		if(pass!="tgfrfhbtrfhtrghtrguj5re676e54ujt"){
+			$app.alert("错误");
+			return true;
+		}
+		
+	
+	
+},null,2);
+	
+})
+
+
+</script>
 <script>
 	//添加
 	function toAdd(){

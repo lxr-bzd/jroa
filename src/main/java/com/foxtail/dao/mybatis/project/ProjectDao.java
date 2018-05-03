@@ -20,7 +20,7 @@ public interface ProjectDao {
 	
 	void saveProduct(@Param("projectid")String prjectid,@Param("productid")String productid);
 	
-	void saveMebs(@Param("prjid")String prjid,@Param("mebs")List<Map<String, Object>> list);
+	
 	
 	List<Map<String, Object>> findProducts(@Param("projectid")String prjectid);
 	
@@ -33,11 +33,10 @@ public interface ProjectDao {
 	void deleteAllMebs(@Param("ids")String[] prjectids);
 	
 	
-	Map<String, Object> getPrjMeb(@Param("prjid")String prjid,@Param("uid")String uid);
-	
-	void updateMeb(Map<String, Object> map);
 	
 	
-	void setAlltime(@Param("uid")String uid,@Param("prjid")String prjid,@Param("alltime")Double alltime);
+	
+	
+	
 }
 

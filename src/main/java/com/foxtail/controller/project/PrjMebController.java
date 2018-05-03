@@ -43,8 +43,9 @@ public class PrjMebController extends BaseMybatisController{
 		}
 			
 		Map<String, Object> ret = new HashMap<>();
-		ret.put("mebs", projectService.findMebs(prjid));
+		//ret.put("mebs", projectService.findMebs(prjid));
 		ret.put("uid", uid);
+		ret.put("prj", projectService.getById(prjid));
 		
 		return JsonResult.getSuccessResult(ret);
 	}

@@ -112,6 +112,17 @@ var backurl = "${path}/project/project/prjRes.do";
 	}
 	
 	
+	function postQueryParams(params) {
+		
+		
+		// $app.form.preSubmit("#searchForm");
+		var queryParams = $("#manSearchForm").serializeObject();
+		
+		queryParams.limit=params.limit;
+		queryParams.offset=params.offset;
+		//	queryParams.deptid = $app.form.multipleSelectVal("#searchForm .lxr_multipleSelect");
+		return $lxr.trimObject(queryParams); 
+	}
 	
 	function refTable(tb){
 		
@@ -292,7 +303,7 @@ function getChilds(ds){
 
 <script type="text/html" id="prjTemp">
 
-<div class="rightinfo explain_col" style="text-align: left;">
+<div class="rightinfo explain_col" >
 <form id="cusSearchForm" method="post">
     			<span>关键词：</span><input name="kw" value="" placeholder="项目名称"  class="form-control input-sm w200" type="text" style="display: inline;" >
 				<input type="button" class="btn btn-info btn-round btn-sm" value="查询" onclick="refTable('#prjTable')">
