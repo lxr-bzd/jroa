@@ -21,6 +21,10 @@
   		
   		<if test="ft.startTime != null ">AND a.ordertime > #{ft.startTime}</if>
   		<if test="ft.endTime != null ">AND a.ordertime &lt; #{ft.endTime}</if>
+  		
+  		<if test="ft.renewStime != null ">AND a.renewtime > #{ft.renewStime}</if>
+  		<if test="ft.renewEtime != null ">AND a.renewtime &lt; #{ft.renewEtime}</if>
+  		
   		<if test="ft.progressid != null ">AND a.progressid = #{ft.progressid}</if>
   		
   		<if test="ft.uid != null ">AND (a.managerid = #{ft.uid} OR #{ft.uid} in (select empid from prj_project_meb where prjid=a.id))</if>

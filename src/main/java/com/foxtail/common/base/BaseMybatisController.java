@@ -2,6 +2,7 @@ package com.foxtail.common.base;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -122,5 +123,20 @@ public class BaseMybatisController implements WebBindingInitializer
 	  
 
   }
+  
+  
+  public Map<String, String> getMapModel(HttpServletRequest request,String[] modelMap){
+	  Map<String, String> model = new HashMap<>();
+	  if(modelMap==null||modelMap.length<1)return model;
+	  
+	  for (int i = 0; i < modelMap.length; i++) {
+		model.put(modelMap[i], request.getParameter(modelMap[i]));
+	}
+	  
+	  return model;
+	  
+  }
+  
+  
 
 }

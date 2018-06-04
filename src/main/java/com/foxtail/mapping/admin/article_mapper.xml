@@ -3,7 +3,7 @@
 <mapper namespace="com.foxtail.dao.mybatis.admin.ArticleDao">
 	
 	<sql id="base_column">
-		a.*
+		a.id,  a.title,  a.author,  a.image,  a.summary,  a.state,  a.type,  a.creator,  a.createtime
 	</sql>
 
 	  
@@ -20,7 +20,7 @@
   
 		
 	<select id="getById" resultType="com.foxtail.model.admin.Article" >
-  		select  <include refid="base_column" /> from adm_article a where a.id=#{id}
+  		select  a.* from adm_article a where a.id=#{id}
   	</select> 
 
 	

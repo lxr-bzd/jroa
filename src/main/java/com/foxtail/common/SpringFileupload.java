@@ -60,7 +60,7 @@ public class SpringFileupload {
 	
 	
 	public static String upload(MultipartHttpServletRequest  request,String name) throws IllegalStateException, IOException {
-		MultipartHttpServletRequest multipartRequest =  request;         
+		MultipartHttpServletRequest multipartRequest =  request;
 		// 获得文件：
 		MultipartFile mfile = (MultipartFile) multipartRequest.getFile(name); 
 	    
@@ -144,6 +144,10 @@ public class SpringFileupload {
 
 	}
 	
-	
+public static File reversalFile(String url) {
+		
+		return new File(getTomcatHost(),"webapps"+url);
+
+	}
 
 }

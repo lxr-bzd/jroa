@@ -22,6 +22,10 @@ public class ProjectFilter {
 	
 	String sysView;
 	
+	//续费时间筛选
+	Long renewStime;
+	Long renewEtime;
+	
 
 	public String getKw() {
 		return kw;
@@ -119,6 +123,22 @@ public class ProjectFilter {
 
 	public void setUid2(String uid2) {
 		this.uid2 = uid2;
+	}
+
+	public Long getRenewStime() {
+		return renewStime;
+	}
+
+	public void setRenewStime(Long renewStime) {
+		this.renewStime = renewStime;
+	}
+
+	public Long getRenewEtime() {
+		return renewEtime;
+	}
+
+	public void setRenewEtime(Long renewEtime) {
+		this.renewEtime = renewEtime;
 	}
 
 	

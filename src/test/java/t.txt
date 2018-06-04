@@ -1,0 +1,82 @@
+alter table _pk import tablespace;
+
+
+alter table _log import tablespace;
+
+
+alter table t_sys_user_role import tablespace;
+
+
+alter table t_sys_user import tablespace;
+
+
+alter table t_sys_role_resource import tablespace;
+
+
+alter table t_sys_role import tablespace;
+
+
+alter table t_sys_resource import tablespace;
+
+
+alter table t_sys_release_user import tablespace;
+
+
+alter table t_sys_member_user import tablespace;
+
+
+alter table t_sys_advice import tablespace;
+
+
+alter table t_knowledge_type import tablespace;
+
+
+alter table t_knowledge import tablespace;
+
+
+alter table prj_res import tablespace;
+
+
+alter table prj_rate import tablespace;
+
+
+alter table prj_project_prduct import tablespace;
+
+
+alter table prj_project_meb import tablespace;
+
+
+alter table prj_project import tablespace;
+
+
+alter table prj_progress import tablespace;
+
+
+alter table prj_log import tablespace;
+
+
+alter table prj_collect import tablespace;
+
+
+
+
+alter table cus_visit import tablespace;
+
+
+alter table cus_type import tablespace;
+
+
+alter table cus_product_cus import tablespace;
+
+
+alter table cus_product import tablespace;
+
+
+alter table cus_customer import tablespace;
+
+
+alter table app_session import tablespace;
+
+
+
+

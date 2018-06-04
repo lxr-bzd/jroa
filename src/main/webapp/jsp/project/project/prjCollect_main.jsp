@@ -67,8 +67,7 @@ var toInfoUrl = '${path}/project/project/prjCollect/view.do';
     function operatorFormatter(value, row, index) {
     	var operator='<div class="btn-group">';
 		    
-	    	
-	    		operator+=$app.btn('edit','编辑','editById(\''+row.id+'\')');
+	    	operator+=$app.btn('edit','编辑','editById(\''+row.id+'\')');
 		    
 				operator+=$app.btn('delete','删除','toRemove(\''+row.id+'\')');
 	    	

@@ -58,7 +58,7 @@
     <insert id="saveMebs"  >
      INSERT INTO prj_project_meb(role, empid, prjid, starttime, endtime, intime, usetime, alltime, sort)
        VALUES<foreach collection="mebs" item="meb" index="index" open="" close="" separator=",">
-       (#{ meb.role },#{ meb.empid },#{ meb.prjid },#{ meb.starttime },#{ meb.endtime },#{ meb.intime },#{ meb.usetime },#{ meb.alltime },#{ meb.sort }) 
+       (#{ meb.role },#{ meb.empid },#{ prjid },#{ meb.starttime },#{ meb.endtime },#{ meb.intime },#{ meb.usetime },#{ meb.alltime },#{ meb.sort }) 
           </foreach>
      
     </insert>

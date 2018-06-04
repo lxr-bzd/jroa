@@ -120,12 +120,10 @@ var toInfoUrl = '${path}/project/project/project/view.do';
 </script>
 <script type="text/javascript">
 function todevelop(id,name,managerName){
-	
 	window.location.href = "${path}/project/project/prjMeb.do?prjid="+id+"&prjName="+encodeURIComponent(name)+"&managerName="+encodeURIComponent(managerName);
 }
 
 function todetail(id,name){
-	
 	window.location.href = "${path}/project/project/prjLog.do?prjid="+id+"&prjName="+encodeURIComponent(name);
 }
 
@@ -242,12 +240,17 @@ function getUnSelectRows(){
 					<input placeholder="结束" data-lxr="{type:'time',format:'yyyy-MM-dd'}" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary" onfocus="WdatePicker({isShowClear:false})">
 					<input type="hidden" name="endTime">
 					
-					<span>项目进度：</span>
+					<span>项目状态：</span>
 					<select name="progressid" data-model='{url:"${path}/project/setting/progress/view.do?limit=-1&offset=0",val:"id",name:"name",root:"rows"}' class="lxr-select form-control  w200" style="display: inline;" ><option value="">-请选择-</option></select>
 	    			
 					<span>关键词：</span>
 	    			<input name="kw" value="" placeholder="项目名称"  class="form-control input-sm w200" type="text" style="display: inline;" >
 	    			<br /><br />
+	    			<span>续费时间：</span>
+	    			<input placeholder="开始" data-lxr="{type:'time',format:'yyyy-MM-dd'}" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary" onfocus="WdatePicker({isShowClear:false})">
+	    			<input type="hidden" name="renewStime">-
+					<input placeholder="结束" data-lxr="{type:'time',format:'yyyy-MM-dd'}" style="display: inline" type="text" class="lxr-format wdateExt Wdate input-primary" onfocus="WdatePicker({isShowClear:false})">
+					<input type="hidden" name="renewEtime">
     			</div>
     			<!--<input type="button" class="btn btn-info btn-round btn-sm" value="查询" onclick="refTable()">-->
     			<div class="control-group" style="display: inline-block;">

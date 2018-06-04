@@ -17,6 +17,7 @@ import com.foxtail.common.AppModelMap;
 import com.foxtail.common.JsonResult;
 import com.foxtail.common.base.BaseMybatisController;
 import com.foxtail.service.project.ProjectService;
+import com.thoughtworks.xstream.mapper.Mapper.Null;
 
 @Controller
 @RequestMapping("project/project/prjMeb")
@@ -75,9 +76,34 @@ public class PrjMebController extends BaseMybatisController{
 		projectService.setAlltime(prjid, uid, alltime);
 		
 		return JsonResult.getSuccessResult();
+	}
+	
+	
+	
+	
+	@RequestMapping("viewRate")
+	@ResponseBody
+	public Object viewRate() {
+		return null;
 
 	}
 	
+	@RequestMapping("updateRate")
+	@ResponseBody
+	public Object updateRate() {
+		return null;
+
+	}
+	
+	@RequestMapping("saveRate")
+	@ResponseBody
+	public Object saveRate(HttpServletRequest request) {
+		
+		Map<String, String> model = getMapModel(request, new String[]{"prjid","name","progress"});
+		
+		return null;
+
+	}
 	
 	
 	

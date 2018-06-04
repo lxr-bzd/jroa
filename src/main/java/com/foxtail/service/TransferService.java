@@ -39,10 +39,11 @@ public class TransferService {
 	public void updateAccountByEmp(Emp emp,Emp pEmp) {	
 		
 		
-		Place place = placeService.getById(pEmp.getPlaceid());
+		Place place = placeService.getById(emp.getPlaceid());
 		String roleid = place.getRoleid();
 		if(StringUtils.isEmpty(emp.getAccount())){
 			if(!StringUtils.isEmpty(pEmp.getAccount()))
+				//新账号为空旧账号不为空
 				sysUserService.deleteByAccouts(new String[]{pEmp.getAccount()});
 			
 			
@@ -50,6 +51,7 @@ public class TransferService {
 			
 			
 			if(!StringUtils.isEmpty(pEmp.getAccount())) {
+				//新账号不为空旧账号不为空
 				 SysUser user = sysUserService.findSingleUser(pEmp.getAccount());
 					user.setUserName(emp.getName());
 					user.setAccount(emp.getAccount());
@@ -58,6 +60,7 @@ public class TransferService {
 					updateAccount(user, roleid);
 					
 			}else {
+				//新账号不为空旧账号为空
 				SysUser sysUser = new SysUser();
 				sysUser.setUserName(emp.getName());
 				sysUser.setAccount(emp.getAccount());

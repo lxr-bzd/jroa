@@ -116,7 +116,7 @@ var backurl = "${path}/project/project/prjRes.do";
 		
 		
 		// $app.form.preSubmit("#searchForm");
-		var queryParams = $("#manSearchForm").serializeObject();
+		var queryParams = $("#prjSearchForm").serializeObject();
 		
 		queryParams.limit=params.limit;
 		queryParams.offset=params.offset;
@@ -304,7 +304,7 @@ function getChilds(ds){
 <script type="text/html" id="prjTemp">
 
 <div class="rightinfo explain_col" >
-<form id="cusSearchForm" method="post">
+<form id="prjSearchForm" method="post">
     			<span>关键词：</span><input name="kw" value="" placeholder="项目名称"  class="form-control input-sm w200" type="text" style="display: inline;" >
 				<input type="button" class="btn btn-info btn-round btn-sm" value="查询" onclick="refTable('#prjTable')">
     		</form>

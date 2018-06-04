@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.foxtail.dao.mybatis.project.PrjRateDao">
+	
+	<sql id="base_column">
+		a.*
+	</sql>
+
+	  
+	<select id="findAll" resultType="com.foxtail.model.project.PrjRes" >
+  		select  <include refid="base_column" />,b.name prjName,c.name cusName from prj_res a left join prj_project b on a.prjid=b.id
+  		left join cus_customer c on b.customrid=c.id
+  		WHERE 1=1
+  		<if test="kw != null ">AND c.name like CONCAT('%',#{kw},'%') OR b.name like CONCAT('%',#{kw},'%') </if>
+  
+  	</select>
+  
+		
+	<select id="getById" resultType="map" >
+  		select  <include refid="base_column" />,b.name prjName,c.name cusName from prj_res a left join prj_project b on a.prjid=b.id
+  		left join cus_customer c on b.customrid=c.id where a.id=#{id}
+  	</select> 
+
+	
+	
+	<update id="update" >
+	  UPDATE prj_rate SET
+			progress=#{ mo.progress }
+ 			WHERE id=#{model.id}
+
+	</update>
+
+	 <!-- 根据对象主键更新 -->
+  	<insert id="save"  >
+     INSERT INTO prj_rate( prjid, name, progress) VALUES(#{ mo.prjid },#{ mo.name },#{ mo.progress })
+     </insert>
+	
+  	
+  
+</mapper>   
