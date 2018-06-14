@@ -98,6 +98,7 @@ public class LoginController {
 	@RequestMapping(value = "loadAuthorization/pass")
     public ModelAndView pass()
     {
+		
     	ModelAndView mv = new ModelAndView("layout/main");
     	SysUserActiveVo user = ShiroUser.getUser();
     	mv.addObject("user", user);

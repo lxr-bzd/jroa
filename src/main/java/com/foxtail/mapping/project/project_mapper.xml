@@ -32,7 +32,6 @@
   		exists (select bb.deptid from prj_project_meb aa left join man_emp bb on aa.empid=bb.id where aa.prjid=a.id AND bb.deptid in
   		<foreach collection="ft.udeptids" item="deptid" index="index" open="(" close=")" separator=",">
               #{deptid}</foreach>)
-  		
   		)</if>
   		ORDER BY signtime DESC
   		

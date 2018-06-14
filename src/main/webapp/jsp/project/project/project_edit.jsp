@@ -393,7 +393,7 @@ var backurl = "${path}/project/project/project.do";
 				</li> -->
 				<input type="hidden"  name="pro_state" value="1" >
 				<li><label>项目功能表：</label>
-					<input type="file"  name="doc_file" class="form-control input-primary w260" accept=".xls,.doc,.txt,.pdf">
+					<input type="file"  name="doc_file" class="form-control input-primary w260" accept=".xls,.doc,.txt,.pdf,.docx,.xmind">
 				</li>
 					
 				<li><label>项目进度：</label>
@@ -530,7 +530,7 @@ var backurl = "${path}/project/project/project.do";
 				<input type="hidden"  name="pro_state" value="1" >
 				
 				<li><label>项目功能表：</label>
-					<input type="file"  name="doc_file" class="form-control input-primary w260" accept=".xls,.doc,.txt,.pdf">
+					<input type="file"  name="doc_file" class="form-control input-primary w260" accept=".xls,.doc,.txt,.pdf,.docx,.xmind">
 				</li>
 					
 				<li><label>项目进度：</label>

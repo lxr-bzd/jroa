@@ -137,7 +137,7 @@ $app.dialog = function(url,onclose,param){
 	context.layer.open({
 		  type: 2,
 		  title: param.title?param.title:'文本',
-		  shadeClose: true,
+		  shadeClose: false,
 		  maxmin: true,
 		  skin: 'layui-layer-rim',
 		  shade: 0.5,
